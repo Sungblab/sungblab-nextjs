@@ -95,7 +95,11 @@ const ImageSlider = () => {
 
     // 컴포넌트가 언마운트될 때 타이머를 정리
     return () => clearInterval(timer);
-  }, [images.length]); // 의존성 배열에 images.length 추가
+  }, []); // 빈 배열로 설정
+
+  if (images.length === 0) {
+    return null; // 이미지가 없는 경우
+  }
 
   const goToPrevious = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -269,13 +273,13 @@ const Home: NextPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <ArchiveCard
                 title="GitHub"
-                description="제 깃허브 저장소 입니다. 중학교 2학년 시절부터 꾸준히 commit 과 fetch, publish가 이루어진 곳입니다."
+                description={`제 깃허브 저장소 입니다. 중학교 2학년 시절부터 꾸준히 commit 과 fetch, publish가 이루어진 곳입니다.`}
                 link="https://github.com/Kimsungbin1"
                 icon=""
               />
               <ArchiveCard
                 title="YouTube"
-                description="제 유튜브 채널입니다. 주로 쓰는 플랫폼은 아니지만 가끔 영상으로 올리는 프로젝트가 있습니다."
+                description={`제 유튜브 채널입니다. 주로 쓰는 플랫폼은 아니지만 가끔 영상으로 올리는 프로젝트가 있습니다.`}
                 link="https://www.youtube.com/@sungbing1119"
                 icon=""
               />
