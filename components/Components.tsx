@@ -65,6 +65,12 @@ export const Header: React.FC = () => {
             >
               Projects
             </Link>
+            <Link
+              href="/projects"
+              className="hover:text-[#57c5b5] text-2xl transition-colors duration-300 font-bold"
+            >
+              Blog{" "}
+            </Link>
           </div>
           <div className="md:hidden">
             <button
@@ -129,14 +135,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 interface ProjectCardProps {
   title: string;
   description: string;
-  link: string;
-  technologies?: string[]; // Make technologies optional
+  technologies?: string[];
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   title,
   description,
-  link,
   technologies = [], // Provide a default empty array
 }) => {
   return (
@@ -157,9 +161,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           </div>
         )}
         <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/projects"
           className="inline-block bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition-colors duration-300"
         >
           View Project

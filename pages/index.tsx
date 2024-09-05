@@ -4,7 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { motion, useAnimation } from "framer-motion";
 import { Layout, ProjectCard, SocialButton } from "../components/Components";
-import { projects } from "../data/projects";
+import { projects, Project } from "../data/projects";
 import Image from "next/image";
 import profilePic from "../img/sb.jpg";
 import bgImage1 from "../img/bg1.jpg";
@@ -316,7 +316,7 @@ const Home: NextPage = () => {
                   <ProjectCard
                     title={project.title}
                     description={project.description}
-                    link={project.link}
+                    technologies={project.technologies}
                   />
                 </motion.div>
               ))}
@@ -383,15 +383,6 @@ const Home: NextPage = () => {
             </div>
           </section>
         </AnimatedSection>
-
-        <AnimatedSection>
-          <section className="mb-16">
-            <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">
-              Guestbook
-            </h2>
-            <Guestbook />
-          </section>
-        </AnimatedSection>
       </main>
     </Layout>
   );
@@ -425,60 +416,6 @@ const ArchiveCard: React.FC<ArchiveCardProps> = ({
       >
         Visit {title} Profile &rarr;
       </a>
-    </div>
-  );
-};
-
-const Guestbook: React.FC = () => {
-  const [messages, setMessages] = useState<{ name: string; message: string }[]>(
-    []
-  );
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (name && message) {
-      setMessages([...messages, { name, message }]);
-      setName("");
-      setMessage("");
-    }
-  };
-
-  return (
-    <div className="max-w-2xl mx-auto">
-      <form onSubmit={handleSubmit} className="mb-8">
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Your Name"
-          className="w-full px-4 py-2 mb-4 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Leave a message"
-          className="w-full px-4 py-2 mb-4 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
-          rows={4}
-          required
-        ></textarea>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors"
-        >
-          Sign Guestbook
-        </button>
-      </form>
-      <div className="space-y-4">
-        {messages.map((msg, index) => (
-          <div key={index} className="bg-white p-4 rounded-lg shadow">
-            <p className="font-semibold">{msg.name}</p>
-            <p className="text-gray-600">{msg.message}</p>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
