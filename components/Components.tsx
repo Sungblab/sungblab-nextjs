@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   FaTwitter,
@@ -7,6 +7,8 @@ import {
   FaYoutube,
   FaInstagram,
 } from "react-icons/fa";
+import axios from "axios";
+import Image from "next/image";
 
 // Footer Component
 export const Footer: React.FC = () => {
@@ -66,7 +68,7 @@ export const Header: React.FC = () => {
               Projects
             </Link>
             <Link
-              href="/projects"
+              href="/blog"
               className="hover:text-[#57c5b5] text-2xl transition-colors duration-300 font-bold"
             >
               Blog{" "}
@@ -201,5 +203,111 @@ export const SocialButton: React.FC<SocialButtonProps> = ({
       <IconComponent className="mr-2" />
       {label}
     </a>
+  );
+};
+
+interface Comment {
+  _id: string;
+  name: string;
+  content: string;
+  createdAt: string;
+}
+
+interface CommentsProps {
+  postSlug: string;
+}
+
+export const Comments: React.FC<CommentsProps> = ({ postSlug }) => {
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [name, setName] = useState("");
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    fetchComments();
+  }, [postSlug]);
+
+  const fetchComments = async () => {
+    const response = await axios.get(`/api/comments?postSlug=${postSlug}`);
+    setComments(response.data);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await axios.post("/api/comments", { postSlug, name, content });
+    setName("");
+    setContent("");
+    fetchComments();
+  };
+
+  return (
+    <div className="mt-8">
+      <h3 className="text-2xl font-semibold mb-4">Comments</h3>
+      <form onSubmit={handleSubmit} className="mb-6">
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Your name"
+          className="w-full p-2 mb-2 border rounded"
+          required
+        />
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Your comment"
+          className="w-full p-2 mb-2 border rounded"
+          required
+        />
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Submit Comment
+        </button>
+      </form>
+      <div>
+        {comments.map((comment) => (
+          <div key={comment._id} className="mb-4 p-4 bg-gray-100 rounded">
+            <p className="font-semibold">{comment.name}</p>
+            <p>{comment.content}</p>
+            <p className="text-sm text-gray-500">
+              {new Date(comment.createdAt).toLocaleString()}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Comments;
+
+interface BlogPostProps {
+  content: string;
+}
+
+export const BlogPost: React.FC<BlogPostProps> = ({ content }) => {
+  const optimizedContent = React.useMemo(() => {
+    return content.replace(
+      /<img\s+src="([^"]+)"\s+alt="([^"]+)">/g,
+      (match, src, alt) => `
+        <div class="relative w-full h-64 my-4">
+          <Image
+            src="${src}"
+            alt="${alt}"
+            layout="fill"
+            objectFit="cover"
+            className="rounded-lg"
+          />
+        </div>
+      `
+    );
+  }, [content]);
+
+  return (
+    <div
+      className="blog-content"
+      dangerouslySetInnerHTML={{ __html: optimizedContent }}
+    />
   );
 };

@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
@@ -47,7 +47,7 @@ const ProjectCard: React.FC<Project> = ({
   </div>
 );
 
-const Projects: NextPage = () => {
+const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
   const [filter, setFilter] = useState("");
 
   const filteredProjects = projects.filter(
@@ -92,6 +92,14 @@ const Projects: NextPage = () => {
       </main>
     </Layout>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {
+      projects,
+    },
+  };
 };
 
 export default Projects;

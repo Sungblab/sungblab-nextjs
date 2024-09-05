@@ -7,11 +7,6 @@ import { Layout, ProjectCard, SocialButton } from "../components/Components";
 import { projects, Project } from "../data/projects";
 import Image from "next/image";
 import profilePic from "../img/sb.jpg";
-import bgImage1 from "../img/bg1.jpg";
-import bgImage2 from "../img/bg2.jpg";
-import bgImage3 from "../img/bg3.jpg";
-import bgImage4 from "../img/bg4.jpg";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const skillCategories = [
   {
@@ -82,72 +77,6 @@ const SkillCategory: React.FC<{
     ))}
   </div>
 );
-
-const ImageSlider = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = [bgImage1, bgImage2, bgImage3, bgImage4];
-  const imageOpacity = 1; // 이미지 투명도 조절 (0: 완전 투명, 1: 완전 불투명)
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 8000);
-
-    // 컴포넌트가 언마운트될 때 타이머를 정리
-    return () => clearInterval(timer);
-  }, []); // 빈 배열로 설정
-
-  if (images.length === 0) {
-    return null; // 이미지가 없는 경우
-  }
-
-  const goToPrevious = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-  };
-
-  const goToNext = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  return (
-    <div className="absolute inset-0 overflow-hidden">
-      {images.map((image, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: index === currentImageIndex ? imageOpacity : 0 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0"
-          style={{ zIndex: index === currentImageIndex ? 1 : 0 }}
-        >
-          <div className="relative w-full h-full">
-            <Image
-              src={image}
-              alt={`Background ${index + 1}`}
-              layout="fill"
-              objectFit="cover"
-              quality={100}
-            />
-          </div>
-        </motion.div>
-      ))}
-      <button
-        onClick={goToPrevious}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-2 rounded-full z-10 hover:bg-opacity-75 transition-all duration-200"
-      >
-        <ChevronLeft size={24} color="black" />
-      </button>
-      <button
-        onClick={goToNext}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-2 rounded-full z-10 hover:bg-opacity-75 transition-all duration-200"
-      >
-        <ChevronRight size={24} color="black" />
-      </button>
-    </div>
-  );
-};
 
 const useIntersectionObserver = (
   ref: React.RefObject<HTMLElement>,
@@ -240,10 +169,9 @@ const Home: NextPage = () => {
 
       <main className="container mx-auto px-4 py-8 bg-gray-50">
         <AnimatedSection>
-          <section className="mb-16 text-center flex flex-col items-center relative h-screen">
-            <ImageSlider />
+          <section className="mb-4 text-center flex flex-col items-center relative">
             <div className="relative z-10 flex flex-col items-center justify-center h-full">
-              <div className="mb-8 relative w-48 h-48">
+              <div className="mb-4 relative w-48 h-48">
                 <Image
                   src={profilePic}
                   alt="Sungblab's profile"
@@ -252,15 +180,14 @@ const Home: NextPage = () => {
                   className="rounded-full border-4 border-purple-600 shadow-lg"
                 />
               </div>
-              <div className="bg-black bg-opacity-70 p-6 rounded-lg backdrop-filter backdrop-blur-md max-w-3xl w-full px-8 py-12  ">
+              <div className="p-6 rounded-lg backdrop-filter backdrop-blur-md max-w-3xl w-full">
                 <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
                   Welcome to Sungblab's World
                 </h1>
-                <p className="text-xl font-bold mb-4 text-white text-shadow">
+                <p className="text-xl font-bold text-black text-shadow">
                   Full-stack Developer | Python Developer
                 </p>
               </div>
-              <div className="flex space-x-4 mt-4"></div>
             </div>
           </section>
         </AnimatedSection>
