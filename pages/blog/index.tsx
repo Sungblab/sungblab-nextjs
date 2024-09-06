@@ -2,7 +2,8 @@ import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Layout } from "../../components/Components";
+import { motion, AnimatePresence } from "framer-motion";
+import { Layout, useTheme } from "../../components/Components";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -51,13 +52,13 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filteredPosts, setFilteredPosts] = useState(posts);
+  const { theme } = useTheme();
 
   const categories = [
     "all",
     ...Array.from(new Set(posts.map((post) => post.frontmatter.category))),
   ];
 
-  // null, undefined, 빈 문자열 제거
   const validCategories = categories.filter(Boolean);
 
   useEffect(() => {
@@ -98,19 +99,48 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
         />
       </Head>
 
-      <main className="container mx-auto px-4 py-8">
-        <h1 className="">Blog Posts</h1>
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className={`container mx-auto px-4 py-8 ${
+          theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+        }`}
+      >
+        <motion.h1
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className={`text-3xl font-bold mb-6 ${
+            theme === "dark" ? "text-white" : "text-gray-800"
+          }`}
+        >
+          Blog Posts
+        </motion.h1>
 
-        <div className="mb-6 flex flex-col md:flex-row gap-4">
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mb-6 flex flex-col md:flex-row gap-4"
+        >
           <input
             type="text"
             placeholder="Search posts..."
-            className="w-full md:w-2/3 p-2 border rounded"
+            className={`w-full md:w-2/3 p-2 border rounded ${
+              theme === "dark"
+                ? "bg-gray-800 text-white border-gray-700"
+                : "bg-white text-gray-800 border-gray-300"
+            }`}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <select
-            className="w-full md:w-1/3 p-2 border rounded"
+            className={`w-full md:w-1/3 p-2 border rounded ${
+              theme === "dark"
+                ? "bg-gray-800 text-white border-gray-700"
+                : "bg-white text-gray-800 border-gray-300"
+            }`}
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
@@ -122,33 +152,75 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
               </option>
             ))}
           </select>
-        </div>
+        </motion.div>
 
-        <div className="">
-          {filteredPosts.map((post) => (
-            <div
-              key={post.slug}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-            >
-              <h2 className="text-xl font-semibold mb-2">
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="text-blue-600 hover:text-blue-800"
+        <AnimatePresence>
+          <motion.div layout className="space-y-6">
+            {filteredPosts.map((post, index) => (
+              <motion.div
+                key={post.slug}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={`p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ${
+                  theme === "dark" ? "bg-gray-800" : "bg-white"
+                }`}
+              >
+                <motion.h2
+                  whileHover={{ scale: 1.0 }}
+                  className="text-xl font-semibold mb-2"
                 >
-                  {post.frontmatter.title}
-                </Link>
-              </h2>
-              <p className="text-gray-600 mb-4">{post.excerpt}</p>
-              <div className="flex justify-between items-center">
-                <p className="text-sm text-gray-500">{post.frontmatter.date}</p>
-                <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">
-                  {post.frontmatter.category}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </main>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className={`hover:underline ${
+                      theme === "dark"
+                        ? "text-blue-400 hover:text-blue-300"
+                        : "text-blue-600 hover:text-blue-800"
+                    }`}
+                  >
+                    {post.frontmatter.title}
+                  </Link>
+                </motion.h2>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className={`mb-4 ${
+                    theme === "dark" ? "text-gray-300" : "text-gray-600"
+                  }`}
+                >
+                  {post.excerpt}
+                </motion.p>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="flex justify-between items-center"
+                >
+                  <p
+                    className={`text-sm ${
+                      theme === "dark" ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
+                    {post.frontmatter.date}
+                  </p>
+                  <motion.span
+                    whileHover={{ scale: 1.1 }}
+                    className={`text-xs px-2 py-1 rounded ${
+                      theme === "dark"
+                        ? "bg-gray-700 text-gray-300"
+                        : "bg-gray-200 text-gray-700"
+                    }`}
+                  >
+                    {post.frontmatter.category}
+                  </motion.span>
+                </motion.div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </motion.main>
     </Layout>
   );
 };
