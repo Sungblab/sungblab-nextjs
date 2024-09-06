@@ -23,7 +23,7 @@ export const projects: Project[] = [
     title: "Sungblab",
     description:
       "React와 Next.js를 사용하여 개발한 반응형 개인 포트폴리오 웹사이트입니다.",
-    link: "https://sungblab-nextjs.vercel.app/",
+    link: "https://github.com/Kimsungbin1/sungblab-nextjs",
     image: sbImage,
     technologies: ["React", "Next.js", "Tailwind CSS"],
     date: "2024-09-05",
@@ -33,7 +33,7 @@ export const projects: Project[] = [
     title: "Codelab",
     description:
       "HTML과 Tailwind css를 사용하여 개발한 동아리 포트폴리오 사이트입니다.",
-    link: "https://codelap.netlify.app/",
+    link: "https://github.com/Kimsungbin1/Codelap",
     image: clImage,
     technologies: ["HTML", "Tailwind CSS"],
     date: "2024-05-27",

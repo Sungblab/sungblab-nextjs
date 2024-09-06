@@ -1,31 +1,77 @@
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "../../components/Components";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-interface BlogPost {
+interface Post {
   slug: string;
-  title: string;
-  date: string;
+  frontmatter: {
+    title: string;
+    date: string;
+    category: string;
+  };
+  content: string;
   excerpt: string;
 }
 
 interface BlogPageProps {
-  posts: BlogPost[];
+  posts: Post[];
 }
+
+const POSTS_PATH = path.join(process.cwd(), "content/blog");
+
+const getAllPosts = (): Post[] => {
+  const filenames = fs.readdirSync(POSTS_PATH);
+
+  const posts = filenames.map((filename) => {
+    const filePath = path.join(POSTS_PATH, filename);
+    const fileContents = fs.readFileSync(filePath, "utf8");
+    const { data, content } = matter(fileContents);
+
+    return {
+      slug: filename.replace(".mdx", ""),
+      frontmatter: data as Post["frontmatter"],
+      content,
+      excerpt: content.slice(0, 150) + "...",
+    };
+  });
+
+  return posts.sort(
+    (a, b) =>
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime()
+  );
+};
 
 const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [filteredPosts, setFilteredPosts] = useState(posts);
 
-  const filteredPosts = posts.filter(
-    (post) =>
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const categories = [
+    "all",
+    ...Array.from(new Set(posts.map((post) => post.frontmatter.category))),
+  ];
+
+  // null, undefined, 빈 문자열 제거
+  const validCategories = categories.filter(Boolean);
+
+  useEffect(() => {
+    const filtered = posts.filter(
+      (post) =>
+        (selectedCategory === "all" ||
+          post.frontmatter.category === selectedCategory) &&
+        (post.frontmatter.title
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+    setFilteredPosts(filtered);
+  }, [searchTerm, selectedCategory, posts]);
 
   return (
     <Layout>
@@ -35,24 +81,46 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
           name="description"
           content="Sungblab's blog posts about web development and technology"
         />
+        <meta
+          name="keywords"
+          content="web development, technology, blog, coding"
+        />
+        <meta property="og:title" content="Sungblab's Blog" />
+        <meta
+          property="og:description"
+          content="Explore web development and technology insights"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yourwebsite.com/blog" />
       </Head>
 
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">
-          Blog Posts
-        </h1>
+        <h1 className="">Blog Posts</h1>
 
-        <div className="mb-6">
+        <div className="mb-6 flex flex-col md:flex-row gap-4">
           <input
             type="text"
             placeholder="Search posts..."
-            className="w-full p-2 border rounded"
+            className="w-full md:w-2/3 p-2 border rounded"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          <select
+            className="w-full md:w-1/3 p-2 border rounded"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            {validCategories.map((category) => (
+              <option key={category} value={category}>
+                {category
+                  ? category.charAt(0).toUpperCase() + category.slice(1)
+                  : "Uncategorized"}
+              </option>
+            ))}
+          </select>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="">
           {filteredPosts.map((post) => (
             <div
               key={post.slug}
@@ -63,11 +131,16 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                   href={`/blog/${post.slug}`}
                   className="text-blue-600 hover:text-blue-800"
                 >
-                  {post.title}
+                  {post.frontmatter.title}
                 </Link>
               </h2>
               <p className="text-gray-600 mb-4">{post.excerpt}</p>
-              <p className="text-sm text-gray-500">{post.date}</p>
+              <div className="flex justify-between items-center">
+                <p className="text-sm text-gray-500">{post.frontmatter.date}</p>
+                <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">
+                  {post.frontmatter.category}
+                </span>
+              </div>
             </div>
           ))}
         </div>
@@ -77,24 +150,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const postsDirectory = path.join(process.cwd(), "content/blog");
-  const filenames = fs.readdirSync(postsDirectory);
-
-  const posts = filenames.map((filename) => {
-    const filePath = path.join(postsDirectory, filename);
-    const fileContents = fs.readFileSync(filePath, "utf8");
-    const { data, content } = matter(fileContents);
-
-    return {
-      slug: filename.replace(".md", ""),
-      title: data.title,
-      date: data.date,
-      excerpt: content.slice(0, 150) + "...",
-    };
-  });
-
-  // Sort posts by date
-  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const posts = getAllPosts();
 
   return {
     props: {

@@ -167,7 +167,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-<main className="mt-0 container mx-auto px-4 py-8 bg-white rounded-lg shadow-md my-8">
+      <main className="mt-0 container mx-auto px-4 py-8 bg-white rounded-lg shadow-md my-8">
         <AnimatedSection>
           <section className="mb-4 text-center flex flex-col items-center relative">
             <div className="relative z-10 flex flex-col items-center justify-center h-full">
@@ -181,7 +181,7 @@ const Home: NextPage = () => {
                 />
               </div>
               <div className="p-6 rounded-lg backdrop-filter backdrop-blur-md max-w-3xl w-full">
-                <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                <h1 className="text-5xl py-1 font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
                   Welcome to Sungblab's World
                 </h1>
                 <p className="text-xl font-bold text-black text-shadow">

@@ -43,7 +43,6 @@ export const Footer: React.FC = () => {
   );
 };
 
-
 // Header Component
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -52,25 +51,25 @@ export const Header: React.FC = () => {
     <header className="py-4">
       <nav className="container mx-auto px-4">
         <div className="flex justify-between items-center">
-          <Link href="/" className="text-3xl font-bold text-gray-800">
+          <Link href="/" className="text-4xl font-bold text-gray-800">
             Sungblab
           </Link>
           <div className="hidden md:flex space-x-6">
             <Link
               href="/"
-              className="text-gray-600 hover:text-[#57c5b5] text-lg transition-colors duration-300"
+              className="text-gray-600 hover:text-[#57c5b5] font-bold text-lg transition-colors duration-300"
             >
               Home
             </Link>
             <Link
               href="/projects"
-              className="text-gray-600 hover:text-[#57c5b5] text-lg transition-colors duration-300"
+              className="text-gray-600 hover:text-[#57c5b5] font-bold text-lg transition-colors duration-300"
             >
               Projects
             </Link>
             <Link
               href="/blog"
-              className="text-gray-600 hover:text-[#57c5b5] text-lg transition-colors duration-300"
+              className="text-gray-600 hover:text-[#57c5b5] font-bold text-lg transition-colors duration-300"
             >
               Blog
             </Link>
