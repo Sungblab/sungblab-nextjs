@@ -180,6 +180,10 @@ const Home: NextPage = () => {
           name="google-site-verification"
           content="PxfmFDZIIiYW7qK7pk6s17rsBKYeI43cV5s15D5D5Yo"
         />
+        <meta
+          name="naver-site-verification"
+          content="60a035a882f7831c7dcca834bf7815344cf4ffa8"
+        />
       </Head>
 
       <main className="mt-0 container mx-auto px-4 py-8 bg-white rounded-lg shadow-md my-8">
