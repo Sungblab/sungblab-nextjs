@@ -264,7 +264,7 @@ const Home: NextPage = () => {
             <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">
               Get in Touch
             </h2>
-            <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <div className="max-w-2xl mx-auto bg-white p-8 ">
               <p className="text-center mb-6 text-gray-700 text-lg">
                 저는 동료 개발자, 잠재 고객 또는 웹 개발 및 기술에 관심이 있는
                 모든 분들과 소통하는 것을 언제나 기쁘게 생각합니다. 프로젝트를
