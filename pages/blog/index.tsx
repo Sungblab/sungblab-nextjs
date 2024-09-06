@@ -76,7 +76,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
   return (
     <Layout>
       <Head>
-        <title>Sungblab's Blog</title>
+        <title>Sungblab</title>
         <meta
           name="description"
           content="Sungblab's blog posts about web development and technology"
@@ -85,13 +85,17 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
           name="keywords"
           content="web development, technology, blog, coding"
         />
-        <meta property="og:title" content="Sungblab's Blog" />
+        <meta property="og:title" content="Sungblab" />
         <meta
           property="og:description"
           content="Explore web development and technology insights"
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://yourwebsite.com/blog" />
+        <meta property="og:url" content="https://sungblab.vercel.app/blog" />
+        <meta
+          name="google-site-verification"
+          content="PxfmFDZIIiYW7qK7pk6s17rsBKYeI43cV5s15D5D5Yo"
+        />
       </Head>
 
       <main className="container mx-auto px-4 py-8">

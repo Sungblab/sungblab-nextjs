@@ -165,6 +165,21 @@ const Home: NextPage = () => {
           content="Sungblab's innovative portfolio showcasing web development prowess and creativity"
         />
         <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="keywords"
+          content="web development, technology, blog, coding, portfolio"
+        />
+        <meta property="og:title" content="Sungblab" />
+        <meta
+          property="og:description"
+          content="Explore web development and technology insights"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://sungblab.vercel.app/" />
+        <meta
+          name="google-site-verification"
+          content="PxfmFDZIIiYW7qK7pk6s17rsBKYeI43cV5s15D5D5Yo"
+        />
       </Head>
 
       <main className="mt-0 container mx-auto px-4 py-8 bg-white rounded-lg shadow-md my-8">
