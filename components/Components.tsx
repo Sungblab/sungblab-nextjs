@@ -13,10 +13,10 @@ import Image from "next/image";
 // Footer Component
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="container mx-auto px-4 py-8">
+    <footer className=" py-8">
+      <div className="container mx-auto px-4">
         <div className="flex flex-col items-center">
-          <p className="text-center text-lg mb-4">
+          <p className="text-center text-gray-600 mb-4">
             &copy; {new Date().getFullYear()} Sungblab. All rights reserved.
           </p>
           <div className="flex space-x-6">
@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
               href="https://www.instagram.com/kimsungbin1119/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-2xl hover:text-[#57c5b5] transition-colors duration-300"
+              className="text-2xl text-gray-600 hover:text-[#57c5b5] transition-colors duration-300"
             >
               <FaInstagram />
             </a>
@@ -32,7 +32,7 @@ export const Footer: React.FC = () => {
               href="https://github.com/Kimsungbin1"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-2xl hover:text-[#57c5b5] transition-colors duration-300"
+              className="text-2xl text-gray-600 hover:text-[#57c5b5] transition-colors duration-300"
             >
               <FaGithub />
             </a>
@@ -43,41 +43,42 @@ export const Footer: React.FC = () => {
   );
 };
 
+
 // Header Component
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <header className="bg-gray-900 text-white shadow-lg">
-      <nav className="container mx-auto px-4 py-6">
+    <header className="py-4">
+      <nav className="container mx-auto px-4">
         <div className="flex justify-between items-center">
-          <Link href="/" className="text-4xl font-bold text-[#57c5b5]">
+          <Link href="/" className="text-3xl font-bold text-gray-800">
             Sungblab
           </Link>
-          <div className="hidden md:flex space-x-6 text-lg">
+          <div className="hidden md:flex space-x-6">
             <Link
               href="/"
-              className="hover:text-[#57c5b5] text-2xl transition-colors duration-300 font-bold"
+              className="text-gray-600 hover:text-[#57c5b5] text-lg transition-colors duration-300"
             >
               Home
             </Link>
             <Link
               href="/projects"
-              className="hover:text-[#57c5b5] text-2xl transition-colors duration-300 font-bold"
+              className="text-gray-600 hover:text-[#57c5b5] text-lg transition-colors duration-300"
             >
               Projects
             </Link>
             <Link
               href="/blog"
-              className="hover:text-[#57c5b5] text-2xl transition-colors duration-300 font-bold"
+              className="text-gray-600 hover:text-[#57c5b5] text-lg transition-colors duration-300"
             >
-              Blog{" "}
+              Blog
             </Link>
           </div>
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-white focus:outline-none"
+              className="text-gray-600 focus:outline-none"
               aria-label="Toggle menu"
             >
               <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
@@ -101,15 +102,21 @@ export const Header: React.FC = () => {
           <div className="mt-4 md:hidden">
             <Link
               href="/"
-              className="block py-2 hover:text-[#57c5b5] transition-colors duration-300"
+              className="block py-2 text-gray-600 hover:text-[#57c5b5] transition-colors duration-300"
             >
               Home
             </Link>
             <Link
               href="/projects"
-              className="block py-2 hover:text-[#57c5b5] transition-colors duration-300"
+              className="block py-2 text-gray-600 hover:text-[#57c5b5] transition-colors duration-300"
             >
               Projects
+            </Link>
+            <Link
+              href="/blog"
+              className="block py-2 text-gray-600 hover:text-[#57c5b5] transition-colors duration-300"
+            >
+              Blog
             </Link>
           </div>
         )}

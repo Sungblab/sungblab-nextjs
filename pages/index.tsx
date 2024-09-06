@@ -167,7 +167,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto px-4 py-8 bg-gray-50">
+<main className="mt-0 container mx-auto px-4 py-8 bg-white rounded-lg shadow-md my-8">
         <AnimatedSection>
           <section className="mb-4 text-center flex flex-col items-center relative">
             <div className="relative z-10 flex flex-col items-center justify-center h-full">
