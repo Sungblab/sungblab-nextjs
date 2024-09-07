@@ -153,9 +153,8 @@ const BlogPost: NextPage<BlogPostProps> = ({ frontMatter, mdxSource, toc }) => {
       <span className="block my-8">
         <Image
           {...props}
-          width={300}
-          height={300}
-          layout="responsive"
+          width={1000}
+          height={400}
           objectFit="cover"
           alt={props.alt || "blog image"}
           className="rounded-lg shadow-md"
