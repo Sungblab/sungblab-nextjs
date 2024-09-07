@@ -194,240 +194,236 @@ const Home: NextPage = () => {
   };
 
   return (
-    <ThemeProvider>
-      <Layout>
-        <Head>
-          <title>Sungblab</title>
-          <meta
-            name="description"
-            content="Sungblab's innovative portfolio showcasing web development prowess and creativity"
-          />
-          <link rel="icon" href="/favicon.ico" />
-          <meta
-            name="keywords"
-            content="web development, technology, blog, coding, portfolio"
-          />
-          <meta property="og:title" content="Sungblab" />
-          <meta
-            property="og:description"
-            content="Explore web development and technology insights"
-          />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://sungblab.vercel.app/" />
-          <meta
-            name="google-site-verification"
-            content="PxfmFDZIIiYW7qK7pk6s17rsBKYeI43cV5s15D5D5Yo"
-          />
-          <meta
-            name="naver-site-verification"
-            content="60a035a882f7831c7dcca834bf7815344cf4ffa8"
-          />
-        </Head>
+    <Layout>
+      <Head>
+        <title>Sungblab</title>
+        <meta
+          name="description"
+          content="Sungblab's innovative portfolio showcasing web development prowess and creativity"
+        />
+        <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="keywords"
+          content="web development, technology, blog, coding, portfolio"
+        />
+        <meta property="og:title" content="Sungblab" />
+        <meta
+          property="og:description"
+          content="Explore web development and technology insights"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://sungblab.vercel.app/" />
+        <meta
+          name="google-site-verification"
+          content="PxfmFDZIIiYW7qK7pk6s17rsBKYeI43cV5s15D5D5Yo"
+        />
+        <meta
+          name="naver-site-verification"
+          content="60a035a882f7831c7dcca834bf7815344cf4ffa8"
+        />
+      </Head>
 
-        <main
-          className={`container mx-auto rounded-lg shadow-md px-4 py-8 my-8 ${
-            theme === "dark"
-              ? "bg-gray-900 text-gray-100"
-              : "bg-white text-gray-900"
-          }`}
-        >
-          <AnimatedSection>
-            <section className="mb-16 text-center flex flex-col items-center relative">
-              <div className="relative z-10 flex flex-col items-center justify-center h-full">
-                <div className="mb-8 relative w-48 h-48">
-                  <Image
-                    src={profilePic}
-                    alt="Sungblab's profile"
-                    width={500}
-                    height={300}
-                    className="rounded-full border-4 border-purple-600 shadow-lg"
-                  />
-                </div>
-                <div
-                  className={`p-8 rounded-lg backdrop-filter backdrop-blur-md max-w-3xl w-full ${
-                    theme === "dark"
-                      ? "bg-gray-800 bg-opacity-70"
-                      : "bg-gray-100"
-                  }`}
+      <main
+        className={`container mx-auto rounded-lg shadow-md px-4 py-8 my-8 ${
+          theme === "dark"
+            ? "bg-gray-900 text-gray-100"
+            : "bg-white text-gray-900"
+        }`}
+      >
+        <AnimatedSection>
+          <section className="mb-16 text-center flex flex-col items-center relative">
+            <div className="relative z-10 flex flex-col items-center justify-center h-full">
+              <div className="mb-8 relative w-48 h-48">
+                <Image
+                  src={profilePic}
+                  alt="Sungblab's profile"
+                  width={500}
+                  height={300}
+                  className="rounded-full border-4 border-purple-600 shadow-lg"
+                />
+              </div>
+              <div
+                className={`p-8 rounded-lg backdrop-filter backdrop-blur-md max-w-3xl w-full ${
+                  theme === "dark" ? "bg-gray-800 bg-opacity-70" : "bg-gray-100"
+                }`}
+              >
+                <h1 className="text-5xl py-2 font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                  Welcome to Sungblab's World
+                </h1>
+                <p
+                  className={`text-xl font-bold ${
+                    theme === "dark" ? "text-gray-200" : "text-gray-700"
+                  } text-shadow`}
                 >
-                  <h1 className="text-5xl py-2 font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                    Welcome to Sungblab's World
-                  </h1>
-                  <p
-                    className={`text-xl font-bold ${
-                      theme === "dark" ? "text-gray-200" : "text-gray-700"
-                    } text-shadow`}
+                  Full-stack Developer | Python Developer
+                </p>
+              </div>
+            </div>
+          </section>
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <section className="mb-16">
+            <h2
+              className={`text-3xl font-semibold mb-8 text-center ${
+                theme === "dark" ? "text-gray-100" : "text-gray-800"
+              }`}
+            >
+              Archiving
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <ArchiveCard
+                title="GitHub"
+                description={`제 깃허브 저장소 입니다. 중학교 2학년 시절부터 꾸준히 commit 과 fetch, publish가 이루어진 곳입니다.`}
+                link="https://github.com/Kimsungbin1"
+                icon={<FaGithub />}
+              />
+              <ArchiveCard
+                title="YouTube"
+                description={`제 유튜브 채널입니다. 주로 쓰는 플랫폼은 아니지만 가끔 영상으로 올리는 프로젝트가 있습니다.`}
+                link="https://www.youtube.com/@sungbing1119"
+                icon={<FaInstagram />}
+              />
+            </div>
+          </section>
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <section className="mb-16">
+            <h2
+              className={`text-3xl font-semibold mb-8 text-center ${
+                theme === "dark" ? "text-gray-100" : "text-gray-800"
+              }`}
+            >
+              Skills & Expertise
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {skillCategories.map((category) => (
+                <SkillCategory key={category.name} category={category} />
+              ))}
+            </div>
+          </section>
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <section className="mb-16">
+            <h2
+              className={`text-3xl font-semibold mb-8 text-center ${
+                theme === "dark" ? "text-gray-100" : "text-gray-800"
+              }`}
+            >
+              Projects
+            </h2>
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 gap-8"
+              variants={projectVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {projects.slice(0, 4).map((project) => (
+                <motion.div key={project.id} variants={projectVariants}>
+                  <ProjectCard
+                    title={project.title}
+                    description={project.description}
+                    technologies={project.technologies}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+            <div className="text-center mt-8">
+              <Link
+                href="/projects"
+                className={`inline-block text-white px-6 py-3 rounded-full transition-colors shadow-md hover:shadow-lg ${
+                  theme === "dark"
+                    ? "bg-blue-600 hover:bg-blue-500"
+                    : "bg-blue-600 hover:bg-blue-700"
+                }`}
+              >
+                View All Projects
+              </Link>
+            </div>
+          </section>
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <section className="mb-16">
+            <h2
+              className={`text-3xl font-semibold mb-8 text-center ${
+                theme === "dark" ? "text-gray-100" : "text-gray-800"
+              }`}
+            >
+              Get in Touch
+            </h2>
+            <div
+              className={`max-w-2xl mx-auto p-8 rounded-lg ${
+                theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+              }`}
+            >
+              <p
+                className={`text-center mb-6 text-lg ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
+                저는 동료 개발자, 잠재 고객 또는 웹 개발 및 기술에 관심이 있는
+                모든 분들과 소통하는 것을 언제나 기쁘게 생각합니다. 프로젝트를
+                구상 중이거나 공동 작업을 하고 싶거나 그냥 인사만 하고
+                싶으시다면 언제든지 연락주세요!
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <h3
+                    className={`text-xl font-semibold mb-2 ${
+                      theme === "dark" ? "text-gray-100" : "text-gray-800"
+                    }`}
                   >
-                    Full-stack Developer | Python Developer
+                    Contact Information
+                  </h3>
+                  <p className="mb-2">
+                    <strong>Email:</strong>{" "}
+                    <a
+                      href="mailto:ksb19558@naver.com"
+                      className={`hover:underline ${
+                        theme === "dark" ? "text-blue-300" : "text-blue-600"
+                      }`}
+                    >
+                      ksb19558@naver.com
+                    </a>
+                  </p>
+                  <p
+                    className={
+                      theme === "dark" ? "text-gray-300" : "text-gray-600"
+                    }
+                  >
+                    <strong>IG:</strong> Kimsungbin1119
                   </p>
                 </div>
-              </div>
-            </section>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <section className="mb-16">
-              <h2
-                className={`text-3xl font-semibold mb-8 text-center ${
-                  theme === "dark" ? "text-gray-100" : "text-gray-800"
-                }`}
-              >
-                Archiving
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <ArchiveCard
-                  title="GitHub"
-                  description={`제 깃허브 저장소 입니다. 중학교 2학년 시절부터 꾸준히 commit 과 fetch, publish가 이루어진 곳입니다.`}
-                  link="https://github.com/Kimsungbin1"
-                  icon={<FaGithub />}
-                />
-                <ArchiveCard
-                  title="YouTube"
-                  description={`제 유튜브 채널입니다. 주로 쓰는 플랫폼은 아니지만 가끔 영상으로 올리는 프로젝트가 있습니다.`}
-                  link="https://www.youtube.com/@sungbing1119"
-                  icon={<FaInstagram />}
-                />
-              </div>
-            </section>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <section className="mb-16">
-              <h2
-                className={`text-3xl font-semibold mb-8 text-center ${
-                  theme === "dark" ? "text-gray-100" : "text-gray-800"
-                }`}
-              >
-                Skills & Expertise
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {skillCategories.map((category) => (
-                  <SkillCategory key={category.name} category={category} />
-                ))}
-              </div>
-            </section>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <section className="mb-16">
-              <h2
-                className={`text-3xl font-semibold mb-8 text-center ${
-                  theme === "dark" ? "text-gray-100" : "text-gray-800"
-                }`}
-              >
-                Projects
-              </h2>
-              <motion.div
-                className="grid grid-cols-1 md:grid-cols-2 gap-8"
-                variants={projectVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                {projects.slice(0, 4).map((project) => (
-                  <motion.div key={project.id} variants={projectVariants}>
-                    <ProjectCard
-                      title={project.title}
-                      description={project.description}
-                      technologies={project.technologies}
+                <div>
+                  <h3
+                    className={`text-xl font-semibold mb-2 ${
+                      theme === "dark" ? "text-gray-100" : "text-gray-800"
+                    }`}
+                  >
+                    Social Media
+                  </h3>
+                  <div className="flex flex-col space-y-2">
+                    <SocialButton
+                      href="https://www.instagram.com/kimsungbin1119/"
+                      icon="instagram"
+                      label="Instagram"
                     />
-                  </motion.div>
-                ))}
-              </motion.div>
-              <div className="text-center mt-8">
-                <Link
-                  href="/projects"
-                  className={`inline-block text-white px-6 py-3 rounded-full transition-colors shadow-md hover:shadow-lg ${
-                    theme === "dark"
-                      ? "bg-blue-600 hover:bg-blue-500"
-                      : "bg-blue-600 hover:bg-blue-700"
-                  }`}
-                >
-                  View All Projects
-                </Link>
-              </div>
-            </section>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <section className="mb-16">
-              <h2
-                className={`text-3xl font-semibold mb-8 text-center ${
-                  theme === "dark" ? "text-gray-100" : "text-gray-800"
-                }`}
-              >
-                Get in Touch
-              </h2>
-              <div
-                className={`max-w-2xl mx-auto p-8 rounded-lg ${
-                  theme === "dark" ? "bg-gray-800" : "bg-gray-100"
-                }`}
-              >
-                <p
-                  className={`text-center mb-6 text-lg ${
-                    theme === "dark" ? "text-gray-300" : "text-gray-600"
-                  }`}
-                >
-                  저는 동료 개발자, 잠재 고객 또는 웹 개발 및 기술에 관심이 있는
-                  모든 분들과 소통하는 것을 언제나 기쁘게 생각합니다. 프로젝트를
-                  구상 중이거나 공동 작업을 하고 싶거나 그냥 인사만 하고
-                  싶으시다면 언제든지 연락주세요!
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <h3
-                      className={`text-xl font-semibold mb-2 ${
-                        theme === "dark" ? "text-gray-100" : "text-gray-800"
-                      }`}
-                    >
-                      Contact Information
-                    </h3>
-                    <p className="mb-2">
-                      <strong>Email:</strong>{" "}
-                      <a
-                        href="mailto:ksb19558@naver.com"
-                        className={`hover:underline ${
-                          theme === "dark" ? "text-blue-300" : "text-blue-600"
-                        }`}
-                      >
-                        ksb19558@naver.com
-                      </a>
-                    </p>
-                    <p
-                      className={
-                        theme === "dark" ? "text-gray-300" : "text-gray-600"
-                      }
-                    >
-                      <strong>IG:</strong> Kimsungbin1119
-                    </p>
-                  </div>
-                  <div>
-                    <h3
-                      className={`text-xl font-semibold mb-2 ${
-                        theme === "dark" ? "text-gray-100" : "text-gray-800"
-                      }`}
-                    >
-                      Social Media
-                    </h3>
-                    <div className="flex flex-col space-y-2">
-                      <SocialButton
-                        href="https://www.instagram.com/kimsungbin1119/"
-                        icon="instagram"
-                        label="Instagram"
-                      />
-                      <SocialButton
-                        href="https://github.com/Kimsungbin1"
-                        icon="github"
-                        label="GitHub"
-                      />
-                    </div>
+                    <SocialButton
+                      href="https://github.com/Kimsungbin1"
+                      icon="github"
+                      label="GitHub"
+                    />
                   </div>
                 </div>
               </div>
-            </section>
-          </AnimatedSection>
-        </main>
-      </Layout>
-    </ThemeProvider>
+            </div>
+          </section>
+        </AnimatedSection>
+      </main>
+    </Layout>
   );
 };
 
