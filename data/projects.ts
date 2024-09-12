@@ -80,7 +80,7 @@ export const projects: Project[] = [
   },
   {
     id: 7,
-    title: "llama3 fine-tuning EEVE-Korean-10.8B voice assistant",
+    title: "fine-tuning EEVE-Korean-10.8B voice assistant",
     description:
       "이 프로젝트는 RTX 4070 ti super 모델을 ai 연산, 추론에 활용해보기위해 llama3 8b 한국어 파인튜닝 모델을 활용해서 음성인식 보이스 어시스턴트를 만들어 보았습니다.",
     link: "https://youtu.be/OIVoiqm4ZuU?si=vgzCIqXWaoPyy7Y-",
