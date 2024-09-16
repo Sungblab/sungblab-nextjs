@@ -304,6 +304,7 @@ export const getStaticProps: GetStaticProps<BlogPostProps> = async ({
       frontMatter: {
         title: data.title as string,
         date: data.date as string,
+        category: data.category as string,
       },
       mdxSource,
       toc,

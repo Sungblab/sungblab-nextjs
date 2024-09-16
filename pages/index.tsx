@@ -255,7 +255,7 @@ const Home: NextPage = () => {
                     theme === "dark" ? "text-gray-200" : "text-gray-700"
                   } text-shadow`}
                 >
-                  Full-stack Developer | Python Developer
+                  Web & Python Developer
                 </p>
               </div>
             </div>

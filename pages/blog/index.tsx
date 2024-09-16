@@ -54,18 +54,14 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const { theme } = useTheme();
 
-  const categories = [
-    "all",
-    ...Array.from(new Set(posts.map((post) => post.frontmatter.category))),
-  ];
-
-  const validCategories = categories.filter(Boolean);
+  const categories = ["all", "develop", "AI", "others"];
 
   useEffect(() => {
     const filtered = posts.filter(
       (post) =>
         (selectedCategory === "all" ||
-          post.frontmatter.category === selectedCategory) &&
+          post.frontmatter.category.toLowerCase() ===
+            selectedCategory.toLowerCase()) &&
         (post.frontmatter.title
           .toLowerCase()
           .includes(searchTerm.toLowerCase()) ||
@@ -144,78 +140,64 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
-            {validCategories.map((category) => (
+            {categories.map((category) => (
               <option key={category} value={category}>
-                {category
-                  ? category.charAt(0).toUpperCase() + category.slice(1)
-                  : "Uncategorized"}
+                {category.charAt(0).toUpperCase() + category.slice(1)}
               </option>
             ))}
           </select>
         </motion.div>
 
         <AnimatePresence>
-          <motion.div layout className="space-y-6">
+          <motion.div layout className="space-y-4">
             {filteredPosts.map((post, index) => (
               <motion.div
                 key={post.slug}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -50 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ${
-                  theme === "dark" ? "bg-gray-800" : "bg-white"
-                }`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
               >
-                <motion.h2
-                  whileHover={{ scale: 1.0 }}
-                  className="text-xl font-semibold mb-2"
-                >
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className={`hover:underline ${
-                      theme === "dark"
-                        ? "text-blue-400 hover:text-blue-300"
-                        : "text-blue-600 hover:text-blue-800"
+                <Link href={`/blog/${post.slug}`} className="block mb-2">
+                  <div
+                    className={`p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer ${
+                      theme === "dark" ? "bg-gray-800" : "bg-white"
                     }`}
                   >
-                    {post.frontmatter.title}
-                  </Link>
-                </motion.h2>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className={`mb-4 ${
-                    theme === "dark" ? "text-gray-300" : "text-gray-600"
-                  }`}
-                >
-                  {post.excerpt}
-                </motion.p>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  className="flex justify-between items-center"
-                >
-                  <p
-                    className={`text-sm ${
-                      theme === "dark" ? "text-gray-400" : "text-gray-500"
-                    }`}
-                  >
-                    {post.frontmatter.date}
-                  </p>
-                  <motion.span
-                    whileHover={{ scale: 1.1 }}
-                    className={`text-xs px-2 py-1 rounded ${
-                      theme === "dark"
-                        ? "bg-gray-700 text-gray-300"
-                        : "bg-gray-200 text-gray-700"
-                    }`}
-                  >
-                    {post.frontmatter.category}
-                  </motion.span>
-                </motion.div>
+                    <h2
+                      className={`text-xl font-semibold mb-2 ${
+                        theme === "dark" ? "text-blue-400" : "text-blue-600"
+                      }`}
+                    >
+                      {post.frontmatter.title}
+                    </h2>
+                    <p
+                      className={`mb-4 ${
+                        theme === "dark" ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
+                      {post.excerpt}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <p
+                        className={`text-sm ${
+                          theme === "dark" ? "text-gray-400" : "text-gray-500"
+                        }`}
+                      >
+                        {post.frontmatter.date}
+                      </p>
+                      <span
+                        className={`text-xs px-2 py-1 rounded ${
+                          theme === "dark"
+                            ? "bg-gray-700 text-gray-300"
+                            : "bg-gray-200 text-gray-700"
+                        }`}
+                      >
+                        {post.frontmatter.category}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </motion.div>
