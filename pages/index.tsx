@@ -226,7 +226,7 @@ const Home: NextPage = () => {
       <main
         className={`container mx-auto rounded-lg shadow-md px-4 py-8 my-8 ${
           theme === "dark"
-            ? "bg-gray-900 text-gray-100"
+            ? "bg-gray-800 text-gray-100"
             : "bg-white text-gray-900"
         }`}
       >
@@ -244,7 +244,7 @@ const Home: NextPage = () => {
               </div>
               <div
                 className={`p-4 sm:p-6 rounded-lg backdrop-filter backdrop-blur-md w-full ${
-                  theme === "dark" ? "bg-gray-900 bg-opacity-70" : "bg-white"
+                  theme === "dark" ? "bg-gray-800 bg-opacity-70" : "bg-white"
                 }`}
               >
                 <h1 className="text-3xl sm:text-4xl md:text-5xl py-2 font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
@@ -356,7 +356,7 @@ const Home: NextPage = () => {
             </h2>
             <div
               className={`max-w-2xl mx-auto p-8 rounded-lg ${
-                theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+                theme === "dark" ? "bg-gray-800" : "bg-white"
               }`}
             >
               <p
