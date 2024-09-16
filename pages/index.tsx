@@ -13,7 +13,7 @@ import {
 import { projects } from "../data/projects";
 import Image from "next/image";
 import profilePic from "../img/sb.jpg";
-import { FaInstagram, FaGithub } from "react-icons/fa";
+import { FaInstagram, FaGithub, FaYoutube } from "react-icons/fa";
 
 const skillCategories = [
   {
@@ -232,26 +232,26 @@ const Home: NextPage = () => {
       >
         <AnimatedSection>
           <section className="mb-16 text-center flex flex-col items-center relative">
-            <div className="relative z-10 flex flex-col items-center justify-center h-full">
-              <div className="mb-8 relative w-48 h-48">
+            <div className="relative z-10 flex flex-col items-center justify-center h-full w-full">
+              <div className="mb-6 relative w-40 h-40 sm:w-48 sm:h-48">
                 <Image
                   src={profilePic}
                   alt="Sungblab's profile"
-                  width={500}
-                  height={300}
+                  layout="fill"
+                  objectFit="cover"
                   className="rounded-full border-4 border-purple-600 shadow-lg"
                 />
               </div>
               <div
-                className={`p-8 rounded-lg backdrop-filter backdrop-blur-md max-w-3xl w-full ${
-                  theme === "dark" ? "bg-gray-800 bg-opacity-70" : "bg-gray-100"
+                className={`p-4 sm:p-6 rounded-lg backdrop-filter backdrop-blur-md w-full ${
+                  theme === "dark" ? "bg-gray-900 bg-opacity-70" : "bg-white"
                 }`}
               >
-                <h1 className="text-5xl py-2 font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                  Welcome to Sungblab's World
+                <h1 className="text-3xl sm:text-4xl md:text-5xl py-2 font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                  Welcome to Sungblab
                 </h1>
                 <p
-                  className={`text-xl font-bold ${
+                  className={`text-xl sm:text-2xl md:text-3xl font-bold ${
                     theme === "dark" ? "text-gray-200" : "text-gray-700"
                   } text-shadow`}
                 >
@@ -282,7 +282,7 @@ const Home: NextPage = () => {
                 title="YouTube"
                 description={`제 유튜브 채널입니다. 주로 쓰는 플랫폼은 아니지만 가끔 영상으로 올리는 프로젝트가 있습니다.`}
                 link="https://www.youtube.com/@sungbing1119"
-                icon={<FaInstagram />}
+                icon={<FaYoutube />}
               />
             </div>
           </section>
@@ -364,10 +364,7 @@ const Home: NextPage = () => {
                   theme === "dark" ? "text-gray-300" : "text-gray-600"
                 }`}
               >
-                저는 동료 개발자, 잠재 고객 또는 웹 개발 및 기술에 관심이 있는
-                모든 분들과 소통하는 것을 언제나 기쁘게 생각합니다. 프로젝트를
-                구상 중이거나 공동 작업을 하고 싶거나 그냥 인사만 하고
-                싶으시다면 언제든지 연락주세요!
+                고등학생 주니어 개발자 입니다. 언제든지 연락주세요!
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
