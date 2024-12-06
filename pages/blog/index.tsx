@@ -1,60 +1,46 @@
 import { GetStaticProps, NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Layout, useTheme } from "../../components/Components";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-
-interface Post {
-  slug: string;
-  frontmatter: {
-    title: string;
-    date: string;
-    category: string;
-  };
-  content: string;
-  excerpt: string;
-}
+import { Layout, useTheme, Card } from "../../components/Components";
+import BlogPostCard from "../../components/blog/BlogPostCard";
+import BlogSearch from "../../components/blog/BlogSearch";
+import BlogCategories from "../../components/blog/BlogCategories";
+import SEO from "../../components/SEO";
+import { Post } from "../../types/post";
+import { getAllPosts } from "../../utils/mdxUtils";
+import styled from "styled-components";
+import { stripMarkdown } from "../../utils/textUtils";
 
 interface BlogPageProps {
   posts: Post[];
 }
 
-const POSTS_PATH = path.join(process.cwd(), "content/blog");
+const POSTS_PER_PAGE = 6; // 페이지당 포스트 수
 
-const getAllPosts = (): Post[] => {
-  const filenames = fs.readdirSync(POSTS_PATH);
+const categories = [
+  { id: "all", label: "전체" },
+  { id: "develop", label: "개발" },
+  { id: "AI", label: "인공지능" },
+  { id: "others", label: "기타" },
+];
 
-  const posts = filenames.map((filename) => {
-    const filePath = path.join(POSTS_PATH, filename);
-    const fileContents = fs.readFileSync(filePath, "utf8");
-    const { data, content } = matter(fileContents);
+interface ThemeType {
+  colors: {
+    background: string;
+  };
+}
 
-    return {
-      slug: filename.replace(".mdx", ""),
-      frontmatter: data as Post["frontmatter"],
-      content,
-      excerpt: content.slice(0, 150) + "...",
-    };
-  });
-
-  return posts.sort(
-    (a, b) =>
-      new Date(b.frontmatter.date).getTime() -
-      new Date(a.frontmatter.date).getTime()
-  );
-};
+const BlogCard = styled(Card)<{ theme: ThemeType }>`
+  background: ${({ theme }) => theme.colors.background};
+  margin-bottom: 1.5rem;
+`;
 
 const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const { theme } = useTheme();
-
-  const categories = ["all", "develop", "AI", "others"];
 
   useEffect(() => {
     const filtered = posts.filter(
@@ -65,143 +51,140 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
         (post.frontmatter.title
           .toLowerCase()
           .includes(searchTerm.toLowerCase()) ||
-          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
+          stripMarkdown(post.excerpt)
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()))
     );
     setFilteredPosts(filtered);
+    setCurrentPage(1);
   }, [searchTerm, selectedCategory, posts]);
+
+  // 페이지네이션 계산
+  const indexOfLastPost = currentPage * POSTS_PER_PAGE;
+  const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+
+  const handlePageChange = (pageNumber: number): void => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <Layout>
-      <Head>
-        <title>Sungblab</title>
-        <meta
-          name="description"
-          content="Sungblab's blog posts about web development and technology"
-        />
-        <meta
-          name="keywords"
-          content="web development, technology, blog, coding"
-        />
-        <meta property="og:title" content="Sungblab" />
-        <meta
-          property="og:description"
-          content="Explore web development and technology insights"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://sungblab.vercel.app/blog" />
-        <meta
-          name="google-site-verification"
-          content="PxfmFDZIIiYW7qK7pk6s17rsBKYeI43cV5s15D5D5Yo"
-        />
-      </Head>
+      <SEO
+        title="Blog | Sungblab"
+        description="Sungblab의 개발 블로그 - 웹 개발, AI, 그리고 기술 이야기"
+      />
 
       <motion.main
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className={`container mx-auto px-4 py-8 ${
-          theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+        className={`min-h-screen ${
+          theme === "dark" ? "bg-gray-900" : "bg-gray-50"
         }`}
       >
-        <motion.h1
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className={`text-3xl font-bold mb-6 ${
-            theme === "dark" ? "text-white" : "text-gray-800"
-          }`}
-        >
-          Blog Posts
-        </motion.h1>
-
-        <motion.div
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-6 flex flex-col md:flex-row gap-4"
-        >
-          <input
-            type="text"
-            placeholder="Search posts..."
-            className={`w-full md:w-2/3 p-2 border rounded ${
-              theme === "dark"
-                ? "bg-gray-800 text-white border-gray-700"
-                : "bg-white text-gray-800 border-gray-300"
-            }`}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <select
-            className={`w-full md:w-1/3 p-2 border rounded ${
-              theme === "dark"
-                ? "bg-gray-800 text-white border-gray-700"
-                : "bg-white text-gray-800 border-gray-300"
-            }`}
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+        <div className="container mx-auto px-4 py-12">
+          {/* 헤더 섹션 */}
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
           >
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category.charAt(0).toUpperCase() + category.slice(1)}
-              </option>
-            ))}
-          </select>
-        </motion.div>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500 py-2">
+              Blog
+            </h1>
+            <p className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>
+              개발과 기술에 대한 이야기를 공유합니다
+            </p>
+          </motion.div>
 
-        <AnimatePresence>
-          <motion.div layout className="space-y-4">
-            {filteredPosts.map((post, index) => (
-              <motion.div
-                key={post.slug}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Link href={`/blog/${post.slug}`} className="block mb-2">
-                  <div
-                    className={`p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer ${
-                      theme === "dark" ? "bg-gray-800" : "bg-white"
+          {/* 검색 및 필터 섹션 */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mb-8 space-y-6"
+          >
+            <BlogSearch
+              searchTerm={searchTerm}
+              onSearch={setSearchTerm}
+              theme={theme}
+            />
+            <BlogCategories
+              categories={categories}
+              selectedCategory={selectedCategory}
+              onCategorySelect={setSelectedCategory}
+              theme={theme}
+            />
+          </motion.div>
+
+          {/* 블로그 포스트 그리드 */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              layout
+              className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            >
+              {currentPosts.map((post, index) => (
+                <BlogPostCard
+                  key={post.slug}
+                  post={post}
+                  theme={theme}
+                  index={index}
+                />
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* 페이지네이션 */}
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-8 gap-2">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (number) => (
+                  <button
+                    key={number}
+                    onClick={() => handlePageChange(number)}
+                    className={`px-4 py-2 rounded-lg transition-all duration-300 ${
+                      currentPage === number
+                        ? theme === "dark"
+                          ? "bg-purple-600 text-white"
+                          : "bg-purple-500 text-white"
+                        : theme === "dark"
+                        ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                     }`}
                   >
-                    <h2
-                      className={`text-xl font-semibold mb-2 ${
-                        theme === "dark" ? "text-blue-400" : "text-blue-600"
-                      }`}
-                    >
-                      {post.frontmatter.title}
-                    </h2>
-                    <p
-                      className={`mb-4 ${
-                        theme === "dark" ? "text-gray-300" : "text-gray-600"
-                      }`}
-                    >
-                      {post.excerpt}
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <p
-                        className={`text-sm ${
-                          theme === "dark" ? "text-gray-400" : "text-gray-500"
-                        }`}
-                      >
-                        {post.frontmatter.date}
-                      </p>
-                      <span
-                        className={`text-xs px-2 py-1 rounded ${
-                          theme === "dark"
-                            ? "bg-gray-700 text-gray-300"
-                            : "bg-gray-200 text-gray-700"
-                        }`}
-                      >
-                        {post.frontmatter.category}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+                    {number}
+                  </button>
+                )
+              )}
+            </div>
+          )}
+
+          {/* 검색 결과 없음 메시지 */}
+          {filteredPosts.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-12"
+            >
+              <p
+                className={`text-xl mb-2 ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
+                검색 결과가 없습니다
+              </p>
+              <p
+                className={theme === "dark" ? "text-gray-400" : "text-gray-500"}
+              >
+                다른 키워드로 검색해보세요
+              </p>
+            </motion.div>
+          )}
+        </div>
       </motion.main>
     </Layout>
   );
@@ -209,7 +192,6 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const posts = getAllPosts();
-
   return {
     props: {
       posts,

@@ -23,7 +23,7 @@ export const projects: Project[] = [
     title: "Sungblab",
     description:
       "React와 Next.js를 사용하여 개발한 반응형 개인 포트폴리오 웹사이트입니다.",
-    link: "https://github.com/Kimsungbin1/sungblab-nextjs",
+    link: "https://github.com/Sungblab/sungblab-nextjs",
     image: sbImage,
     technologies: ["React", "Next.js", "Tailwind CSS"],
     date: "2024-09-05",
@@ -33,7 +33,7 @@ export const projects: Project[] = [
     title: "Codelab",
     description:
       "HTML과 Tailwind css를 사용하여 개발한 동아리 포트폴리오 사이트입니다.",
-    link: "https://github.com/Kimsungbin1/Codelap",
+    link: "https://github.com/Sungblab/Codelap",
     image: clImage,
     technologies: ["HTML", "Tailwind CSS"],
     date: "2024-05-27",
@@ -53,7 +53,7 @@ export const projects: Project[] = [
     title: "sb_python_attendance_system",
     description:
       "고등학교 생활중 학급에서 얼굴인식 출결관리 시스템을 하면 좋겠다는 생각에 얼굴인식 기술을 활용해 파이썬으로 구현해 보았습니다.",
-    link: "https://github.com/Kimsungbin1/SB_face_recognition_system",
+    link: "https://github.com/Sungblab/SB_face_recognition_system",
     image: attImage,
     technologies: ["Python", "open_cv", "face_recognition"],
     date: "2024-05-21",
@@ -63,7 +63,7 @@ export const projects: Project[] = [
     title: "ai_career_advisor",
     description:
       "고등학교 행사중 과학수학 페스티벌에 출전하기 위해 LLM api를 이용한 프롬프트 엔지니어링 인공지능 진로 탐색 서비스를 만들었습니다",
-    link: "https://github.com/Kimsungbin1",
+    link: "https://github.com/Sungblab",
     image: aiImage,
     technologies: ["Python", "Flask", "Claude 3.5 sonnet api", "Tailwind CSS"],
     date: "2024-08-25",
@@ -73,7 +73,7 @@ export const projects: Project[] = [
     title: "QR attend system",
     description:
       "이 프로젝트는 QR 코드를 사용한 출석 시스템입니다. 사용자는 모바일 웹을 통해 QR 코드를 스캔하여 출석을 확인할 수 있습니다. 제 학교 학급에서 실제로 사용하기 위해 개발했습니다. ",
-    link: "https://github.com/Kimsungbin1",
+    link: "https://github.com/Sungblab",
     image: qrImage,
     technologies: ["HTML", "Tailwind CSS", "Node.js", "Express.js", "MongoDB"],
     date: "2024-08-07",

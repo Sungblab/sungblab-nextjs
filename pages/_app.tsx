@@ -1,13 +1,16 @@
+import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "../components/Components";
 import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const App: NextPage<AppProps> = ({ Component, pageProps }) => {
   return (
     <ThemeProvider>
-      <Component {...pageProps} />
+      <main>
+        <Component {...pageProps} />
+      </main>
     </ThemeProvider>
   );
-}
+};
 
-export default MyApp;
+export default App;

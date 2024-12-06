@@ -12,13 +12,19 @@ import {
 import axios from "axios";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import BlogImage from "./blog/BlogImage";
+import styled from "styled-components";
 
 // Theme Context
-type Theme = "light" | "dark";
-
 interface ThemeContextType {
-  theme: Theme;
+  theme: "light" | "dark";
   toggleTheme: () => void;
+  colors: {
+    background: string;
+    primary: string;
+    secondary: string;
+    border: string;
+  };
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -26,47 +32,41 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("theme") as Theme | null;
+      const savedTheme = localStorage.getItem("theme") as
+        | "light"
+        | "dark"
+        | null;
       return savedTheme || "light";
     }
     return "light";
   });
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("theme") as Theme | null;
-      if (savedTheme) {
-        setTheme(savedTheme);
-        document.documentElement.classList.toggle(
-          "dark",
-          savedTheme === "dark"
-        );
-      }
-    }
-  }, []);
+  const colors = {
+    light: {
+      background: "#FFFFFF",
+      primary: "#4A5568",
+      secondary: "#718096",
+      border: "#E2E8F0",
+    },
+    dark: {
+      background: "#1A202C",
+      primary: "#A0AEC0",
+      secondary: "#718096",
+      border: "#2D3748",
+    },
+  };
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("theme", theme);
-      document.documentElement.classList.toggle("dark", theme === "dark");
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => {
-      const newTheme = prevTheme === "light" ? "dark" : "light";
-      if (typeof window !== "undefined") {
-        localStorage.setItem("theme", newTheme);
-        document.documentElement.classList.toggle("dark", newTheme === "dark");
-      }
-      return newTheme;
-    });
+  const contextValue = {
+    theme,
+    toggleTheme: () =>
+      setTheme((prev) => (prev === "light" ? "dark" : "light")),
+    colors: colors[theme],
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );
@@ -86,36 +86,48 @@ export const Footer: React.FC = () => {
     <footer
       className={`py-8 ${
         theme === "dark"
-          ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-600"
-      }`}
+          ? "bg-gray-900/95 text-white"
+          : "bg-gray-100/95 text-gray-600"
+      } backdrop-blur-sm`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center">
-          <p className="text-center mb-4">
-            &copy; {new Date().getFullYear()} Sungblab. All rights reserved.
-          </p>
-          <div className="flex space-x-6">
-            <a
-              href="https://www.instagram.com/kimsungbin1119/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`text-2xl hover:text-[#57c5b5] transition-colors duration-300 ${
-                theme === "dark" ? "text-gray-300" : "text-gray-600"
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="flex flex-col items-center space-y-6">
+          <div className="w-full">
+            <div
+              className={`h-px ${
+                theme === "dark" ? "bg-gray-800" : "bg-gray-200"
               }`}
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href="https://github.com/Kimsungbin1"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`text-2xl hover:text-[#57c5b5] transition-colors duration-300 ${
-                theme === "dark" ? "text-gray-300" : "text-gray-600"
-              }`}
-            >
-              <FaGithub />
-            </a>
+            />
+          </div>
+
+          <div className="flex flex-col md:flex-row justify-between items-center w-full text-sm">
+            <p className={theme === "dark" ? "text-gray-400" : "text-gray-500"}>
+              &copy; {new Date().getFullYear()} Sungblab. All rights reserved.
+            </p>
+            <div className="flex space-x-4 mt-2 md:mt-0">
+              <motion.a
+                href="mailto:ksb19558@naver.com"
+                whileHover={{ scale: 1.05 }}
+                className={`transition-colors duration-300 ${
+                  theme === "dark"
+                    ? "text-gray-400 hover:text-purple-400"
+                    : "text-gray-600 hover:text-purple-600"
+                }`}
+              >
+                Contact
+              </motion.a>
+              <motion.a
+                href="/blog"
+                whileHover={{ scale: 1.05 }}
+                className={`transition-colors duration-300 ${
+                  theme === "dark"
+                    ? "text-gray-400 hover:text-purple-400"
+                    : "text-gray-600 hover:text-purple-600"
+                }`}
+              >
+                Blog
+              </motion.a>
+            </div>
           </div>
         </div>
       </div>
@@ -160,77 +172,91 @@ export const Header: React.FC = () => {
 
   return (
     <header
-      className={`py-4 ${
+      className={`sticky top-0 z-50 py-4 backdrop-blur-md bg-opacity-80 ${
         theme === "dark"
-          ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-900"
-      }`}
+          ? "bg-gray-900/80 text-white"
+          : "bg-gray-100/80 text-gray-900"
+      } transition-colors duration-300`}
     >
       <nav className="container mx-auto px-4">
         <div className="flex justify-between items-center">
-          <Link href="/" className="text-4xl font-bold">
+          <Link
+            href="/"
+            className="min-w-[140px] text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500 py-2"
+          >
             Sungblab
           </Link>
           <div className="hidden md:flex space-x-6 items-center">
-            <Link
-              href="/"
-              className={`hover:text-[#57c5b5] font-bold text-lg transition-colors duration-300 ${
-                theme === "dark" ? "text-gray-300" : "text-gray-600"
+            {["Home", "Projects", "Blog"].map((item) => (
+              <Link
+                key={item}
+                href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                className={`relative group font-bold text-lg transition-colors duration-300 ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-600 group-hover:w-full transition-all duration-300" />
+              </Link>
+            ))}
+            <motion.button
+              onClick={toggleTheme}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className={`p-2 rounded-full transition-colors duration-300 ${
+                theme === "dark"
+                  ? "bg-gray-800 hover:bg-gray-700"
+                  : "bg-gray-200 hover:bg-gray-300"
               }`}
             >
-              Home
-            </Link>
-            <Link
-              href="/projects"
-              className={`hover:text-[#57c5b5] font-bold text-lg transition-colors duration-300 ${
-                theme === "dark" ? "text-gray-300" : "text-gray-600"
-              }`}
-            >
-              Projects
-            </Link>
-            <Link
-              href="/blog"
-              className={`hover:text-[#57c5b5] font-bold text-lg transition-colors duration-300 ${
-                theme === "dark" ? "text-gray-300" : "text-gray-600"
-              }`}
-            >
-              Blog
-            </Link>
-            <button onClick={toggleTheme} className="ml-4">
               {theme === "dark" ? (
-                <FaSun className="text-yellow-400" />
+                <FaSun className="text-yellow-400 w-5 h-5" />
               ) : (
-                <FaMoon className="text-gray-600" />
+                <FaMoon className="text-gray-600 w-5 h-5" />
               )}
-            </button>
+            </motion.button>
           </div>
           <div className="md:hidden flex items-center">
-            <button onClick={toggleTheme} className="mr-4">
+            <motion.button
+              onClick={toggleTheme}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="mr-4"
+            >
               {theme === "dark" ? (
-                <FaSun className="text-yellow-400" />
+                <FaSun className="text-yellow-400 w-5 h-5" />
               ) : (
-                <FaMoon className="text-gray-600" />
+                <FaMoon className="text-gray-600 w-5 h-5" />
               )}
-            </button>
+            </motion.button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="focus:outline-none"
               aria-label="Toggle menu"
             >
-              <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
-                {isOpen ? (
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
-                  />
-                ) : (
-                  <path
-                    fillRule="evenodd"
-                    d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-                  />
-                )}
-              </svg>
+              <motion.div
+                animate={isOpen ? "open" : "closed"}
+                variants={{
+                  open: { rotate: 180 },
+                  closed: { rotate: 0 },
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                  {isOpen ? (
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
+                    />
+                  ) : (
+                    <path
+                      fillRule="evenodd"
+                      d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
+                    />
+                  )}
+                </svg>
+              </motion.div>
             </button>
           </div>
         </div>
@@ -243,30 +269,20 @@ export const Header: React.FC = () => {
               variants={menuVariants}
               className="mt-4 md:hidden overflow-hidden"
             >
-              <Link
-                href="/"
-                className={`block py-2 hover:text-[#57c5b5] transition-colors duration-300 ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-600"
-                }`}
-              >
-                Home
-              </Link>
-              <Link
-                href="/projects"
-                className={`block py-2 hover:text-[#57c5b5] transition-colors duration-300 ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-600"
-                }`}
-              >
-                Projects
-              </Link>
-              <Link
-                href="/blog"
-                className={`block py-2 hover:text-[#57c5b5] transition-colors duration-300 ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-600"
-                }`}
-              >
-                Blog
-              </Link>
+              {["Home", "Projects", "Blog"].map((item) => (
+                <Link
+                  key={item}
+                  href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                  className={`block py-2 px-4 rounded-lg mb-2 transition-all duration-300 ${
+                    theme === "dark"
+                      ? "text-gray-300 hover:bg-gray-800"
+                      : "text-gray-600 hover:bg-gray-200"
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item}
+                </Link>
+              ))}
             </motion.div>
           )}
         </AnimatePresence>
@@ -282,16 +298,22 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { theme } = useTheme();
+
   return (
     <div
-      className={`flex flex-col min-h-screen font-sans ${
-        theme === "dark"
-          ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-900"
-      }`}
+      className={`flex flex-col min-h-screen font-sans antialiased ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
+      } transition-colors duration-300`}
     >
       <Header />
-      <main className="flex-grow">{children}</main>
+      <motion.main
+        className="flex-grow"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {children}
+      </motion.main>
       <Footer />
     </div>
   );
@@ -380,19 +402,33 @@ export const SocialButton: React.FC<SocialButtonProps> = ({
   }[icon];
 
   return (
-    <a
+    <motion.a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center px-4 py-2 rounded-full transition-colors ${
+      whileHover={{ scale: 1.05, y: -2 }}
+      whileTap={{ scale: 0.95 }}
+      className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
         theme === "dark"
-          ? "bg-gray-700 text-gray-200 hover:bg-gray-600"
-          : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-      }`}
+          ? "bg-gray-800/80 text-gray-200 hover:bg-purple-900/80"
+          : "bg-gray-200/80 text-gray-800 hover:bg-purple-100/80"
+      } backdrop-blur-sm`}
     >
-      <IconComponent className="mr-2" />
-      {label}
-    </a>
+      <IconComponent className="text-lg" />
+      <span className="font-medium">{label}</span>
+      <motion.span
+        className="ml-1 opacity-0 -translate-x-2"
+        variants={{
+          hover: { opacity: 1, x: 0 },
+          initial: { opacity: 0, x: -8 },
+        }}
+        initial="initial"
+        whileHover="hover"
+        transition={{ duration: 0.2 }}
+      >
+        →
+      </motion.span>
+    </motion.a>
   );
 };
 
@@ -535,4 +571,55 @@ export const BlogPost: React.FC<BlogPostProps> = ({ content }) => {
   );
 };
 
+export const mdxComponents = {
+  img: (props: any) => (
+    <BlogImage src={props.src} alt={props.alt} className="rounded-lg my-4" />
+  ),
+  // 다른 MDX 컴포넌트들...
+};
+
 export default Comments;
+
+// theme 타입 의
+interface ThemeType {
+  colors: {
+    background: string;
+    primary: string;
+    secondary: string;
+    border: string;
+  };
+}
+
+export const Button = styled.button<{ theme: ThemeType }>`
+  background: ${({ theme }) => theme?.colors?.primary || "#4A5568"};
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const Card = styled.div<{ theme: ThemeType }>`
+  background: ${({ theme }) => theme?.colors?.background || "#FFFFFF"};
+  border: 1px solid ${({ theme }) => theme?.colors?.border || "#E2E8F0"};
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+`;
+
+export const Tag = styled.span<{ theme: ThemeType }>`
+  background: ${({ theme }) => theme?.colors?.secondary || "#718096"};
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+`;
