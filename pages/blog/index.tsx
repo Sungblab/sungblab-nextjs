@@ -15,7 +15,7 @@ interface BlogPageProps {
   posts: Post[];
 }
 
-const POSTS_PER_PAGE = 6; // 페이지당 포스트 수
+const POSTS_PER_PAGE = 10;
 
 const categories = [
   { id: "all", label: "전체" },
@@ -139,8 +139,9 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
           </AnimatePresence>
 
           {/* 페이지네이션 */}
-          {totalPages > 1 && (
-            <div className="flex justify-center mt-8 gap-2">
+          <div className="flex justify-center mt-8">
+            {/* 페이지 번호 */}
+            <div className="flex justify-center gap-2">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (number) => (
                   <button
@@ -161,7 +162,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                 )
               )}
             </div>
-          )}
+          </div>
 
           {/* 검색 결과 없음 메시지 */}
           {filteredPosts.length === 0 && (

@@ -68,6 +68,29 @@ const BlogPost: NextPage<BlogPostProps> = ({
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollButtons, setShowScrollButtons] = useState(false);
 
+  const generateId = (text: string) => {
+    return text
+      .toString()
+      .replace(/[^가-힣a-zA-Z0-9\s]/g, "")
+      .trim()
+      .replace(/\s+/g, "-")
+      .toLowerCase();
+  };
+
+  const scrollToHeader = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight =
@@ -105,80 +128,90 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
   const MDXComponents = {
     Math,
-    h1: (props: any) => (
-      <h1
-        className={`text-4xl font-bold mt-10 mb-6 ${
-          theme === "dark" ? "text-gray-200" : "text-gray-800"
-        }`}
-        {...props}
-      />
-    ),
-    h2: (props: any) => (
-      <h2
-        className={`text-3xl font-semibold mt-8 mb-4 ${
-          theme === "dark" ? "text-gray-300" : "text-gray-700"
-        }`}
-        {...props}
-      />
-    ),
+    h1: (props: any) => {
+      const id = generateId(props.children);
+      return (
+        <h1
+          id={id}
+          className={`text-3xl md:text-4xl font-bold mt-8 md:mt-12 mb-6 md:mb-8 tracking-tight ${
+            theme === "dark" ? "text-gray-100" : "text-gray-900"
+          }`}
+          {...props}
+        />
+      );
+    },
+    h2: (props: any) => {
+      const id = generateId(props.children);
+      return (
+        <h2
+          id={id}
+          className={`text-2xl md:text-3xl font-semibold mt-8 md:mt-10 mb-4 md:mb-6 tracking-tight ${
+            theme === "dark" ? "text-gray-200" : "text-gray-800"
+          }`}
+          {...props}
+        />
+      );
+    },
     h3: (props: any) => (
       <h3
-        className={`text-2xl font-medium mt-6 mb-3 ${
-          theme === "dark" ? "text-gray-400" : "text-gray-600"
+        className={`text-xl md:text-2xl font-medium mt-6 md:mt-8 mb-3 md:mb-4 tracking-tight ${
+          theme === "dark" ? "text-gray-300" : "text-gray-700"
         }`}
         {...props}
       />
     ),
     p: (props: any) => (
       <p
-        className={`my-4 leading-relaxed ${
-          theme === "dark" ? "text-gray-300" : "text-gray-600"
+        className={`my-4 md:my-6 text-base md:text-lg leading-7 md:leading-8 ${
+          theme === "dark" ? "text-gray-300" : "text-gray-700"
         }`}
         {...props}
       />
     ),
     ul: (props: any) => (
       <ul
-        className={`list-disc list-inside my-6 ${
-          theme === "dark" ? "text-gray-300" : "text-gray-600"
+        className={`list-disc ml-6 my-4 space-y-1 ${
+          theme === "dark" ? "text-gray-300" : "text-gray-700"
         }`}
         {...props}
       />
     ),
     ol: (props: any) => (
       <ol
-        className={`list-decimal list-inside my-6 ${
-          theme === "dark" ? "text-gray-300" : "text-gray-600"
+        className={`list-decimal ml-6 my-4 space-y-1 ${
+          theme === "dark" ? "text-gray-300" : "text-gray-700"
         }`}
         {...props}
       />
     ),
-    li: (props: any) => <li className="my-2" {...props} />,
+    li: (props: any) => <li className="pl-2">{props.children}</li>,
     a: (props: any) => (
       <a
-        className={`hover:underline ${
-          theme === "dark" ? "text-blue-400" : "text-blue-600"
+        className={`font-medium underline decoration-2 underline-offset-2 transition-colors duration-200 ${
+          theme === "dark"
+            ? "text-blue-400 hover:text-blue-300"
+            : "text-blue-600 hover:text-blue-800"
         }`}
         {...props}
       />
     ),
     code: (props: any) => (
       <code
-        className={`rounded px-2 py-1 font-mono text-sm ${
+        className={`rounded-md px-2 py-1 font-mono text-sm ${
           theme === "dark"
             ? "bg-gray-800 text-pink-300"
-            : "bg-gray-100 text-gray-800"
+            : "bg-gray-100 text-pink-800"
         }`}
         {...props}
       />
     ),
     pre: (props: any) => (
       <pre
-        className={`rounded p-4 overflow-x-auto my-6 text-sm ${
+        className={`rounded-lg p-6 my-8 overflow-x-auto text-sm leading-6 ${
           theme === "dark"
             ? "bg-gray-800 text-gray-200"
             : "bg-gray-100 text-gray-800"
-        }`}
+        } shadow-lg`}
         {...props}
       />
     ),
@@ -226,11 +259,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="mb-8"
+                className="mb-12"
               >
                 <Link
                   href="/blog"
-                  className={`inline-flex items-center mb-8 text-sm font-medium transition-colors duration-200 ${
+                  className={`inline-flex items-center mb-8 text-sm font-medium transition-colors duration-200 hover:translate-x-[-4px] ${
                     theme === "dark"
                       ? "text-gray-400 hover:text-gray-200"
                       : "text-gray-600 hover:text-gray-800"
@@ -239,47 +272,45 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   <FaArrowLeft className="mr-2" /> 블로그 목록으로 돌아가기
                 </Link>
 
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <h1
-                      className={`text-4xl font-bold mb-4 ${
-                        theme === "dark" ? "text-gray-100" : "text-gray-900"
+                <div className="space-y-6">
+                  <h1
+                    className={`text-3xl lg:text-4xl font-bold leading-tight tracking-tight ${
+                      theme === "dark" ? "text-gray-100" : "text-gray-900"
+                    }`}
+                  >
+                    {frontMatter.title}
+                  </h1>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <span
+                      className={`text-sm ${
+                        theme === "dark" ? "text-gray-400" : "text-gray-600"
                       }`}
                     >
-                      {frontMatter.title}
-                    </h1>
-                    <div className="flex items-center space-x-4 mb-6">
-                      <span
-                        className={`text-sm ${
-                          theme === "dark" ? "text-gray-400" : "text-gray-600"
-                        }`}
-                      >
-                        {frontMatter.date}
-                      </span>
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm ${
-                          theme === "dark"
-                            ? "bg-gray-800 text-gray-300"
-                            : "bg-gray-200 text-gray-700"
-                        }`}
-                      >
-                        {frontMatter.category}
-                      </span>
-                    </div>
-                    <div className="flex space-x-3">
-                      <button
-                        onClick={copyPostUrl}
-                        className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 bg-blue-500 text-white hover:bg-blue-600"
-                      >
-                        <FaCopy className="mr-2" /> URL 복사
-                      </button>
-                      <button
-                        onClick={sharePost}
-                        className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 bg-teal-500 text-white hover:bg-teal-600"
-                      >
-                        <FaShare className="mr-2" /> 공유하기
-                      </button>
-                    </div>
+                      {frontMatter.date}
+                    </span>
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        theme === "dark"
+                          ? "bg-gray-800 text-gray-300"
+                          : "bg-gray-200 text-gray-700"
+                      }`}
+                    >
+                      {frontMatter.category}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    <button
+                      onClick={copyPostUrl}
+                      className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 bg-blue-500 text-white hover:bg-blue-600 hover:scale-105"
+                    >
+                      <FaCopy className="mr-2" /> URL 복사
+                    </button>
+                    <button
+                      onClick={sharePost}
+                      className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 bg-teal-500 text-white hover:bg-teal-600 hover:scale-105"
+                    >
+                      <FaShare className="mr-2" /> 공유하기
+                    </button>
                   </div>
                 </div>
               </motion.div>
@@ -353,7 +384,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
               <div className="mt-16">
                 <Giscus
-                  repo="Kimsungbin1/sungblab-nextjs"
+                  repo="sungblab/sungblab-nextjs"
                   repoId="R_kgDOMs0-6A"
                   category="Announcements"
                   categoryId="DIC_kwDOMs0-6M4CiQTH"
@@ -386,27 +417,22 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <FaListUl className="mr-2" />
                       목차
                     </h3>
-                    <nav className="space-y-2">
+                    <nav className="space-y-3">
                       {toc.map((item) => (
-                        <a
+                        <button
                           key={item.id}
-                          href={`#${item.id}`}
+                          onClick={() => scrollToHeader(item.id)}
                           className={`
-                            block text-sm hover:text-blue-500 transition-colors duration-200
+                            block w-full text-left hover:text-blue-500 transition-colors duration-200
                             ${
                               item.level === 1
-                                ? "font-medium"
-                                : "text-sm opacity-90"
-                            }
-                            ${
-                              item.level === 1
-                                ? "pl-0"
-                                : `pl-${(item.level - 1) * 4}`
+                                ? "text-base font-medium"
+                                : "text-sm pl-4 text-gray-600 dark:text-gray-400"
                             }
                           `}
                         >
                           {item.text}
-                        </a>
+                        </button>
                       ))}
                     </nav>
                   </div>
@@ -505,13 +531,23 @@ export const getStaticProps: GetStaticProps<BlogPostProps> = async ({
   const nextPost = currentPostIndex > 0 ? posts[currentPostIndex - 1] : null;
 
   // TOC 생성 로직...
+  const generateId = (text: string) => {
+    return text
+      .toString()
+      .replace(/[^가-힣a-zA-Z0-9\s]/g, "")
+      .trim()
+      .replace(/\s+/g, "-")
+      .toLowerCase();
+  };
+
   const toc = post.content
     .split("\n")
-    .filter((line) => line.startsWith("#"))
+    .filter((line) => line.startsWith("#") || line.startsWith("##"))
+    .filter((line) => !line.startsWith("###"))
     .map((line) => {
       const level = line.split(" ")[0].length;
       const text = line.replace(/^#+\s/, "");
-      const id = text.toLowerCase().replace(/\s/g, "-");
+      const id = generateId(text);
       return { id, text, level };
     });
 
