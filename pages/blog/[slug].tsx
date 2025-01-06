@@ -164,8 +164,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
       <code
         className={`rounded px-2 py-1 font-mono text-sm ${
           theme === "dark"
-            ? "bg-gray-700 text-pink-300"
-            : "bg-gray-100 text-pink-500"
+            ? "bg-gray-800 text-pink-300"
+            : "bg-gray-100 text-gray-800"
         }`}
         {...props}
       />
@@ -173,7 +173,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
     pre: (props: any) => (
       <pre
         className={`rounded p-4 overflow-x-auto my-6 text-sm ${
-          theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+          theme === "dark"
+            ? "bg-gray-800 text-gray-200"
+            : "bg-gray-100 text-gray-800"
         }`}
         {...props}
       />
@@ -182,11 +184,16 @@ const BlogPost: NextPage<BlogPostProps> = ({
       <span className="block my-8">
         <Image
           {...props}
-          width={1000}
-          height={400}
-          objectFit="cover"
+          width={800}
+          height={600}
+          style={{
+            maxHeight: "600px",
+            width: "auto",
+            margin: "0 auto",
+            objectFit: "contain",
+          }}
           alt={props.alt || "blog image"}
-          className="rounded-lg shadow-md"
+          className="rounded-lg shadow-md mx-auto"
         />
       </span>
     ),
