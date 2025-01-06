@@ -1,2 +1,6 @@
+# Allow all crawlers
 User-agent: *
 Allow: /
+
+# Sitemap location
+Sitemap: https://sungblab.vercel.app/sitemap.xml
