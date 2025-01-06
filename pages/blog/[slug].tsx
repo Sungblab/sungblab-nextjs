@@ -7,6 +7,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import { Layout, useTheme } from "../../components/Components";
 import Giscus from "@giscus/react";
 import { useState, useEffect } from "react";
+import Math from "../../components/Math";
 import {
   FaArrowUp,
   FaArrowDown,
@@ -103,6 +104,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
   };
 
   const MDXComponents = {
+    Math,
     h1: (props: any) => (
       <h1
         className={`text-4xl font-bold mt-10 mb-6 ${

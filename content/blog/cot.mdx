@@ -1,0 +1,260 @@
+---
+title: "LLM의 진화"
+date: "2025-01-06"
+category: "AI"
+---
+
+# LLM의 카운팅 문제와 근본적 한계
+
+현대의 Large Language Models (LLMs)은 놀라운 자연어 처리 능력을 보여주고 있지만, 기본적인 카운팅 작업에서 의외의 한계를 드러내고 있습니다. 이는 단순한 기술적 결함이 아닌, 모델 아키텍처의 근본적인 특성에서 기인하는 문제입니다.
+
+## 트랜스포머의 등장과 혁신
+
+2017년 "Attention is All You Need" 논문의 발표 이후, 트랜스포머 모델은 AI 분야에 혁명적인 변화를 가져왔습니다. 이 모델은 ChatGPT, Claude, Gemini, LLaMA 등 현대 AI의 기반이 되었으며, 텍스트 처리뿐만 아니라 오디오, 비디오, 번역 등 다양한 분야로 확장되었습니다.
+
+## 현재 LLM의 주요 한계점
+
+### 1. 텍스트 길이 제어 문제
+
+- 200단어 요청에 150단어나 250단어 생성
+- 정확한 글자 수 카운팅 실패
+- 컨텍스트 길이 제한으로 인한 제약
+
+### 2. 문자열 패턴 카운팅 문제
+
+<Math math="Accuracy_{counting} = \frac{\text{Correct Count}}{\text{Total Attempts}} \times 100" />
+
+예를 들어 "strawberry"에서 'r'의 개수를 세는 간단한 작업에서도 오류가 발생합니다.
+
+### 3. 반복 패턴 인식 문제
+
+한글의 중복 종성과 같은 반복 패턴 인식에서 특히 취약성을 보입니다.
+
+## 트랜스포머 아키텍처의 구조적 특성
+
+트랜스포머의 핵심인 어텐션 메커니즘은 다음과 같은 수학적 구조를 가집니다:
+
+<Math math="Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})V" block />
+
+이 구조는 문장의 모든 단어 간 관계를 동시에 고려할 수 있게 해주지만, 동시에 높은 연산 복잡도를 야기합니다:
+
+<Math math="Complexity = O(n^2 \cdot d)" block />
+
+여기서 n은 시퀀스 길이, d는 차원을 나타냅니다.
+
+# 셀프 어텐션과 메모리 문제
+
+트랜스포머 모델은 마치 여러 개의 머리를 가진 메두사와 같이, 각기 다른 관점에서 단어 간 관계를 해석하는 멀티헤드 어텐션을 사용합니다. 이 구조는 놀라운 성능을 보여주지만, 동시에 큰 계산 부담을 초래합니다.
+
+## 멀티헤드 어텐션의 수학적 구조
+
+<Math math="MultiHead(Q, K, V) = Concat(head_1, ..., head_h)W^O" block />
+<Math math="where\ head_i = Attention(QW^Q_i, KW^K_i, VW^V_i)" block />
+
+각 헤드는 독립적으로 연산을 수행하며, 이는 다음과 같은 메모리 요구사항을 발생시킵니다:
+
+<Math
+  math="Memory_{required} = h \times (3 \times d^2) + BatchSize \times SeqLength \times ModelDim \times 4"
+  block
+/>
+
+## Chain-of-Thought 프롬프팅 해결방안
+
+CoT 프롬프팅은 LLM의 추론 능력을 향상시키는 효과적인 방법입니다. 수학적으로 다음과 같이 표현됩니다:
+
+<Math
+  math="P(answer|steps, problem) = \frac{P(steps|problem) \times P(answer|steps)}{P(problem)}"
+  block
+/>
+
+### CoT의 실제 적용 예시
+
+일반적 프롬프팅:
+
+```
+Q: strawberry에서 'r'의 개수는?
+A: 2개
+```
+
+CoT 프롬프팅:
+
+```
+Q: strawberry에서 'r'의 개수를 단계별로 세어주세요.
+A: 1단계: 각 글자 확인
+   s(r없음) → t(r없음) → r(첫번째) → a(r없음) → w(r없음)
+   → b(r없음) → e(r없음) → r(두번째) → r(세번째) → y(r없음)
+   총 개수: 3개
+```
+
+## 하드웨어 요구사항과 제약
+
+현대의 트랜스포머 모델은 고성능 하드웨어를 필요로 합니다:
+
+<Math math="Computing_{power} = \frac{Parameters \times Tokens}{Time}" block />
+
+이로 인해:
+
+1. NVIDIA AI 칩과 같은 고성능 하드웨어 필요
+2. 높은 전력 소비
+3. 메모리 사용량 급증
+4. 입력 토큰 수 제한 필요
+
+# 차세대 아키텍처와 미래 전망
+
+## MOE (Mixture of Experts) 아키텍처
+
+MOE는 트랜스포머의 한계를 극복하기 위한 혁신적인 접근 방식입니다. 이 아키텍처는 여러 전문가 모델들을 결합하여 효율성을 높입니다.
+
+### MOE의 수학적 기초
+
+<Math math="Output = \sum_{i=1}^n g_i(x)f_i(x)" block />
+
+여기서:
+
+- <Math math="g_i(x)" />는 각 전문가를 선택하는 게이팅 함수
+- <Math math="f_i(x)" />는 각 전문가 모델의 출력
+- n은 전문가의 수
+
+### MOE의 장점
+
+1. 계산 효율성 향상
+2. 메모리 사용 최적화
+3. 특화된 태스크 처리 능력
+
+## 하이퍼스케일 AI 연구 동향
+
+하이퍼스케일 AI는 대규모 확장성을 목표로 하며, 다음과 같은 방향으로 발전하고 있습니다:
+
+### 성능 스케일링 법칙
+
+<Math math="Performance = \alpha \log(N) + \beta \sqrt{C}" block />
+
+여기서:
+
+- N은 파라미터 수
+- C는 컴퓨팅 능력
+- α, β는 스케일링 계수
+
+## Mamba 아키텍처
+
+Mamba는 선택적 상태 공간 모델링을 통해 트랜스포머의 한계를 극복하려 시도합니다:
+
+<Math math="h_t = \phi(x_t, h_{t-1})" block />
+<Math math="y_t = \psi(h_t)" block />
+
+### Mamba의 주요 특징
+
+1. 선형 시간 복잡도
+2. 긴 시퀀스 처리 능력 향상
+3. 메모리 효율성 개선
+
+## 종합적 전망 및 발전 방향
+
+현재 AI 기술은 다음과 같은 방향으로 진화하고 있습니다:
+
+### 1. 효율성 개선
+
+<Math math="Efficiency = \frac{Performance}{Resource_{usage}}" block />
+
+### 2. 확장성 강화
+
+- 분산 처리 기술 발전
+- 모듈화된 아키텍처 도입
+- 리소스 최적화 기술
+
+### 3. 새로운 패러다임
+
+- 하이브리드 아키텍처
+- 생물학적 영감을 받은 모델
+- 양자 컴퓨팅 통합
+
+# 결론
+
+트랜스포머는 AI 발전의 중요한 이정표였지만, 그 한계는 분명합니다. MOE, Mamba, 하이퍼스케일 AI와 같은 새로운 접근 방식들은 이러한 한계를 극복하고 AI의 새로운 지평을 열어갈 것으로 기대됩니다.
+
+# Future Research Directions
+
+향후 연구는 다음과 같은 영역에 집중될 것으로 예상됩니다:
+
+1. 계산 효율성 최적화
+2. 메모리 사용량 절감
+3. 확장성 있는 아키텍처 개발
+4. 하이브리드 접근법 연구
+
+이러한 연구들은 더 효율적이고 강력한 AI 시스템의 개발을 가능하게 할 것입니다.
+
+## 새로운 아키텍처의 등장
+
+### SSM (State Space Model)
+
+SSM은 트랜스포머의 대안으로 주목받고 있는 새로운 아키텍처입니다:
+
+<Math math="h_{t+1} = Ah_t + Bx_t" block />
+<Math math="y_t = Ch_t + Dx_t" block />
+
+여기서:
+
+- h_t는 시스템의 상태
+- x_t는 입력
+- y_t는 출력
+- A, B, C, D는 시스템 매개변수
+
+SSM의 장점:
+
+1. 선형 시간 복잡도
+2. 메모리 효율성
+3. 긴 시퀀스 처리 능력
+
+### Mamba 아키텍처
+
+Mamba는 SSM을 기반으로 한 혁신적인 모델입니다:
+
+<Math math="S_{t+1} = \Delta_t \odot (A_t S_t + B_t x_t)" block />
+<Math math="y_t = C_t S_t" block />
+
+특징:
+
+1. 선택적 상태 업데이트
+2. 하드웨어 최적화
+3. 긴 컨텍스트 처리
+
+### Jamba: 하이브리드 접근
+
+Jamba는 트랜스포머와 Mamba를 결합한 모델입니다:
+
+<Math math="Output = \alpha T(x) + (1-\alpha)M(x)" block />
+
+여기서:
+
+- T(x)는 트랜스포머 레이어의 출력
+- M(x)는 Mamba 레이어의 출력
+- α는 혼합 계수
+
+장점:
+
+1. 120B 활성 파라미터
+2. 향상된 처리량
+3. 긴 시퀀스 처리 능력
+
+## 미래 전망
+
+### 1. 실시간 처리 최적화
+
+마이크로소프트의 디코더 기반 트랜스포머는 실시간 처리에 최적화되어 있습니다:
+
+<Math math="Latency = \frac{TokenCount}{ProcessingSpeed}" block />
+
+### 2. 멀티모달 통합
+
+환경 이해와 상상력을 결합한 새로운 패러다임:
+
+<Math math="Understanding = f(Text, Vision, Audio, Interaction)" block />
+
+### 3. 계산 효율성 향상
+
+새로운 아키텍처들의 계산 복잡도 비교:
+
+- 트랜스포머: O(n²)
+- SSM: O(n)
+- Mamba: O(n)
+- Jamba: O(n·log(n))
