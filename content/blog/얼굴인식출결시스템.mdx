@@ -1,0 +1,456 @@
+---
+title: "파이썬 face recognition 라이브러리를 활용한 얼굴인식 출결 시스템 제작"
+date: "2025-01-08"
+category: "develop"
+---
+
+# 파이썬 얼굴인식 출결 시스템 제작 과정
+
+## 1. 프로젝트 소개
+
+이 프로젝트는 파이썬의 `face_recognition` 라이브러리와 PyQt5를 활용하여 만든 얼굴인식 기반 출결 시스템입니다. 실시간으로 얼굴을 인식하고 등록된 사용자의 출석을 자동으로 기록하는 기능을 제공합니다.
+
+### 주요 기능
+
+- 실시간 얼굴 인식 및 출석 체크
+- 새로운 얼굴 등록 및 관리
+- 출석 기록 저장 및 내보내기
+- 직관적인 그래픽 사용자 인터페이스
+- 대량 얼굴 등록 기능
+
+## 2. 개발 환경 설정
+
+### 필요한 라이브러리
+
+```bash
+pip install face_recognition
+pip install PyQt5
+pip install opencv-python
+pip install numpy
+pip install Pillow
+```
+
+### 주요 라이브러리 설명
+
+- `face_recognition`: 얼굴 인식 핵심 기능 제공
+- `PyQt5`: GUI 구현
+- `opencv-python`: 카메라 스트림 처리
+- `Pillow`: 이미지 처리
+- `numpy`: 배열 및 행렬 연산
+
+## 3. 시스템 구조 및 상세 구현
+
+### 3.1 전체 시스템 구조
+
+프로그램은 크게 세 개의 주요 클래스로 구성되어 있습니다:
+
+1. `AttendanceSystem`: 메인 윈도우 클래스
+2. `AttendanceTab`: 출석 체크 탭
+3. `ManagementTab`: 얼굴 관리 탭
+
+각 클래스의 역할과 구현을 자세히 살펴보겠습니다.
+
+### 3.2 AttendanceSystem 클래스
+
+메인 윈도우를 구성하는 클래스로, 전체적인 UI 레이아웃과 스타일을 정의합니다.
+
+```python
+class AttendanceSystem(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+        self.showMaximized()  # 전체화면으로 시작
+
+    def initUI(self):
+        self.setWindowTitle('얼굴인식 출결 시스템')
+        # 스타일시트 설정
+        self.setStyleSheet("""
+            QMainWindow {
+                background-color: #f0f0f0;
+            }
+            QPushButton {
+                background-color: #2196F3;
+                color: white;
+                border: none;
+                padding: 12px 24px;
+                border-radius: 6px;
+                font-size: 14px;
+                min-width: 120px;
+            }
+            # ... 기타 스타일 정의 ...
+        """)
+```
+
+### 3.3 AttendanceTab 클래스 상세 구현
+
+출석 체크를 담당하는 핵심 클래스입니다. 실시간 카메라 처리와 얼굴 인식을 수행합니다.
+
+#### 3.3.1 초기화 및 UI 구성
+
+```python
+class AttendanceTab(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.initUI()
+
+        # 카메라 및 얼굴인식 관련 변수 초기화
+        self.camera = None
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_frame)
+        self.is_running = False
+        self.frame_count = 0
+
+        # 얼굴 인식 데이터 초기화
+        self.known_face_encodings = []
+        self.known_face_names = []
+        self.load_known_faces()
+
+        # 출석한 학생 목록
+        self.present_students = set()
+```
+
+#### 3.3.2 실시간 얼굴 인식 처리
+
+프레임 처리와 얼굴 인식의 핵심 로직입니다:
+
+```python
+def update_frame(self):
+    ret, frame = self.camera.read()
+    if ret:
+        # 성능 최적화를 위해 3프레임마다 처리
+        process_this_frame = self.frame_count % 3 == 0
+        self.frame_count += 1
+
+        if process_this_frame:
+            # 프레임 크기 조정으로 처리 속도 향상
+            height, width = frame.shape[:2]
+            small_frame = cv2.resize(frame, (width//4, height//4))
+            rgb_small_frame = cv2.cvtColor(small_frame, cv2.COLOR_BGR2RGB)
+
+            try:
+                # 얼굴 위치 감지
+                face_locations = face_recognition.face_locations(
+                    rgb_small_frame,
+                    model="hog"  # CPU 최적화 모드
+                )
+
+                if face_locations:
+                    # 얼굴 특징 추출
+                    face_encodings = face_recognition.face_encodings(
+                        rgb_small_frame,
+                        face_locations
+                    )
+
+                    # 각 얼굴에 대해 처리
+                    for (top, right, bottom, left), face_encoding in zip(
+                        face_locations, face_encodings
+                    ):
+                        if len(self.known_face_encodings) > 0:
+                            # 벡터화된 연산으로 얼굴 비교
+                            face_distances = face_recognition.face_distance(
+                                self.known_face_encodings,
+                                face_encoding
+                            )
+                            best_match_index = np.argmin(face_distances)
+
+                            # 유사도 임계값(0.6) 이하일 때만 인식
+                            if face_distances[best_match_index] < 0.6:
+                                name = self.known_face_names[best_match_index]
+                                self.record_attendance(name)
+                                self.show_notification(name)
+```
+
+#### 3.3.3 출석 기록 처리
+
+출석 기록을 저장하고 UI를 업데이트하는 로직입니다:
+
+```python
+def record_attendance(self, name):
+    try:
+        current_time = datetime.datetime.now()
+        time_string = current_time.strftime('%H:%M:%S')
+
+        # 중복 출석 방지 (5분 이내)
+        if name in self.present_students:
+            return
+
+        # 얼굴 이미지 처리 및 표시
+        faces_dir = "faces"
+        image_path = os.path.join(faces_dir, f"{name}.jpg")
+        if os.path.exists(image_path):
+            # 최근 인식된 얼굴 표시
+            pixmap = QPixmap(image_path)
+            pixmap = pixmap.scaled(
+                250, 250,
+                Qt.KeepAspectRatio,
+                Qt.SmoothTransformation
+            )
+            self.recent_face_label.setPixmap(pixmap)
+
+            # 상태 메시지 업데이트
+            self.status_label.setStyleSheet("""
+                QLabel {
+                    color: #4CAF50;
+                    padding: 15px;
+                    background-color: #E8F5E9;
+                    border-radius: 8px;
+                    font-weight: bold;
+                    font-size: 16px;
+                }
+            """)
+            self.status_label.setText(f'✓ {name}님 출석이 확인되었습니다.')
+
+            # 출석 테이블에 기록 추가
+            self.update_attendance_table(name, time_string, pixmap)
+
+            # CSV 파일에 기록
+            self.save_attendance_record(name, time_string)
+
+            # 출석 상태 업데이트
+            self.present_students.add(name)
+            self.update_absent_list()
+
+    except Exception as e:
+        print(f"출석 기록 중 오류 발생: {str(e)}")
+```
+
+### 3.4 ManagementTab 클래스 상세 구현
+
+얼굴 등록과 관리를 담당하는 클래스입니다.
+
+#### 3.4.1 얼굴 등록 기능
+
+단일 얼굴 등록과 대량 등록 기능을 제공합니다:
+
+```python
+def register_face(self):
+    try:
+        file_name, _ = QFileDialog.getOpenFileName(
+            self, "얼굴 이미지 선택", "",
+            "Image files (*.jpg *.jpeg *.png)"
+        )
+        if file_name:
+            name, ok = QInputDialog.getText(
+                self, '이름 입력',
+                '등록할 사람의 이름을 입력하세요:'
+            )
+            if ok and name:
+                faces_dir = "faces"
+                if not os.path.exists(faces_dir):
+                    os.makedirs(faces_dir)
+
+                # 파일 이름 중복 방지
+                new_path = os.path.join(faces_dir, f"{name}.jpg")
+                counter = 1
+                while os.path.exists(new_path):
+                    new_path = os.path.join(faces_dir, f"{name}_{counter}.jpg")
+                    counter += 1
+
+                # 이미지 처리 및 저장
+                image = Image.open(file_name)
+                image = image.convert('RGB')
+                image.save(new_path, 'JPEG', quality=95)
+
+                self.known_faces.append((name, new_path))
+                self.update_face_grid()
+                QMessageBox.information(
+                    self, '등록 완료',
+                    f'{name}의 얼굴이 등록되었습니다.'
+                )
+
+    except Exception as e:
+        QMessageBox.warning(
+            self, '오류',
+            f'얼굴 등록 중 오류가 발생했습니다: {str(e)}'
+        )
+```
+
+#### 3.4.2 대량 얼굴 등록 기능
+
+```python
+def bulk_register_faces(self):
+    try:
+        folder_path = QFileDialog.getExistingDirectory(
+            self, "이미지가 있는 폴더 선택"
+        )
+
+        if folder_path:
+            # 결과 추적을 위한 변수들
+            success_count = 0
+            skip_count = 0
+            fail_count = 0
+            error_files = []
+
+            # 진행 상황 표시
+            progress = QMessageBox()
+            progress.setWindowTitle("등록 진행 중")
+            progress.setText("얼굴 등록을 진행하고 있습니다...")
+            progress.show()
+
+            valid_extensions = ('.jpg', '.jpeg', '.png')
+
+            # 폴더 내 모든 이미지 처리
+            for filename in os.listdir(folder_path):
+                if filename.lower().endswith(valid_extensions):
+                    try:
+                        file_path = os.path.join(folder_path, filename)
+                        name = os.path.splitext(filename)[0]
+
+                        # 중복 체크
+                        existing_path = os.path.join(faces_dir, f"{name}.jpg")
+                        if os.path.exists(existing_path):
+                            skip_count += 1
+                            continue
+
+                        # 얼굴 인식 확인
+                        image = face_recognition.load_image_file(file_path)
+                        face_locations = face_recognition.face_locations(image)
+
+                        if face_locations:
+                            # 이미지 처리 및 저장
+                            img = Image.open(file_path)
+                            img = img.convert('RGB')
+                            img.save(new_path, 'JPEG', quality=95)
+                            success_count += 1
+                        else:
+                            fail_count += 1
+                            error_files.append(f"{filename} (얼굴 감지 실패)")
+
+                    except Exception as e:
+                        fail_count += 1
+                        error_files.append(f"{filename} (오류: {str(e)})")
+
+            # 결과 표시
+            result_message = (
+                f"등록 완료:\n\n"
+                f"성공: {success_count}개\n"
+                f"건너뜀: {skip_count}개\n"
+                f"실패: {fail_count}개"
+            )
+            if error_files:
+                result_message += "\n\n실패한 파일들:\n" + "\n".join(error_files)
+
+            QMessageBox.information(self, '대량 등록 완료', result_message)
+
+    except Exception as e:
+        QMessageBox.warning(
+            self, '오류',
+            f'대량 등록 중 오류가 발생했습니다: {str(e)}'
+        )
+```
+
+### 3.5 성능 최적화 구현 상세
+
+시스템의 성능을 최적화하기 위해 적용된 주요 기술들입니다:
+
+1. **프레임 처리 최적화**
+
+   - 3프레임마다 얼굴 인식 처리
+   - 프레임 크기를 1/4로 축소하여 처리 속도 향상
+
+2. **얼굴 인식 최적화**
+
+   - HOG 기반 얼굴 감지 사용 (CPU 최적화)
+   - 벡터화된 연산으로 얼굴 비교 속도 개선
+
+3. **메모리 관리**
+
+   - 이미지 처리 시 메모리 효율적 사용
+   - 불필요한 객체의 즉시 해제
+
+4. **UI 반응성 향상**
+   - 비동기 처리로 UI 블로킹 방지
+   - 애니메이션 효과의 최적화된 구현
+
+### 3.6 오류 처리 및 예외 상황 관리
+
+시스템의 안정성을 위한 주요 예외 처리:
+
+1. **카메라 연결 오류**
+
+   - 여러 카메라 인덱스 시도
+   - 연결 실패 시 적절한 에러 메시지 표시
+
+2. **얼굴 인식 오류**
+
+   - 인식 실패 시 graceful degradation
+   - 오류 로깅 및 사용자 피드백 제공
+
+3. **파일 처리 오류**
+
+   - 파일 접근 권한 확인
+   - 중복 파일 처리 로직
+
+4. **메모리 관리**
+   - 대용량 이미지 처리 시 메모리 누수 방지
+   - 리소스 적절한 해제
+
+## 4. 시스템 사용 방법
+
+### 4.1 초기 설정
+
+1. 프로그램 실행
+2. 관리 탭에서 얼굴 등록
+3. 출결 탭으로 이동하여 시스템 시작
+
+### 4.2 일상적 사용
+
+1. 프로그램 시작
+2. '출석 시작' 버튼 클릭
+3. 자동 얼굴 인식 및 기록
+4. 필요시 출석 기록 내보내기
+
+### 4.3 관리 작업
+
+1. 새로운 얼굴 등록
+2. 기존 얼굴 정보 관리
+3. 출석 기록 관리 및 백업
+
+## 5. 향후 개선 계획
+
+### 5.1 기능 개선
+
+- 딥러닝 모델 적용으로 인식 정확도 향상
+- 실시간 통계 및 그래프 기능 추가
+- 데이터베이스 연동
+- 웹 인터페이스 추가
+
+### 5.2 성능 최적화
+
+- GPU 가속 지원 추가
+- 멀티스레딩 처리 개선
+- 메모리 사용량 최적화
+
+### 5.3 사용자 경험 개선
+
+- 더 직관적인 UI/UX
+- 다국어 지원
+- 커스터마이징 옵션 추가
+
+전체 소스 코드는 [깃허브](https://github.com/Sungblab/SB_face_recognition_system)에서 확인하실 수 있습니다.
+
+<div
+  style={{
+    position: "relative",
+    paddingBottom: "56.25%",
+    height: 0,
+    overflow: "hidden",
+    maxWidth: "100%",
+    marginTop: "2rem",
+  }}
+>
+  <iframe
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+    }}
+    src="https://www.youtube.com/embed/OEV1jFOZ5-4"
+    title="파이썬 face recognition 라이브러리를 활용한 얼굴인식 출결 시스템 제작"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>

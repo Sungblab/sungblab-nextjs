@@ -1,0 +1,436 @@
+---
+title: "클로드 api를 활용한 진로상담 챗봇 만들기"
+date: "2025-01-08"
+category: "develop"
+---
+
+# Claude API를 활용한 진로상담 챗봇 만들기
+
+안녕하세요! 이번 포스트에서는 Claude API를 활용하여 진로상담 챗봇을 만드는 과정을 아주 상세하게 설명해드리려고 합니다. 취업과 진로에 대한 고민이 많은 학생들을 위해, AI 기술을 활용한 상담 서비스를 직접 구현해보는 프로젝트입니다.
+
+## 1. 개발 환경 설정 (Prerequisites)
+
+### Python 설치
+
+- Python 3.8 이상 버전을 설치합니다. (https://www.python.org/downloads/)
+- 설치 시 "Add Python to PATH" 옵션을 반드시 체크해주세요.
+- 설치 완료 후 터미널에서 `python --version` 명령어로 정상 설치를 확인합니다.
+
+### 가상환경 설정
+
+```bash
+# 가상환경 생성
+python -m venv venv
+
+# 가상환경 활성화 (Windows)
+venv\Scripts\activate
+
+# 가상환경 활성화 (Mac/Linux)
+source venv/bin/activate
+```
+
+### 필요한 라이브러리 설치
+
+```bash
+# Conda를 사용한 라이브러리 설치
+conda install flask
+conda install -c conda-forge anthropic
+conda install python-dotenv
+conda install -c conda-forge flask-sqlalchemy
+```
+
+이후 requirements.txt 파일을 생성하여 의존성을 관리합니다:
+
+```
+Flask==2.0.1
+anthropic==0.3.0
+python-dotenv==0.19.0
+Flask-SQLAlchemy==2.5.1
+```
+
+특히 anthropic 패키지는 반드시 conda를 통해 설치해야 합니다. pip로 설치 시 호환성 문제가 발생할 수 있습니다.
+
+## 2. Claude API 설정하기
+
+![API 설정](/images/api설정.png)
+
+### API 키 발급 과정
+
+1. Anthropic 공식 웹사이트(https://anthropic.com)에 접속합니다.
+2. 회원가입 후 로그인을 진행합니다.
+3. Console 또는 Dashboard에서 API 섹션으로 이동합니다.
+4. "Create New API Key" 버튼을 클릭하여 새로운 API 키를 생성합니다.
+5. 생성된 API 키를 안전한 곳에 보관합니다.
+
+### 환경변수 설정
+
+프로젝트 루트 디렉토리에 `.env` 파일을 생성하고 다음과 같이 작성합니다:
+
+```
+ANTHROPIC_API_KEY=your_api_key_here
+FLASK_ENV=development
+FLASK_APP=run.py
+```
+
+## 3. 프로젝트 구조 설정
+
+### 디렉토리 구조 상세 설명
+
+```
+project/
+├── app/
+│   ├── __init__.py         # Flask 애플리케이션 초기화
+│   ├── templates/          # HTML 템플릿 파일들
+│   │   ├── index.html     # 메인 페이지
+│   │   ├── chat.html      # 채팅 인터페이스
+│   │   └── base.html      # 기본 템플릿
+│   ├── static/            # 정적 파일들
+│   │   ├── css/          # 스타일시트
+│   │   └── js/           # 자바스크립트 파일들
+│   └── utils.py          # 유틸리티 함수들
+├── config.py              # 설정 파일
+├── requirements.txt       # 의존성 목록
+└── run.py                # 애플리케이션 실행 파일
+```
+
+### 주요 파일 설정
+
+#### config.py
+
+```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+class Config:
+    SECRET_KEY = os.urandom(24)
+    ANTHROPIC_API_KEY = os.getenv('ANTHROPIC_API_KEY')
+```
+
+#### app/**init**.py
+
+```python
+from flask import Flask
+from config import Config
+
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
+
+    from app.routes import main
+    app.register_blueprint(main)
+
+    return app
+```
+
+## 4. 웹 인터페이스 구현
+
+### 메인 페이지 구현
+
+![첫 번째 페이지](/images/첫번째.png)
+
+메인 페이지는 사용자 친화적인 인터페이스를 제공합니다. Bootstrap을 활용하여 반응형 디자인을 구현했으며, 다음과 같은 요소들을 포함합니다:
+
+- 환영 메시지와 서비스 소개
+- 채팅 시작 버튼
+- 사용 가이드
+- 최근 상담 내역 (로그인 시)
+
+### 채팅 인터페이스
+
+![두 번째 페이지](/images/9번째.png)
+
+채팅 인터페이스는 다음과 같은 특징을 가집니다:
+
+1. 실시간 메시지 표시
+2. 사용자/AI 응답 구분을 위한 다른 스타일 적용
+3. 입력창과 전송 버튼
+4. 대화 내역 자동 스크롤
+5. 로딩 인디케이터
+
+### HTML/CSS 구현
+
+```html
+<!-- index.html 주요 부분 -->
+<div class="chat-container">
+  <div class="chat-messages" id="messageArea">
+    <!-- 메시지들이 여기에 동적으로 추가됨 -->
+  </div>
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="질문을 입력하세요..." />
+    <button onclick="sendMessage()">전송</button>
+  </div>
+</div>
+```
+
+## 5. Claude API 연동
+
+### API 호출 구현
+
+```python
+# app/utils.py
+import anthropic
+
+def get_claude_response(message):
+    client = anthropic.Client(api_key=os.getenv('ANTHROPIC_API_KEY'))
+
+    try:
+        response = client.messages.create(
+            model="claude-3-opus-20240229",
+            max_tokens=1000,
+            messages=[{
+                "role": "user",
+                "content": message
+            }]
+        )
+        return response.content[0].text
+    except Exception as e:
+        return f"Error: {str(e)}"
+```
+
+### 프롬프트 설계
+
+진로 상담에 특화된 프롬프트를 다음과 같이 체계적으로 설계했습니다:
+
+```python
+def engineer_prompt(user_info, user_message):
+    system_prompt = """당신은 전문적인 고등학생 진로 상담 AI입니다.
+
+상담 시 고려해야 할 핵심 영역:
+
+1. 학업 역량 분석
+- 교과목별 성취도와 선호도 파악
+- 학습 스타일과 학업 태도 분석
+- 교과 외 학습 활동 및 자기주도학습 능력
+- 특정 분야에 대한 심화학습 경험
+
+2. 적성 및 흥미 분석
+- MBTI 성격유형과 직업 적합성
+- 취미와 관심사의 진로 연계 가능성
+- 동아리 활동과 교내외 활동 경험
+- 봉사활동과 사회참여 경험
+
+3. 진로 탐색 및 설계
+- 희망 직업군에 대한 상세 정보 제공
+- 필요한 역량과 자격요건 안내
+- 관련 학과 및 커리큘럼 소개
+- 진학 전략 및 준비 방법 제시
+
+4. 역량 개발 계획
+- 학업 성취도 향상을 위한 학습 전략
+- 필요한 자격증 및 스펙 준비 계획
+- 외국어 및 컴퓨터 활용능력 향상 방안
+- 독서 및 교양 함양 방법
+
+5. 심리적 지원
+- 학업 스트레스 관리 방안
+- 진로 불안 해소를 위한 조언
+- 자신감과 동기부여 강화
+- 긍정적 자아상 형성 지원
+
+6. 미래 전망 분석
+- 관심 분야의 산업 동향
+- 미래 유망 직종 정보
+- 기술 발전에 따른 직업 변화
+- 사회 변화와 진로 적응력
+
+7. 실천적 행동 계획
+- 단기 목표(6개월-1년)
+- 중기 목표(1-3년)
+- 장기 목표(3-5년)
+- 구체적 실천 방안과 타임라인"""
+
+    user_context = f"""
+# 학생 기본 정보
+- 이름: {user_info['name']}
+- 나이: {user_info['age']}
+- 학년: {user_info['grade']}
+- 계열: {user_info['academic_track']}
+
+# 학업 현황
+- 학업 성취도: {user_info['academic_performance']}
+- 좋아하는 과목: {user_info['favorite_subject']}
+- 싫어하는 과목: {user_info['disliked_subject']}
+- 학습 스타일: {user_info.get('learning_style', '정보 없음')}
+
+# 진로 탐색
+- 관심사: {user_info['interests']}
+- 희망 진로: {user_info['career_interests']}
+- 장래 희망: {user_info['future_job']}
+- 롤모델: {user_info['role_model']}"""
+
+    return system_prompt + "\n\n" + user_context + "\n\n학생 메시지: " + user_message
+```
+
+#### 프롬프트 구성 요소 설명
+
+1. **시스템 프롬프트 (System Prompt)**
+
+   - AI의 역할 정의: 전문적인 고등학생 진로 상담가
+   - 상담 영역 구체화: 7개 핵심 영역 설정
+   - 상담 방식 가이드라인 제시
+
+2. **사용자 정보 컨텍스트 (User Context)**
+
+   - 기본 정보: 이름, 나이, 학년, 계열
+   - 학업 현황: 성취도, 선호 과목
+   - 진로 관련 정보: 관심사, 희망 진로, 롤모델
+
+3. **상담 원칙**
+
+   - 개별화된 접근: 학생별 맞춤형 상담
+   - 현실적 조언: 실현 가능한 목표 설정
+   - 동기부여: 긍정적 피드백과 격려
+   - 전문성: 최신 정보와 데이터 기반
+   - 윤리적 고려: 편견 없는 상담
+
+4. **응답 구조화**
+
+   ```html
+   <h2>종합 분석</h2>
+   [학생의 특성과 상황에 대한 전문적 분석]
+
+   <h2>진로 적합성 평가</h2>
+   [희망 진로와 현재 역량의 일치도 분석]
+
+   <h2>맞춤형 발전 계획</h2>
+   [단계별 목표와 실천 계획]
+
+   <h2>추천 자료</h2>
+   [맞춤형 학습 자료 및 활동 추천]
+   ```
+
+#### 프롬프트 최적화 전략
+
+1. **맥락 강화**
+
+   - 학생 정보의 체계적 구조화
+   - 관련 정보간 연계성 강조
+   - 시간적 흐름을 고려한 정보 배치
+
+2. **응답 품질 향상**
+
+   - 구체적인 가이드라인 제시
+   - 체계적인 응답 구조 설정
+   - 실행 가능한 조언 강조
+
+3. **개인화 강화**
+
+   - MBTI 성격유형 활용
+   - 학습 스타일 고려
+   - 개인별 강점과 약점 분석
+
+4. **실용성 확보**
+   - 구체적 행동 계획 수립
+   - 시간대별 목표 설정
+   - 실천 가능한 단계 제시
+
+## 6. 데이터베이스 연동
+
+### SQLAlchemy 모델 정의
+
+```python
+from app import db
+
+class ChatHistory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_message = db.Column(db.Text, nullable=False)
+    ai_response = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+```
+
+### 대화 내역 저장 및 조회 기능
+
+```python
+def save_chat(user_message, ai_response):
+    chat = ChatHistory(
+        user_message=user_message,
+        ai_response=ai_response
+    )
+    db.session.add(chat)
+    db.session.commit()
+```
+
+## 7. 보안 및 에러 처리
+
+### API 키 보안
+
+- 환경 변수 사용
+- .gitignore 파일에 .env 추가
+- 프로덕션 환경에서의 보안 설정
+
+### 에러 핸들링
+
+```python
+@app.errorhandler(500)
+def internal_error(error):
+    return jsonify({
+        'error': 'Internal server error',
+        'message': str(error)
+    }), 500
+```
+
+## 8. 배포 준비
+
+### 프로덕션 설정
+
+```python
+# config.py
+class ProductionConfig(Config):
+    DEBUG = False
+    # 프로덕션 데이터베이스 설정
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+```
+
+### 서버 실행
+
+```bash
+gunicorn run:app
+```
+
+## 마무리
+
+이렇게 해서 Claude API를 활용한 진로상담 챗봇의 전체적인 구현 과정을 살펴보았습니다. 이 프로젝트를 통해 다음과 같은 기술들을 학습할 수 있었습니다:
+
+1. Flask 웹 프레임워크 활용
+2. API 연동 및 비동기 처리
+3. 데이터베이스 설계 및 구현
+4. 프론트엔드 인터페이스 구현
+5. 보안 및 에러 처리
+
+더 나은 서비스를 위한 향후 개선 방향:
+
+- 사용자 인증 시스템 추가
+- 상담 내역 분석 및 리포트 기능
+- 다국어 지원
+- 음성 인터페이스 추가
+- 모바일 앱 버전 개발
+
+전체 소스 코드는 [깃허브](https://github.com/Sungblab/ai_career_advisor)에서 확인하실 수 있습니다.
+
+<div
+  style={{
+    position: "relative",
+    paddingBottom: "56.25%",
+    height: 0,
+    overflow: "hidden",
+    maxWidth: "100%",
+    marginTop: "2rem",
+  }}
+>
+  <iframe
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+    }}
+    src="https://www.youtube.com/embed/6ptUPSYBBtA"
+    title="claude api 를 활용한 flask 진로 상담 챗봇"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>

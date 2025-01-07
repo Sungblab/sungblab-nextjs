@@ -162,6 +162,12 @@ const Home: NextPage = () => {
                   label="Instagram"
                 />
               </div>
+              <Link
+                href="/blog"
+                className="inline-block px-6 py-2 mt-4 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold hover:opacity-90 transition-opacity"
+              >
+                블로그 보러가기
+              </Link>
             </div>
           </AnimatedSection>
         </section>
