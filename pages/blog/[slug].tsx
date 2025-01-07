@@ -241,7 +241,10 @@ const BlogPost: NextPage<BlogPostProps> = ({
       />
     ),
     div: (props: any) => (
-      <div className="max-w-full overflow-x-auto py-2" {...props} />
+      <div
+        className="max-w-full overflow-x-auto py-2 overflow-y-hidden"
+        {...props}
+      />
     ),
   };
 
