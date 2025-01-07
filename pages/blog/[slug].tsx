@@ -211,7 +211,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
           theme === "dark"
             ? "bg-gray-800 text-gray-200"
             : "bg-gray-100 text-gray-800"
-        } shadow-lg`}
+        } shadow-lg max-w-full`}
         {...props}
       />
     ),
@@ -239,6 +239,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
         }`}
         {...props}
       />
+    ),
+    div: (props: any) => (
+      <div className="max-w-full overflow-x-auto py-2" {...props} />
     ),
   };
 
@@ -384,7 +387,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
               <div className="mt-16">
                 <Giscus
-                  repo="sungblab/sungblab-nextjs"
+                  repo="Sungblab/sungblab-nextjs"
                   repoId="R_kgDOMs0-6A"
                   category="Announcements"
                   categoryId="DIC_kwDOMs0-6M4CiQTH"
