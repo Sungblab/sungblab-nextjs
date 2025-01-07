@@ -242,7 +242,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
     ),
     div: (props: any) => (
       <div
-        className="max-w-full overflow-x-auto py-2 overflow-y-hidden"
+        className="max-w-full overflow-x-auto py-2 overflow-y-hidden scrollbar-hide"
+        style={{ WebkitOverflowScrolling: "touch" }}
         {...props}
       />
     ),
