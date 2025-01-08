@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import katex from "katex";
 import "katex/dist/katex.min.css";
 import styled from "styled-components";
 
@@ -61,8 +62,7 @@ const Math = ({ math, block = false }: MathProps) => {
   const mathRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && mathRef.current) {
-      const katex = require("katex");
+    if (mathRef.current) {
       try {
         katex.render(math, mathRef.current, {
           throwOnError: false,
