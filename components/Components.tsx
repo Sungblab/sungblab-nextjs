@@ -84,13 +84,17 @@ export const Footer: React.FC = () => {
   const { theme } = useTheme();
   return (
     <footer
-      className={`py-8 ${
+      className={`py-8 relative ${
         theme === "dark"
-          ? "bg-gray-900/95 text-white"
-          : "bg-gray-100/95 text-gray-600"
+          ? "bg-gray-900/95 text-white border-t border-gray-800/50"
+          : "bg-white/95 text-gray-600 border-t border-gray-200/50"
       } backdrop-blur-sm`}
     >
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-500/5 via-blue-500/5 to-transparent opacity-50" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:24px_24px]" />
+      </div>
+      <div className="max-w-6xl mx-auto px-4 relative">
         <div className="flex flex-col items-center space-y-6">
           <div className="w-full">
             <div
@@ -104,28 +108,30 @@ export const Footer: React.FC = () => {
             <p className={theme === "dark" ? "text-gray-400" : "text-gray-500"}>
               &copy; {new Date().getFullYear()} Sungblab. All rights reserved.
             </p>
-            <div className="flex space-x-4 mt-2 md:mt-0">
+            <div className="flex space-x-6 mt-4 md:mt-0">
               <motion.a
                 href="mailto:ksb19558@naver.com"
                 whileHover={{ scale: 1.05 }}
-                className={`transition-colors duration-300 ${
+                className={`group relative font-medium transition-colors duration-300 ${
                   theme === "dark"
                     ? "text-gray-400 hover:text-purple-400"
                     : "text-gray-600 hover:text-purple-600"
                 }`}
               >
                 Contact
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-500 group-hover:w-full transition-all duration-300" />
               </motion.a>
               <motion.a
                 href="/blog"
                 whileHover={{ scale: 1.05 }}
-                className={`transition-colors duration-300 ${
+                className={`group relative font-medium transition-colors duration-300 ${
                   theme === "dark"
                     ? "text-gray-400 hover:text-purple-400"
                     : "text-gray-600 hover:text-purple-600"
                 }`}
               >
                 Blog
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-500 group-hover:w-full transition-all duration-300" />
               </motion.a>
             </div>
           </div>
@@ -172,21 +178,21 @@ export const Header: React.FC = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 py-4 backdrop-blur-md bg-opacity-80 ${
+      className={`sticky top-0 z-50 py-4 backdrop-blur-md ${
         theme === "dark"
-          ? "bg-gray-900/80 text-white"
-          : "bg-gray-100/80 text-gray-900"
+          ? "bg-gray-900/80 text-white border-b border-gray-800/50"
+          : "bg-white/80 text-gray-900 border-b border-gray-200/50"
       } transition-colors duration-300`}
     >
       <nav className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           <Link
             href="/"
-            className="min-w-[140px] text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500 py-2"
+            className="min-w-[140px] text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 bg-size-200 animate-gradient py-2"
           >
             Sungblab
           </Link>
-          <div className="hidden md:flex space-x-6 items-center">
+          <div className="hidden md:flex items-center space-x-8">
             {["Home", "Projects", "Blog"].map((item) => (
               <Link
                 key={item}
@@ -196,17 +202,17 @@ export const Header: React.FC = () => {
                 }`}
               >
                 {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-600 group-hover:w-full transition-all duration-300" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-500 group-hover:w-full transition-all duration-300" />
               </Link>
             ))}
             <motion.button
               onClick={toggleTheme}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className={`p-2 rounded-full transition-colors duration-300 ${
+              className={`p-2 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 ${
                 theme === "dark"
-                  ? "bg-gray-800 hover:bg-gray-700"
-                  : "bg-gray-200 hover:bg-gray-300"
+                  ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
+                  : "bg-white/80 hover:bg-white hover:border-purple-500/30"
               }`}
             >
               {theme === "dark" ? (
@@ -221,7 +227,11 @@ export const Header: React.FC = () => {
               onClick={toggleTheme}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="mr-4"
+              className={`mr-4 p-2 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 ${
+                theme === "dark"
+                  ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
+                  : "bg-white/80 hover:bg-white hover:border-purple-500/30"
+              }`}
             >
               {theme === "dark" ? (
                 <FaSun className="text-yellow-400 w-5 h-5" />
@@ -273,10 +283,10 @@ export const Header: React.FC = () => {
                 <Link
                   key={item}
                   href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                  className={`block py-2 px-4 rounded-lg mb-2 transition-all duration-300 ${
+                  className={`block py-3 px-4 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 mb-2 ${
                     theme === "dark"
-                      ? "text-gray-300 hover:bg-gray-800"
-                      : "text-gray-600 hover:bg-gray-200"
+                      ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30 text-gray-300"
+                      : "bg-white/80 hover:bg-white hover:border-purple-500/30 text-gray-600"
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -385,12 +395,14 @@ interface SocialButtonProps {
   href: string;
   icon: "github" | "youtube" | "linkedin" | "twitter" | "instagram";
   label: string;
+  className?: string;
 }
 
 export const SocialButton: React.FC<SocialButtonProps> = ({
   href,
   icon,
   label,
+  className,
 }) => {
   const { theme } = useTheme();
   const IconComponent = {
@@ -412,7 +424,7 @@ export const SocialButton: React.FC<SocialButtonProps> = ({
         theme === "dark"
           ? "bg-gray-800/80 text-gray-200 hover:bg-purple-900/80"
           : "bg-gray-200/80 text-gray-800 hover:bg-purple-100/80"
-      } backdrop-blur-sm`}
+      } backdrop-blur-sm ${className || ""}`}
     >
       <IconComponent className="text-lg" />
       <span className="font-medium">{label}</span>

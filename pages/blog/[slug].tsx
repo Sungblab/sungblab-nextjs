@@ -25,7 +25,7 @@ import {
   getPostFilePaths,
 } from "../../utils/mdxUtils";
 import { Post } from "../../types/post";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import styled from "styled-components";
 
 interface BlogPostProps {
@@ -67,6 +67,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
   const { theme } = useTheme();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollButtons, setShowScrollButtons] = useState(false);
+  const [showToc, setShowToc] = useState(false);
 
   const generateId = (text: string) => {
     return text
@@ -259,254 +260,356 @@ const BlogPost: NextPage<BlogPostProps> = ({
           theme === "dark" ? "bg-gray-900" : "bg-gray-50"
         }`}
       >
-        <div className="container mx-auto px-4 py-12">
-          <div className="flex flex-col lg:flex-row gap-8">
-            <div className="flex-1">
-              <motion.div
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="mb-12"
-              >
-                <Link
-                  href="/blog"
-                  className={`inline-flex items-center mb-8 text-sm font-medium transition-colors duration-200 hover:translate-x-[-4px] ${
-                    theme === "dark"
-                      ? "text-gray-400 hover:text-gray-200"
-                      : "text-gray-600 hover:text-gray-800"
-                  }`}
-                >
-                  <FaArrowLeft className="mr-2" /> 블로그 목록으로 돌아가기
-                </Link>
+        <div className="relative">
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 via-blue-500/5 to-transparent" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:24px_24px]" />
+          </div>
 
-                <div className="space-y-6">
-                  <h1
-                    className={`text-3xl lg:text-4xl font-bold leading-tight tracking-tight ${
-                      theme === "dark" ? "text-gray-100" : "text-gray-900"
+          <div className="container mx-auto px-4 py-12 relative">
+            <div className="flex flex-col lg:flex-row gap-8">
+              <div className="flex-1">
+                <motion.div
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="mb-12"
+                >
+                  <Link
+                    href="/blog"
+                    className={`inline-flex items-center mb-8 text-sm font-medium transition-all duration-300 group ${
+                      theme === "dark"
+                        ? "text-gray-400 hover:text-gray-200"
+                        : "text-gray-600 hover:text-gray-800"
                     }`}
                   >
-                    {frontMatter.title}
-                  </h1>
-                  <div className="flex flex-wrap items-center gap-4">
-                    <span
-                      className={`text-sm ${
-                        theme === "dark" ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      {frontMatter.date}
-                    </span>
-                    <span
-                      className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        theme === "dark"
-                          ? "bg-gray-800 text-gray-300"
-                          : "bg-gray-200 text-gray-700"
-                      }`}
-                    >
-                      {frontMatter.category}
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap gap-3">
-                    <button
-                      onClick={copyPostUrl}
-                      className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 bg-blue-500 text-white hover:bg-blue-600 hover:scale-105"
-                    >
-                      <FaCopy className="mr-2" /> URL 복사
-                    </button>
-                    <button
-                      onClick={sharePost}
-                      className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 bg-teal-500 text-white hover:bg-teal-600 hover:scale-105"
-                    >
-                      <FaShare className="mr-2" /> 공유하기
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.article
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className={`prose prose-lg ${
-                  theme === "dark" ? "prose-invert prose-dark" : "prose-light"
-                }`}
-              >
-                <MDXRemote {...mdxSource} components={MDXComponents} />
-              </motion.article>
-
-              <div className="mt-12 mb-16 grid grid-cols-1 md:grid-cols-2 gap-4">
-                {prevPost && (
-                  <Link
-                    href={`/blog/${prevPost.slug}`}
-                    className={`
-                      group p-4 rounded-lg transition-all duration-200
-                      ${
-                        theme === "dark"
-                          ? "bg-gray-800 hover:bg-gray-700"
-                          : "bg-white hover:bg-gray-50"
-                      }
-                      shadow-lg
-                    `}
-                  >
-                    <span className="text-sm text-blue-500 mb-2 block">
-                      이전 포스트
-                    </span>
-                    <h3
-                      className={`
-                      font-medium line-clamp-2
-                      ${theme === "dark" ? "text-gray-200" : "text-gray-800"}
-                    `}
-                    >
-                      {prevPost.frontmatter.title}
-                    </h3>
+                    <FaArrowLeft className="mr-2 transition-transform duration-300 group-hover:translate-x-[-4px]" />
+                    블로그 목록으로 돌아가기
                   </Link>
-                )}
 
-                {nextPost && (
-                  <Link
-                    href={`/blog/${nextPost.slug}`}
-                    className={`
-                      group p-4 rounded-lg transition-all duration-200 text-right
-                      ${
-                        theme === "dark"
-                          ? "bg-gray-800 hover:bg-gray-700"
-                          : "bg-white hover:bg-gray-50"
-                      }
-                      shadow-lg
-                    `}
-                  >
-                    <span className="text-sm text-blue-500 mb-2 block">
-                      다음 포스트
-                    </span>
-                    <h3
-                      className={`
-                      font-medium line-clamp-2
-                      ${theme === "dark" ? "text-gray-200" : "text-gray-800"}
-                    `}
+                  <div className="space-y-6">
+                    <h1
+                      className={`text-3xl lg:text-4xl font-bold leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 bg-size-200 animate-gradient`}
                     >
-                      {nextPost.frontmatter.title}
-                    </h3>
-                  </Link>
-                )}
-              </div>
-
-              <div className="mt-16">
-                <Giscus
-                  repo="Sungblab/sungblab-nextjs"
-                  repoId="R_kgDOMs0-6A"
-                  category="Announcements"
-                  categoryId="DIC_kwDOMs0-6M4CiQTH"
-                  mapping="pathname"
-                  reactionsEnabled="1"
-                  emitMetadata="0"
-                  inputPosition="top"
-                  theme={theme === "dark" ? "dark" : "light"}
-                  lang="ko"
-                />
-              </div>
-            </div>
-
-            <div className="hidden lg:block lg:w-72 space-y-8">
-              <div className="relative">
-                <motion.div
-                  initial={{ x: 20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  className={`sticky top-24 ${
-                    theme === "dark" ? "text-gray-300" : "text-gray-700"
-                  }`}
-                >
-                  <div
-                    className={`rounded-lg p-6 ${
-                      theme === "dark" ? "bg-gray-800" : "bg-white"
-                    } shadow-lg mb-8`}
-                  >
-                    <h3 className="text-lg font-semibold mb-4 flex items-center">
-                      <FaListUl className="mr-2" />
-                      목차
-                    </h3>
-                    <nav className="space-y-3">
-                      {toc.map((item) => (
-                        <button
-                          key={item.id}
-                          onClick={() => scrollToHeader(item.id)}
-                          className={`
-                            block w-full text-left hover:text-blue-500 transition-colors duration-200
-                            ${
-                              item.level === 1
-                                ? "text-base font-medium"
-                                : "text-sm pl-4 text-gray-600 dark:text-gray-400"
-                            }
-                          `}
-                        >
-                          {item.text}
-                        </button>
-                      ))}
-                    </nav>
-                  </div>
-
-                  <div
-                    className={`rounded-lg p-6 ${
-                      theme === "dark" ? "bg-gray-800" : "bg-white"
-                    } shadow-lg`}
-                  >
-                    <h3 className="text-lg font-semibold mb-4 flex items-center">
-                      <FaBookmark className="mr-2" />
-                      관련 포스트
-                    </h3>
-                    <div className="space-y-4">
-                      {relatedPosts.slice(0, 3).map((post) => (
-                        <Link
-                          key={post.slug}
-                          href={`/blog/${post.slug}`}
-                          className={`
-                            block group
-                            ${
-                              theme === "dark"
-                                ? "hover:bg-gray-700"
-                                : "hover:bg-gray-50"
-                            }
-                            p-3 rounded-lg transition-colors duration-200
-                          `}
-                        >
-                          <h4 className="font-medium text-sm group-hover:text-blue-500 transition-colors duration-200">
-                            {post.frontmatter.title}
-                          </h4>
-                          <p className="text-xs mt-1 opacity-75">
-                            {post.frontmatter.date}
-                          </p>
-                        </Link>
-                      ))}
+                      {frontMatter.title}
+                    </h1>
+                    <div className="flex flex-wrap items-center gap-4">
+                      <span
+                        className={`text-sm ${
+                          theme === "dark" ? "text-gray-400" : "text-gray-600"
+                        }`}
+                      >
+                        {frontMatter.date}
+                      </span>
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          theme === "dark"
+                            ? "bg-gray-800/60 text-gray-300 border border-gray-700"
+                            : "bg-gray-100/80 text-gray-700 border border-gray-200"
+                        }`}
+                      >
+                        {frontMatter.category}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={copyPostUrl}
+                        className="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg hover:shadow-xl"
+                      >
+                        <FaCopy className="mr-2" /> URL 복사
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={sharePost}
+                        className="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 bg-gradient-to-r from-blue-500 to-teal-400 text-white shadow-lg hover:shadow-xl"
+                      >
+                        <FaShare className="mr-2" /> 공유하기
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setShowToc(!showToc)}
+                        className={`lg:hidden inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 ${
+                          theme === "dark"
+                            ? "bg-gray-800/40 text-gray-200"
+                            : "bg-white/80 text-gray-700"
+                        }`}
+                      >
+                        <FaListUl className="mr-2" /> 목차
+                      </motion.button>
                     </div>
                   </div>
                 </motion.div>
+
+                {/* Mobile TOC */}
+                <AnimatePresence>
+                  {showToc && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="lg:hidden mb-8"
+                    >
+                      <div
+                        className={`rounded-xl p-6 ${
+                          theme === "dark" ? "bg-gray-800/40" : "bg-white/80"
+                        } backdrop-blur-sm border border-transparent`}
+                      >
+                        <h3 className="text-lg font-semibold mb-4 flex items-center">
+                          <FaListUl className="mr-2" />
+                          목차
+                        </h3>
+                        <nav className="space-y-3">
+                          {toc.map((item) => (
+                            <button
+                              key={item.id}
+                              onClick={() => {
+                                scrollToHeader(item.id);
+                                setShowToc(false);
+                              }}
+                              className={`
+                                block w-full text-left hover:text-blue-500 transition-colors duration-200
+                                ${
+                                  item.level === 1
+                                    ? "text-base font-medium"
+                                    : "text-sm pl-4 text-gray-600 dark:text-gray-400"
+                                }
+                              `}
+                            >
+                              {item.text}
+                            </button>
+                          ))}
+                        </nav>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <motion.article
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className={`prose prose-lg max-w-none ${
+                    theme === "dark" ? "prose-invert prose-dark" : "prose-light"
+                  }`}
+                >
+                  <div
+                    className={`rounded-xl p-8 backdrop-blur-sm border border-transparent ${
+                      theme === "dark"
+                        ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
+                        : "bg-white/80 hover:bg-white hover:border-purple-500/30"
+                    } transition-all duration-300`}
+                  >
+                    <MDXRemote {...mdxSource} components={MDXComponents} />
+                  </div>
+                </motion.article>
+
+                <div className="mt-12 mb-16">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {prevPost && (
+                      <Link
+                        href={`/blog/${prevPost.slug}`}
+                        className={`
+                          group p-6 rounded-xl backdrop-blur-sm border border-transparent
+                          ${
+                            theme === "dark"
+                              ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
+                              : "bg-white/80 hover:bg-white hover:border-purple-500/30"
+                          }
+                          transition-all duration-300 shadow-lg hover:shadow-xl
+                        `}
+                      >
+                        <span className="text-sm text-blue-500 mb-2 block">
+                          이전 포스트
+                        </span>
+                        <h3
+                          className={`
+                          font-medium line-clamp-2 group-hover:text-purple-500 transition-colors duration-300
+                          ${
+                            theme === "dark" ? "text-gray-200" : "text-gray-800"
+                          }
+                        `}
+                        >
+                          {prevPost.frontmatter.title}
+                        </h3>
+                      </Link>
+                    )}
+
+                    {nextPost && (
+                      <Link
+                        href={`/blog/${nextPost.slug}`}
+                        className={`
+                          group p-6 rounded-xl backdrop-blur-sm border border-transparent text-right
+                          ${
+                            theme === "dark"
+                              ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
+                              : "bg-white/80 hover:bg-white hover:border-purple-500/30"
+                          }
+                          transition-all duration-300 shadow-lg hover:shadow-xl
+                        `}
+                      >
+                        <span className="text-sm text-blue-500 mb-2 block">
+                          다음 포스트
+                        </span>
+                        <h3
+                          className={`
+                          font-medium line-clamp-2 group-hover:text-purple-500 transition-colors duration-300
+                          ${
+                            theme === "dark" ? "text-gray-200" : "text-gray-800"
+                          }
+                        `}
+                        >
+                          {nextPost.frontmatter.title}
+                        </h3>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-16">
+                  <div
+                    className={`rounded-xl p-8 backdrop-blur-sm border border-transparent ${
+                      theme === "dark" ? "bg-gray-800/40" : "bg-white/80"
+                    } transition-all duration-300`}
+                  >
+                    <Giscus
+                      repo="Sungblab/sungblab-nextjs"
+                      repoId="R_kgDOMs0-6A"
+                      category="Announcements"
+                      categoryId="DIC_kwDOMs0-6M4CiQTH"
+                      mapping="pathname"
+                      reactionsEnabled="1"
+                      emitMetadata="0"
+                      inputPosition="top"
+                      theme={theme === "dark" ? "dark" : "light"}
+                      lang="ko"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="hidden lg:block lg:w-72 space-y-8">
+                <div className="relative">
+                  <motion.div
+                    initial={{ x: 20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className={`sticky top-24 ${
+                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    <div
+                      className={`rounded-xl p-6 backdrop-blur-sm border border-transparent ${
+                        theme === "dark"
+                          ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
+                          : "bg-white/80 hover:bg-white hover:border-purple-500/30"
+                      } transition-all duration-300 shadow-lg mb-8`}
+                    >
+                      <h3 className="text-lg font-semibold mb-4 flex items-center">
+                        <FaListUl className="mr-2" />
+                        목차
+                      </h3>
+                      <nav className="space-y-3">
+                        {toc.map((item) => (
+                          <button
+                            key={item.id}
+                            onClick={() => scrollToHeader(item.id)}
+                            className={`
+                              block w-full text-left hover:text-blue-500 transition-colors duration-200
+                              ${
+                                item.level === 1
+                                  ? "text-base font-medium"
+                                  : "text-sm pl-4 text-gray-600 dark:text-gray-400"
+                              }
+                            `}
+                          >
+                            {item.text}
+                          </button>
+                        ))}
+                      </nav>
+                    </div>
+
+                    <div
+                      className={`rounded-xl p-6 backdrop-blur-sm border border-transparent ${
+                        theme === "dark"
+                          ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
+                          : "bg-white/80 hover:bg-white hover:border-purple-500/30"
+                      } transition-all duration-300 shadow-lg`}
+                    >
+                      <h3 className="text-lg font-semibold mb-4 flex items-center">
+                        <FaBookmark className="mr-2" />
+                        관련 포스트
+                      </h3>
+                      <div className="space-y-4">
+                        {relatedPosts.slice(0, 3).map((post) => (
+                          <Link
+                            key={post.slug}
+                            href={`/blog/${post.slug}`}
+                            className={`
+                              block group p-3 rounded-lg
+                              ${
+                                theme === "dark"
+                                  ? "hover:bg-gray-700/50"
+                                  : "hover:bg-gray-50/50"
+                              }
+                              transition-all duration-200
+                            `}
+                          >
+                            <h4 className="font-medium text-sm group-hover:text-purple-500 transition-colors duration-200">
+                              {post.frontmatter.title}
+                            </h4>
+                            <p className="text-xs mt-1 opacity-75">
+                              {post.frontmatter.date}
+                            </p>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div
-          className="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-600 to-blue-500"
-          style={{ width: `${scrollProgress}%` }}
+        {/* Progress Bar */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: scrollProgress / 100 }}
+          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 transform origin-left z-50"
         />
 
-        {showScrollButtons && (
-          <div className="fixed bottom-8 right-8 flex flex-col space-y-4">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              onClick={scrollToTop}
-              className="p-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg"
+        {/* Scroll Buttons */}
+        <AnimatePresence>
+          {showScrollButtons && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="fixed bottom-8 right-8 flex flex-col space-y-4"
             >
-              <FaArrowUp />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              onClick={scrollToBottom}
-              className="p-3 rounded-full bg-gradient-to-r from-blue-500 to-teal-400 text-white shadow-lg"
-            >
-              <FaArrowDown />
-            </motion.button>
-          </div>
-        )}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={scrollToTop}
+                className="p-3 rounded-xl backdrop-blur-sm border border-transparent bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <FaArrowUp />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={scrollToBottom}
+                className="p-3 rounded-xl backdrop-blur-sm border border-transparent bg-gradient-to-r from-blue-500 to-teal-400 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <FaArrowDown />
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </Layout>
   );
