@@ -266,9 +266,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
-          <div className="container mx-auto px-4 py-12 relative">
+          <div className="container mx-auto px-0 sm:px-4 py-12 relative">
             <div className="flex flex-col lg:flex-row gap-8">
-              <div className="flex-1">
+              <div className="flex-1 px-4 sm:px-0">
                 <motion.div
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -392,12 +392,12 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className={`prose prose-lg max-w-none ${
+                  className={`prose prose-lg max-w-none px-0 ${
                     theme === "dark" ? "prose-invert prose-dark" : "prose-light"
                   }`}
                 >
                   <div
-                    className={`rounded-xl p-8 backdrop-blur-sm border border-transparent ${
+                    className={`rounded-xl p-4 sm:p-8 backdrop-blur-sm border border-transparent ${
                       theme === "dark"
                         ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
                         : "bg-white/80 hover:bg-white hover:border-purple-500/30"
