@@ -268,7 +268,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
           <div className="container mx-auto px-0 sm:px-4 py-12 relative">
             <div className="flex flex-col lg:flex-row gap-8">
-              <div className="flex-1 px-4 sm:px-0">
+              <div className="flex-1 px-2 sm:px-4">
                 <motion.div
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -397,7 +397,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   }`}
                 >
                   <div
-                    className={`rounded-xl p-4 sm:p-8 backdrop-blur-sm border border-transparent ${
+                    className={`rounded-xl p-2 sm:p-8 backdrop-blur-sm border border-transparent ${
                       theme === "dark"
                         ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
                         : "bg-white/80 hover:bg-white hover:border-purple-500/30"
