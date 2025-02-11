@@ -471,7 +471,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
                 <div className="mt-16">
                   <div
-                    className={`rounded-xl p-8 backdrop-blur-sm border border-transparent ${
+                    className={`rounded-xl p-0 sm:p-8 backdrop-blur-sm border border-transparent ${
                       theme === "dark" ? "bg-gray-800/40" : "bg-white/80"
                     } transition-all duration-300`}
                   >
