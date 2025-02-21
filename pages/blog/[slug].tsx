@@ -266,7 +266,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
-          <div className="container mx-auto px-0 sm:px-4 py-12 relative">
+          <div className="container mx-auto py-12 relative">
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="flex-1 px-2 sm:px-4">
                 <motion.div
