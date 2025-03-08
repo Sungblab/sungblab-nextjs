@@ -163,7 +163,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
                     theme === "dark" ? "text-gray-300" : "text-gray-700"
                   } font-light`}
                 >
-                  Web & Python Developer
+                  Full-Stack Developer & AI Enthusiast
                 </p>
                 <motion.p
                   className={`mt-6 max-w-2xl mx-auto text-base sm:text-lg ${
@@ -173,17 +173,26 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
                 >
-                  안녕하세요! 창의적인 웹 개발과 파이썬 프로그래밍을 통해
+                  안녕하세요! 저는
                   <span
                     className={`${
                       theme === "dark" ? "text-purple-300" : "text-purple-600"
                     } font-medium`}
                   >
                     {" "}
-                    혁신적인 솔루션
+                    풀스택 개발
                   </span>
-                  을 만들어내는 개발자입니다. 사용자 경험을 중심으로 한 디자인과
-                  효율적인 코드를 지향합니다.
+                  과
+                  <span
+                    className={`${
+                      theme === "dark" ? "text-purple-300" : "text-purple-600"
+                    } font-medium`}
+                  >
+                    {" "}
+                    인공지능
+                  </span>
+                  에 열정을 가진 개발자입니다. 효율적이고 사용자 친화적인 웹
+                  애플리케이션을 만들고 AI 기능을 통합하는 것이 목표입니다.
                 </motion.p>
               </motion.div>
               <motion.div

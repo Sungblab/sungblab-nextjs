@@ -210,7 +210,7 @@ export const Header: React.FC = () => {
             Sungblab
           </Link>
           <div className="hidden md:flex items-center space-x-8">
-            {["Home", "Projects", "Blog"].map((item) => (
+            {["Home", "Projects", "Blog", "About"].map((item) => (
               <Link
                 key={item}
                 href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
@@ -300,7 +300,7 @@ export const Header: React.FC = () => {
               variants={menuVariants}
               className="mt-4 md:hidden overflow-hidden"
             >
-              {["Home", "Projects", "Blog"].map((item) => (
+              {["Home", "Projects", "Blog", "About"].map((item) => (
                 <Link
                   key={item}
                   href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
@@ -571,11 +571,11 @@ export const Comments: React.FC<CommentsProps> = ({ postSlug }) => {
   );
 };
 
-interface BlogPostProps {
+interface ContentDisplayProps {
   content: string;
 }
 
-export const BlogPost: React.FC<BlogPostProps> = ({ content }) => {
+export const ContentDisplay: React.FC<ContentDisplayProps> = ({ content }) => {
   const { theme } = useTheme();
   const optimizedContent = React.useMemo(() => {
     return content.replace(
@@ -597,8 +597,8 @@ export const BlogPost: React.FC<BlogPostProps> = ({ content }) => {
   return (
     <div
       className={`blog-content ${
-        theme === "dark" ? "text-gray-200" : "text-gray-800"
-      }`}
+        theme === "dark" ? "text-gray-300" : "text-gray-700"
+      } prose prose-lg max-w-none`}
       dangerouslySetInnerHTML={{ __html: optimizedContent }}
     />
   );
