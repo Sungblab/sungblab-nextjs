@@ -119,8 +119,12 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
       >
         <div className="relative">
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 via-blue-500/5 to-transparent" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:24px_24px]" />
+            <div
+              className={`absolute inset-0 ${
+                theme === "dark" ? "bg-gray-900/90" : "bg-white/90"
+              }`}
+            />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
           <div className="container mx-auto px-4 py-12 relative">
@@ -132,7 +136,11 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                 transition={{ duration: 0.5 }}
                 className="text-center mb-12"
               >
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 bg-size-200 animate-gradient py-2">
+                <h1
+                  className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-6 ${
+                    theme === "dark" ? "text-purple-300" : "text-purple-600"
+                  }`}
+                >
                   Blog
                 </h1>
                 <p
@@ -197,14 +205,14 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                         <button
                           key={number}
                           onClick={() => handlePageChange(number)}
-                          className={`px-4 py-2 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 ${
+                          className={`px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
                             currentPage === number
                               ? theme === "dark"
-                                ? "bg-purple-600 text-white"
-                                : "bg-purple-500 text-white"
+                                ? "bg-purple-700 text-white border-purple-700"
+                                : "bg-purple-600 text-white border-purple-600"
                               : theme === "dark"
-                              ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30 text-gray-300"
-                              : "bg-white/80 hover:bg-white hover:border-purple-500/30 text-gray-600"
+                              ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50 text-gray-300"
+                              : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50 text-gray-600"
                           }`}
                         >
                           {number}

@@ -24,6 +24,7 @@ interface ThemeContextType {
     primary: string;
     secondary: string;
     border: string;
+    accent: string;
   };
 }
 
@@ -46,15 +47,17 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   const colors = {
     light: {
       background: "#FFFFFF",
-      primary: "#4A5568",
-      secondary: "#718096",
+      primary: "#7C3AED",
+      secondary: "#A78BFA",
       border: "#E2E8F0",
+      accent: "#4F46E5",
     },
     dark: {
       background: "#1A202C",
-      primary: "#A0AEC0",
-      secondary: "#718096",
+      primary: "#9F7AEA",
+      secondary: "#6B46C1",
       border: "#2D3748",
+      accent: "#818CF8",
     },
   };
 
@@ -91,8 +94,12 @@ export const Footer: React.FC = () => {
       } backdrop-blur-sm`}
     >
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-t from-purple-500/5 via-blue-500/5 to-transparent opacity-50" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:24px_24px]" />
+        <div
+          className={`absolute inset-0 ${
+            theme === "dark" ? "bg-gray-900/90" : "bg-white/90"
+          }`}
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
       </div>
       <div className="max-w-6xl mx-auto px-4 relative">
         <div className="flex flex-col items-center space-y-6">
@@ -114,24 +121,32 @@ export const Footer: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 className={`group relative font-medium transition-colors duration-300 ${
                   theme === "dark"
-                    ? "text-gray-400 hover:text-purple-400"
+                    ? "text-gray-400 hover:text-purple-300"
                     : "text-gray-600 hover:text-purple-600"
                 }`}
               >
                 Contact
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-500 group-hover:w-full transition-all duration-300" />
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 ${
+                    theme === "dark" ? "bg-purple-500" : "bg-purple-600"
+                  } group-hover:w-full transition-all duration-300`}
+                />
               </motion.a>
               <motion.a
                 href="/blog"
                 whileHover={{ scale: 1.05 }}
                 className={`group relative font-medium transition-colors duration-300 ${
                   theme === "dark"
-                    ? "text-gray-400 hover:text-purple-400"
+                    ? "text-gray-400 hover:text-purple-300"
                     : "text-gray-600 hover:text-purple-600"
                 }`}
               >
                 Blog
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-500 group-hover:w-full transition-all duration-300" />
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 ${
+                    theme === "dark" ? "bg-purple-500" : "bg-purple-600"
+                  } group-hover:w-full transition-all duration-300`}
+                />
               </motion.a>
             </div>
           </div>
@@ -188,7 +203,9 @@ export const Header: React.FC = () => {
         <div className="flex justify-between items-center">
           <Link
             href="/"
-            className="min-w-[140px] text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 bg-size-200 animate-gradient py-2"
+            className={`min-w-[140px] text-3xl sm:text-4xl font-bold ${
+              theme === "dark" ? "text-purple-300" : "text-purple-600"
+            }`}
           >
             Sungblab
           </Link>
@@ -202,18 +219,22 @@ export const Header: React.FC = () => {
                 }`}
               >
                 {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-500 group-hover:w-full transition-all duration-300" />
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 ${
+                    theme === "dark" ? "bg-purple-500" : "bg-purple-600"
+                  } group-hover:w-full transition-all duration-300`}
+                />
               </Link>
             ))}
             <motion.button
               onClick={toggleTheme}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className={`p-2 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 ${
+              className={`p-2 rounded-xl backdrop-blur-sm border ${
                 theme === "dark"
-                  ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
-                  : "bg-white/80 hover:bg-white hover:border-purple-500/30"
-              }`}
+                  ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
+                  : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
+              } transition-all duration-300`}
             >
               {theme === "dark" ? (
                 <FaSun className="text-yellow-400 w-5 h-5" />
@@ -227,11 +248,11 @@ export const Header: React.FC = () => {
               onClick={toggleTheme}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className={`mr-4 p-2 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 ${
+              className={`mr-4 p-2 rounded-xl backdrop-blur-sm border ${
                 theme === "dark"
-                  ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
-                  : "bg-white/80 hover:bg-white hover:border-purple-500/30"
-              }`}
+                  ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
+                  : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
+              } transition-all duration-300`}
             >
               {theme === "dark" ? (
                 <FaSun className="text-yellow-400 w-5 h-5" />
@@ -283,11 +304,11 @@ export const Header: React.FC = () => {
                 <Link
                   key={item}
                   href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                  className={`block py-3 px-4 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 mb-2 ${
+                  className={`block py-3 px-4 rounded-xl backdrop-blur-sm border mb-2 ${
                     theme === "dark"
-                      ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30 text-gray-300"
-                      : "bg-white/80 hover:bg-white hover:border-purple-500/30 text-gray-600"
-                  }`}
+                      ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50 text-gray-300"
+                      : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50 text-gray-600"
+                  } transition-all duration-300`}
                   onClick={() => setIsOpen(false)}
                 >
                   {item}
@@ -420,10 +441,10 @@ export const SocialButton: React.FC<SocialButtonProps> = ({
       rel="noopener noreferrer"
       whileHover={{ scale: 1.05, y: -2 }}
       whileTap={{ scale: 0.95 }}
-      className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
+      className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 ${
         theme === "dark"
-          ? "bg-gray-800/80 text-gray-200 hover:bg-purple-900/80"
-          : "bg-gray-200/80 text-gray-800 hover:bg-purple-100/80"
+          ? "bg-gray-800/80 text-gray-200 hover:bg-gray-700/80 border-gray-700/50 hover:border-purple-700/50"
+          : "bg-gray-100/80 text-gray-800 hover:bg-gray-200/80 border-gray-200/50 hover:border-purple-300/50"
       } backdrop-blur-sm ${className || ""}`}
     >
       <IconComponent className="text-lg" />
@@ -599,20 +620,22 @@ interface ThemeType {
     primary: string;
     secondary: string;
     border: string;
+    accent: string;
   };
 }
 
 export const Button = styled.button<{ theme: ThemeType }>`
-  background: ${({ theme }) => theme?.colors?.primary || "#4A5568"};
+  background: ${({ theme }) => theme?.colors?.primary || "#7C3AED"};
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: none;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease;
 
   &:hover {
-    opacity: 0.8;
+    opacity: 0.9;
+    transform: translateY(-2px);
   }
 `;
 
@@ -621,17 +644,24 @@ export const Card = styled.div<{ theme: ThemeType }>`
   border: 1px solid ${({ theme }) => theme?.colors?.border || "#E2E8F0"};
   border-radius: 1rem;
   padding: 1.5rem;
-  transition: transform 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   &:hover {
     transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-color: ${({ theme }) =>
+      theme?.colors?.primary ? `${theme.colors.primary}30` : "#7C3AED30"};
   }
 `;
 
 export const Tag = styled.span<{ theme: ThemeType }>`
-  background: ${({ theme }) => theme?.colors?.secondary || "#718096"};
+  background: ${({ theme }) => theme?.colors?.secondary || "#A78BFA"};
   color: white;
   padding: 0.25rem 0.75rem;
-  border-radius: 0.25rem;
+  border-radius: 9999px;
   font-size: 0.875rem;
+  font-weight: 500;
 `;

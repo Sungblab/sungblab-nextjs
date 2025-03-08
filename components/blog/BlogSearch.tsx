@@ -22,15 +22,19 @@ const BlogSearch = ({
         placeholder="포스트 검색..."
         className={`w-full p-4 pr-12 rounded-xl border ${
           theme === "dark"
-            ? "bg-gray-800/80 text-white border-gray-700 placeholder-gray-400"
-            : "bg-white text-gray-800 border-gray-200 placeholder-gray-400"
-        } focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300`}
+            ? "bg-gray-800/50 text-white border-gray-700 placeholder-gray-400 focus:border-purple-700/50"
+            : "bg-white/80 text-gray-800 border-gray-200 placeholder-gray-400 focus:border-purple-300/50"
+        } focus:outline-none focus:ring-2 ${
+          theme === "dark"
+            ? "focus:ring-purple-700/30"
+            : "focus:ring-purple-500/30"
+        } backdrop-blur-sm transition-all duration-300`}
         value={searchTerm}
         onChange={handleSearch}
       />
       <svg
         className={`absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
-          theme === "dark" ? "text-gray-400" : "text-gray-500"
+          theme === "dark" ? "text-purple-300" : "text-purple-500"
         }`}
         fill="none"
         stroke="currentColor"

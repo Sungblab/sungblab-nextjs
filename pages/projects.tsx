@@ -55,11 +55,11 @@ const ProjectCard: React.FC<Project> = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 50 }}
       transition={{ duration: 0.5 }}
-      className={`group p-6 rounded-2xl backdrop-blur-sm border border-transparent ${
+      className={`group p-6 rounded-2xl backdrop-blur-sm border ${
         theme === "dark"
-          ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
-          : "bg-white/80 hover:bg-white hover:border-purple-500/30"
-      } transition-all duration-300 overflow-hidden`}
+          ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
+          : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
+      } transition-all duration-300 overflow-hidden shadow-lg hover:shadow-xl`}
     >
       <div className="relative h-56 overflow-hidden rounded-xl mb-6">
         <Image
@@ -76,7 +76,13 @@ const ProjectCard: React.FC<Project> = ({
         />
       </div>
       <div className="relative">
-        <h2 className="text-2xl font-bold mb-3 group-hover:text-purple-500 transition-colors duration-300">
+        <h2
+          className={`text-2xl font-bold mb-3 ${
+            theme === "dark"
+              ? "text-gray-100 group-hover:text-purple-300"
+              : "text-gray-800 group-hover:text-purple-600"
+          } transition-colors duration-300`}
+        >
           {title}
         </h2>
         <p
@@ -112,9 +118,17 @@ const ProjectCard: React.FC<Project> = ({
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center justify-center px-6 py-2 overflow-hidden font-medium transition duration-300 ease-out border-2 border-purple-500 rounded-full shadow-md"
+            className={`group relative inline-flex items-center justify-center px-6 py-2 overflow-hidden font-medium transition duration-300 ease-out border-2 rounded-full shadow-md ${
+              theme === "dark"
+                ? "border-purple-500 text-purple-300"
+                : "border-purple-500 text-purple-600"
+            }`}
           >
-            <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gradient-to-r from-purple-600 to-blue-500 group-hover:translate-x-0">
+            <span
+              className={`absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full ${
+                theme === "dark" ? "bg-purple-700" : "bg-purple-600"
+              } group-hover:translate-x-0`}
+            >
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -129,10 +143,10 @@ const ProjectCard: React.FC<Project> = ({
                 />
               </svg>
             </span>
-            <span className="absolute flex items-center justify-center w-full h-full text-purple-500 transition-all duration-300 transform group-hover:translate-x-full">
-              View Project
+            <span className="absolute flex items-center justify-center w-full h-full transition-all duration-300 transform group-hover:translate-x-full">
+              프로젝트 보기
             </span>
-            <span className="relative invisible">View Project</span>
+            <span className="relative invisible">프로젝트 보기</span>
           </motion.a>
         </div>
       </div>
@@ -176,8 +190,12 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
       >
         <div className="relative">
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 via-blue-500/5 to-transparent" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:24px_24px]" />
+            <div
+              className={`absolute inset-0 ${
+                theme === "dark" ? "bg-gray-900/90" : "bg-white/90"
+              }`}
+            />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
           <div className="container mx-auto px-4 py-12 relative">
@@ -188,7 +206,11 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                 transition={{ duration: 0.5 }}
                 className="text-center mb-12"
               >
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 bg-size-200 animate-gradient py-2">
+                <h1
+                  className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-6 ${
+                    theme === "dark" ? "text-purple-300" : "text-purple-600"
+                  }`}
+                >
                   My Projects
                 </h1>
                 <p
@@ -212,15 +234,19 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                     placeholder="프로젝트 또는 기술 검색..."
                     className={`w-full p-4 pr-12 rounded-xl border ${
                       theme === "dark"
-                        ? "bg-gray-800/50 text-white border-gray-700 placeholder-gray-400"
-                        : "bg-white/80 text-gray-800 border-gray-200 placeholder-gray-400"
-                    } focus:outline-none focus:ring-2 focus:ring-purple-500 backdrop-blur-sm`}
+                        ? "bg-gray-800/50 text-white border-gray-700 placeholder-gray-400 focus:border-purple-700/50"
+                        : "bg-white/80 text-gray-800 border-gray-200 placeholder-gray-400 focus:border-purple-300/50"
+                    } focus:outline-none focus:ring-2 ${
+                      theme === "dark"
+                        ? "focus:ring-purple-700/30"
+                        : "focus:ring-purple-500/30"
+                    } backdrop-blur-sm transition-all duration-300`}
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}
                   />
                   <svg
                     className={`absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
-                      theme === "dark" ? "text-gray-400" : "text-gray-500"
+                      theme === "dark" ? "text-purple-300" : "text-purple-500"
                     }`}
                     fill="none"
                     stroke="currentColor"
@@ -256,18 +282,28 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                 >
                   <p
                     className={`text-xl ${
-                      theme === "dark" ? "text-gray-400" : "text-gray-600"
+                      theme === "dark" ? "text-gray-300" : "text-gray-600"
                     }`}
                   >
                     검색 결과가 없습니다
                   </p>
                   <p
                     className={`mt-2 ${
-                      theme === "dark" ? "text-gray-500" : "text-gray-400"
+                      theme === "dark" ? "text-gray-400" : "text-gray-500"
                     }`}
                   >
                     다른 키워드로 검색해보세요
                   </p>
+                  <button
+                    onClick={() => setFilter("")}
+                    className={`mt-6 px-6 py-2 rounded-full border-2 ${
+                      theme === "dark"
+                        ? "border-purple-500 text-purple-300 hover:bg-purple-900/20"
+                        : "border-purple-500 text-purple-600 hover:bg-purple-50"
+                    } transition-colors duration-300`}
+                  >
+                    모든 프로젝트 보기
+                  </button>
                 </motion.div>
               )}
             </AnimatedSection>

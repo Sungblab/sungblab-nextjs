@@ -27,8 +27,8 @@ const BlogPostCard = ({
         <div
           className={`p-6 rounded-xl ${
             theme === "dark"
-              ? "bg-gray-800/50 hover:bg-gray-700/50"
-              : "bg-white hover:bg-gray-50"
+              ? "bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700/50 hover:border-purple-700/50"
+              : "bg-white hover:bg-gray-50 border border-gray-200/50 hover:border-purple-300/50"
           } shadow-lg hover:shadow-xl transition-all duration-300`}
         >
           <div className="flex flex-col gap-4">
@@ -46,9 +46,11 @@ const BlogPostCard = ({
 
             <div className="space-y-3">
               <h2
-                className={`text-xl font-bold group-hover:text-purple-500 transition-colors duration-300 ${
-                  theme === "dark" ? "text-gray-100" : "text-gray-800"
-                }`}
+                className={`text-xl font-bold ${
+                  theme === "dark"
+                    ? "text-gray-100 group-hover:text-purple-300"
+                    : "text-gray-800 group-hover:text-purple-600"
+                } transition-colors duration-300`}
               >
                 {post.frontmatter.title}
               </h2>
@@ -67,8 +69,8 @@ const BlogPostCard = ({
                     key={tag}
                     className={`text-xs px-2 py-1 rounded-full ${
                       theme === "dark"
-                        ? "bg-gray-700 text-gray-300"
-                        : "bg-gray-100 text-gray-600"
+                        ? "bg-gray-700/50 text-gray-300"
+                        : "bg-gray-100/80 text-gray-600"
                     }`}
                   >
                     {tag}

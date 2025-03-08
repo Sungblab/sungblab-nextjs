@@ -53,6 +53,14 @@ const BlogContainer = styled.article`
   padding: 2rem;
   border-radius: 1rem;
   border: 1px solid ${({ theme }) => theme.colors.border};
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
 `;
 
 const BlogPost: NextPage<BlogPostProps> = ({
@@ -262,8 +270,12 @@ const BlogPost: NextPage<BlogPostProps> = ({
       >
         <div className="relative">
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 via-blue-500/5 to-transparent" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:24px_24px]" />
+            <div
+              className={`absolute inset-0 ${
+                theme === "dark" ? "bg-gray-900/90" : "bg-white/90"
+              }`}
+            />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
           <div className="container mx-auto py-12 relative">
@@ -279,8 +291,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     href="/blog"
                     className={`inline-flex items-center mb-8 text-sm font-medium transition-all duration-300 group ${
                       theme === "dark"
-                        ? "text-gray-400 hover:text-gray-200"
-                        : "text-gray-600 hover:text-gray-800"
+                        ? "text-gray-400 hover:text-purple-300"
+                        : "text-gray-600 hover:text-purple-600"
                     }`}
                   >
                     <FaArrowLeft className="mr-2 transition-transform duration-300 group-hover:translate-x-[-4px]" />
@@ -289,7 +301,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
                   <div className="space-y-6">
                     <h1
-                      className={`text-3xl lg:text-4xl font-bold leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 bg-size-200 animate-gradient`}
+                      className={`text-3xl lg:text-4xl font-bold leading-tight tracking-tight ${
+                        theme === "dark" ? "text-purple-300" : "text-purple-600"
+                      }`}
                     >
                       {frontMatter.title}
                     </h1>
@@ -316,7 +330,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={copyPostUrl}
-                        className="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm bg-purple-600 text-white hover:shadow-xl"
+                        className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
+                          theme === "dark"
+                            ? "bg-purple-700 text-white border-purple-700 hover:bg-purple-800"
+                            : "bg-purple-600 text-white border-purple-600 hover:bg-purple-700"
+                        } hover:shadow-xl`}
                       >
                         <FaCopy className="mr-2" /> URL 복사
                       </motion.button>
@@ -324,7 +342,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={sharePost}
-                        className="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm bg-purple-600 text-white  hover:shadow-xl"
+                        className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
+                          theme === "dark"
+                            ? "bg-purple-700 text-white border-purple-700 hover:bg-purple-800"
+                            : "bg-purple-600 text-white border-purple-600 hover:bg-purple-700"
+                        } hover:shadow-xl`}
                       >
                         <FaShare className="mr-2" /> 공유하기
                       </motion.button>
@@ -332,10 +354,10 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setShowToc(!showToc)}
-                        className={`lg:hidden inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 ${
+                        className={`lg:hidden inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
                           theme === "dark"
-                            ? "bg-gray-800/40 text-gray-200"
-                            : "bg-white/80 text-gray-700"
+                            ? "bg-gray-800/40 text-gray-200 border-gray-700/50 hover:border-purple-700/50"
+                            : "bg-white/80 text-gray-700 border-gray-200/50 hover:border-purple-300/50"
                         }`}
                       >
                         <FaListUl className="mr-2" /> 목차
@@ -355,10 +377,18 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     >
                       <div
                         className={`rounded-xl p-6 ${
-                          theme === "dark" ? "bg-gray-800/40" : "bg-white/80"
-                        } backdrop-blur-sm border border-transparent`}
+                          theme === "dark"
+                            ? "bg-gray-800/40 border border-gray-700/50"
+                            : "bg-white/80 border border-gray-200/50"
+                        } backdrop-blur-sm`}
                       >
-                        <h3 className="text-lg font-semibold mb-4 flex items-center">
+                        <h3
+                          className={`text-lg font-semibold mb-4 flex items-center ${
+                            theme === "dark"
+                              ? "text-purple-300"
+                              : "text-purple-600"
+                          }`}
+                        >
                           <FaListUl className="mr-2" />
                           목차
                         </h3>
@@ -371,11 +401,19 @@ const BlogPost: NextPage<BlogPostProps> = ({
                                 setShowToc(false);
                               }}
                               className={`
-                                block w-full text-left hover:text-blue-500 transition-colors duration-200
+                                block w-full text-left transition-colors duration-200
                                 ${
                                   item.level === 1
-                                    ? "text-base font-medium"
-                                    : "text-sm pl-4 text-gray-600 dark:text-gray-400"
+                                    ? `text-base font-medium ${
+                                        theme === "dark"
+                                          ? "hover:text-purple-300"
+                                          : "hover:text-purple-600"
+                                      }`
+                                    : `text-sm pl-4 ${
+                                        theme === "dark"
+                                          ? "text-gray-400 hover:text-purple-300"
+                                          : "text-gray-600 hover:text-purple-600"
+                                      }`
                                 }
                               `}
                             >
@@ -397,11 +435,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   }`}
                 >
                   <div
-                    className={`rounded-xl p-2 sm:p-8 backdrop-blur-sm border border-transparent ${
-                      theme === "dark"
-                        ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
-                        : "bg-white/80 hover:bg-white hover:border-purple-500/30"
-                    } transition-all duration-300`}
+                    className={`rounded-xl p-2 sm:p-8 ${
+                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    }`}
                   >
                     <MDXRemote {...mdxSource} components={MDXComponents} />
                   </div>
@@ -413,23 +449,31 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <Link
                         href={`/blog/${prevPost.slug}`}
                         className={`
-                          group p-6 rounded-xl backdrop-blur-sm border border-transparent
+                          group p-6 rounded-xl backdrop-blur-sm border
                           ${
                             theme === "dark"
-                              ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
-                              : "bg-white/80 hover:bg-white hover:border-purple-500/30"
+                              ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
+                              : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
                           }
                           transition-all duration-300 shadow-lg hover:shadow-xl
                         `}
                       >
-                        <span className="text-sm text-blue-500 mb-2 block">
+                        <span
+                          className={`text-sm mb-2 block ${
+                            theme === "dark"
+                              ? "text-purple-300"
+                              : "text-purple-600"
+                          }`}
+                        >
                           이전 포스트
                         </span>
                         <h3
                           className={`
-                          font-medium line-clamp-2 group-hover:text-purple-500 transition-colors duration-300
+                          font-medium line-clamp-2 transition-colors duration-300
                           ${
-                            theme === "dark" ? "text-gray-200" : "text-gray-800"
+                            theme === "dark"
+                              ? "text-gray-200 group-hover:text-purple-300"
+                              : "text-gray-800 group-hover:text-purple-600"
                           }
                         `}
                         >
@@ -442,23 +486,31 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <Link
                         href={`/blog/${nextPost.slug}`}
                         className={`
-                          group p-6 rounded-xl backdrop-blur-sm border border-transparent text-right
+                          group p-6 rounded-xl backdrop-blur-sm border
                           ${
                             theme === "dark"
-                              ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
-                              : "bg-white/80 hover:bg-white hover:border-purple-500/30"
+                              ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
+                              : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
                           }
                           transition-all duration-300 shadow-lg hover:shadow-xl
                         `}
                       >
-                        <span className="text-sm text-blue-500 mb-2 block">
+                        <span
+                          className={`text-sm mb-2 block ${
+                            theme === "dark"
+                              ? "text-purple-300"
+                              : "text-purple-600"
+                          }`}
+                        >
                           다음 포스트
                         </span>
                         <h3
                           className={`
-                          font-medium line-clamp-2 group-hover:text-purple-500 transition-colors duration-300
+                          font-medium line-clamp-2 transition-colors duration-300
                           ${
-                            theme === "dark" ? "text-gray-200" : "text-gray-800"
+                            theme === "dark"
+                              ? "text-gray-200 group-hover:text-purple-300"
+                              : "text-gray-800 group-hover:text-purple-600"
                           }
                         `}
                         >
@@ -471,9 +523,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
                 <div className="mt-16">
                   <div
-                    className={`rounded-xl p-0 sm:p-8 backdrop-blur-sm border border-transparent ${
-                      theme === "dark" ? "bg-gray-800/40" : "bg-white/80"
-                    } transition-all duration-300`}
+                    className={`rounded-xl p-0 sm:p-8 backdrop-blur-sm border ${
+                      theme === "dark"
+                        ? "bg-gray-800/40 border-gray-700/50"
+                        : "bg-white/80 border-gray-200/50"
+                    } transition-all duration-300 shadow-lg`}
                   >
                     <Giscus
                       repo="Sungblab/sungblab-nextjs"
@@ -502,13 +556,19 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     }`}
                   >
                     <div
-                      className={`rounded-xl p-6 backdrop-blur-sm border border-transparent ${
+                      className={`rounded-xl p-6 backdrop-blur-sm border ${
                         theme === "dark"
-                          ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
-                          : "bg-white/80 hover:bg-white hover:border-purple-500/30"
+                          ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
+                          : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
                       } transition-all duration-300 shadow-lg mb-8`}
                     >
-                      <h3 className="text-lg font-semibold mb-4 flex items-center">
+                      <h3
+                        className={`text-lg font-semibold mb-4 flex items-center ${
+                          theme === "dark"
+                            ? "text-purple-300"
+                            : "text-purple-600"
+                        }`}
+                      >
                         <FaListUl className="mr-2" />
                         목차
                       </h3>
@@ -518,11 +578,19 @@ const BlogPost: NextPage<BlogPostProps> = ({
                             key={item.id}
                             onClick={() => scrollToHeader(item.id)}
                             className={`
-                              block w-full text-left hover:text-blue-500 transition-colors duration-200
+                              block w-full text-left transition-colors duration-200
                               ${
                                 item.level === 1
-                                  ? "text-base font-medium"
-                                  : "text-sm pl-4 text-gray-600 dark:text-gray-400"
+                                  ? `text-base font-medium ${
+                                      theme === "dark"
+                                        ? "hover:text-purple-300"
+                                        : "hover:text-purple-600"
+                                    }`
+                                  : `text-sm pl-4 ${
+                                      theme === "dark"
+                                        ? "text-gray-400 hover:text-purple-300"
+                                        : "text-gray-600 hover:text-purple-600"
+                                    }`
                               }
                             `}
                           >
@@ -533,13 +601,19 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     </div>
 
                     <div
-                      className={`rounded-xl p-6 backdrop-blur-sm border border-transparent ${
+                      className={`rounded-xl p-6 backdrop-blur-sm border ${
                         theme === "dark"
-                          ? "bg-gray-800/40 hover:bg-gray-800/60 hover:border-purple-500/30"
-                          : "bg-white/80 hover:bg-white hover:border-purple-500/30"
+                          ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
+                          : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
                       } transition-all duration-300 shadow-lg`}
                     >
-                      <h3 className="text-lg font-semibold mb-4 flex items-center">
+                      <h3
+                        className={`text-lg font-semibold mb-4 flex items-center ${
+                          theme === "dark"
+                            ? "text-purple-300"
+                            : "text-purple-600"
+                        }`}
+                      >
                         <FaBookmark className="mr-2" />
                         관련 포스트
                       </h3>
@@ -552,16 +626,28 @@ const BlogPost: NextPage<BlogPostProps> = ({
                               block group p-3 rounded-lg
                               ${
                                 theme === "dark"
-                                  ? "hover:bg-gray-700/50"
-                                  : "hover:bg-gray-50/50"
+                                  ? "hover:bg-gray-700/50 hover:text-purple-300"
+                                  : "hover:bg-gray-50/50 hover:text-purple-600"
                               }
                               transition-all duration-200
                             `}
                           >
-                            <h4 className="font-medium text-sm group-hover:text-purple-500 transition-colors duration-200">
+                            <h4
+                              className={`font-medium text-sm transition-colors duration-200 ${
+                                theme === "dark"
+                                  ? "group-hover:text-purple-300"
+                                  : "group-hover:text-purple-600"
+                              }`}
+                            >
                               {post.frontmatter.title}
                             </h4>
-                            <p className="text-xs mt-1 opacity-75">
+                            <p
+                              className={`text-xs mt-1 ${
+                                theme === "dark"
+                                  ? "text-gray-400"
+                                  : "text-gray-500"
+                              }`}
+                            >
                               {post.frontmatter.date}
                             </p>
                           </Link>
@@ -579,7 +665,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: scrollProgress / 100 }}
-          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 transform origin-left z-50"
+          className={`fixed top-0 left-0 right-0 h-1 ${
+            theme === "dark" ? "bg-purple-700" : "bg-purple-600"
+          } transform origin-left z-50`}
         />
 
         {/* Scroll Buttons */}
@@ -595,7 +683,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={scrollToTop}
-                className="p-3 rounded-xl backdrop-blur-sm border border-transparent bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                className={`p-3 rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
+                  theme === "dark"
+                    ? "bg-purple-700 text-white border-purple-700 hover:bg-purple-800"
+                    : "bg-purple-600 text-white border-purple-600 hover:bg-purple-700"
+                }`}
               >
                 <FaArrowUp />
               </motion.button>
@@ -603,7 +695,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={scrollToBottom}
-                className="p-3 rounded-xl backdrop-blur-sm border border-transparent bg-gradient-to-r from-blue-500 to-teal-400 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                className={`p-3 rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
+                  theme === "dark"
+                    ? "bg-indigo-700 text-white border-indigo-700 hover:bg-indigo-800"
+                    : "bg-indigo-600 text-white border-indigo-600 hover:bg-indigo-700"
+                }`}
               >
                 <FaArrowDown />
               </motion.button>

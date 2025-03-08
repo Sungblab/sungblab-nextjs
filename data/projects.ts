@@ -50,7 +50,7 @@ export const projects: Project[] = [
   },
   {
     id: 4,
-    title: "sb_python_attendance_system",
+    title: "attendance_system",
     description:
       "고등학교 생활중 학급에서 얼굴인식 출결관리 시스템을 하면 좋겠다는 생각에 얼굴인식 기술을 활용해 파이썬으로 구현해 보았습니다.",
     link: "https://github.com/Sungblab/SB_face_recognition_system",
