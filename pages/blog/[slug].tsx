@@ -316,7 +316,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={copyPostUrl}
-                        className="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm bg-purple-600 text-white hover:shadow-xl"
                       >
                         <FaCopy className="mr-2" /> URL 복사
                       </motion.button>
@@ -324,7 +324,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={sharePost}
-                        className="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border border-transparent transition-all duration-300 bg-gradient-to-r from-blue-500 to-teal-400 text-white shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm bg-purple-600 text-white  hover:shadow-xl"
                       >
                         <FaShare className="mr-2" /> 공유하기
                       </motion.button>

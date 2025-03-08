@@ -426,7 +426,7 @@ const Home: NextPage = () => {
                     </h3>
                     <p className="mb-2">
                       <a
-                        href="mailto:ksb19558@naver.com"
+                        href="mailto:sungblab@gmail.com"
                         className="text-blue-500 hover:underline text-sm sm:text-base inline-flex items-center justify-center md:justify-start gap-2 transition-colors duration-200 hover:text-blue-600 truncate max-w-full"
                       >
                         <svg
@@ -442,7 +442,7 @@ const Home: NextPage = () => {
                             d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                           />
                         </svg>
-                        <span className="truncate">ksb19558@naver.com</span>
+                        <span className="truncate">sungblab@gmail.com</span>
                       </a>
                     </p>
                   </div>

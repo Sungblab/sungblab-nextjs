@@ -110,7 +110,7 @@ export const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <motion.a
-                href="mailto:ksb19558@naver.com"
+                href="mailto:sungblab@gmail.com"
                 whileHover={{ scale: 1.05 }}
                 className={`group relative font-medium transition-colors duration-300 ${
                   theme === "dark"

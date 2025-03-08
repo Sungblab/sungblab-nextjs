@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Pretendard 폰트 설정 */
+@layer base {
+  html {
+    font-family: "Pretendard Variable", "Pretendard", sans-serif;
+  }
+}
+
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
