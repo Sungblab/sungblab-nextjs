@@ -163,7 +163,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
                     theme === "dark" ? "text-gray-300" : "text-gray-700"
                   } font-light`}
                 >
-                  Full-Stack Developer & AI Enthusiast
+                  Full-Stack Developer
                 </p>
                 <motion.p
                   className={`mt-6 max-w-2xl mx-auto text-base sm:text-lg ${
@@ -180,7 +180,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
                     } font-medium`}
                   >
                     {" "}
-                    풀스택 개발
+                    개발
                   </span>
                   과
                   <span
@@ -191,8 +191,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
                     {" "}
                     인공지능
                   </span>
-                  에 열정을 가진 개발자입니다. 효율적이고 사용자 친화적인 웹
-                  애플리케이션을 만들고 AI 기능을 통합하는 것이 목표입니다.
+                  에 열정을 가진 개발자입니다.
                 </motion.p>
               </motion.div>
               <motion.div
