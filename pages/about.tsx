@@ -117,7 +117,7 @@ const AboutPage: NextPage = () => {
                 theme === "dark" ? "text-purple-300" : "text-purple-600"
               }`}
             >
-              안녕하세요! 👋
+              안녕하세요 👋
             </h2>
             <div
               className={`space-y-6 ${
