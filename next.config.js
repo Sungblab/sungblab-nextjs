@@ -16,7 +16,24 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   generateBuildId: async () => {
-    return "my-build-id";
+    return "my-build-id-" + Date.now();
+  },
+  onDemandEntries: {
+    maxInactiveAge: 10 * 1000,
+    pagesBufferLength: 1,
+  },
+  headers: async () => {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
+      },
+    ];
   },
 };
 
