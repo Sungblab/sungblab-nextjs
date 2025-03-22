@@ -1,7 +1,8 @@
 # Sungblab 블로그
 
 ## 소개
-![image](https://github.com/user-attachments/assets/475785a7-e672-43e2-b000-47e1697afca3)
+![image](https://github.com/user-attachments/assets/faaa07ea-7f79-4be2-82bc-677f988375a4)
+
 
 Sungblab은 Next.js 14를 기반으로 개발된 개인 블로그 및 포트폴리오 웹사이트입니다. 개발, 기술, 그리고 다양한 주제에 관한 글을 공유하는 공간입니다.
 
