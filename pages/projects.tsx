@@ -10,29 +10,11 @@ import { getGitHubRepos } from "../utils/github";
 const AnimatedSection: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.6 }}
     >
       {children}

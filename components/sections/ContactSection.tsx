@@ -49,14 +49,14 @@ export const ContactSection: React.FC = () => {
           >
             <a 
               href="mailto:sungblab@gmail.com"
-              className={`text-3xl md:text-5xl font-bold underline decoration-4 decoration-purple-500 underline-offset-8 transition-colors hover:text-purple-500 ${
+              className={`text-3xl md:text-5xl font-bold underline decoration-4 decoration-purple-500 underline-offset-8 transition-colors hover:text-purple-500 break-all max-w-full px-4 ${
                 theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
               }`}
             >
               sungblab@gmail.com
             </a>
 
-            <div className="flex gap-4 mt-8">
+            <div className="flex flex-wrap justify-center gap-4 mt-8 w-full">
               <SocialButton
                 href="https://github.com/Sungblab"
                 icon="github"

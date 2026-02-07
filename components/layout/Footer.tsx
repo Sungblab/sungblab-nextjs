@@ -36,7 +36,7 @@ export const Footer: React.FC = () => {
             <p className="max-w-md text-lg leading-relaxed mb-8">
               {translate("hero.description")}
             </p>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-4 gap-y-4">
               <SocialButton href="https://github.com/sungblab" icon="github" label="GitHub" />
               <SocialButton href="https://www.threads.com/@kimsungbin1119" icon="threads" label="Threads" />
               <SocialButton href="https://www.linkedin.com/in/sungblab" icon="linkedin" label="LinkedIn" />
