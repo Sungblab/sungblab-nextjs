@@ -4,7 +4,8 @@ interface BlogCategoriesProps {
     label: string;
   }>;
   selectedCategory: string;
-  onCategorySelect: (_category: string) => void;
+  // eslint-disable-next-line no-unused-vars
+  onCategorySelect: (category: string) => void;
   theme: string;
 }
 

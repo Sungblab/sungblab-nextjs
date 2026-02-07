@@ -1,14 +1,13 @@
 import { GetStaticProps, NextPage } from "next";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Layout, useTheme, Card, useLanguage } from "../../components/Components";
+import { Layout, useTheme, useLanguage } from "../../components/Components";
 import BlogPostCard from "../../components/blog/BlogPostCard";
 import BlogSearch from "../../components/blog/BlogSearch";
 import BlogCategories from "../../components/blog/BlogCategories";
 import SEO from "../../components/SEO";
 import { Post } from "../../types/post";
 import { getAllPosts } from "../../utils/mdxUtils";
-import styled from "styled-components";
 import { stripMarkdown } from "../../utils/textUtils";
 
 interface BlogPageProps {
@@ -35,16 +34,6 @@ const AnimatedSection: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-interface ThemeType {
-  colors: {
-    background: string;
-  };
-}
-
-const BlogCard = styled(Card)<{ theme: ThemeType }>`
-  background: ${({ theme }): string => theme.colors.background};
-  margin-bottom: 1.5rem;
-`;
 
 const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -188,7 +177,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                   className="flex justify-center mt-12"
                 >
                   <div className="flex gap-2">
-                    {Array.from({ length: totalPages }, (_: any, i: number): number => i + 1).map(
+                    {Array.from({ length: totalPages }, (_: unknown, i: number): number => i + 1).map(
                       (number: number): JSX.Element => (
                         <button
                           key={number}

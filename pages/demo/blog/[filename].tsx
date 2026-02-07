@@ -1,5 +1,3 @@
-// THIS FILE HAS BEEN GENERATED WITH THE TINA CLI.
-// @ts-nocheck
 /* eslint-disable */
 // This is a demo file once you have tina setup feel free to delete this file
 

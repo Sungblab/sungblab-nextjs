@@ -3,7 +3,8 @@ import { useLanguage } from "../features/LanguageContext";
 
 interface BlogSearchProps {
   searchTerm: string;
-  onSearch: (_value: string) => void;
+  // eslint-disable-next-line no-unused-vars
+  onSearch: (value: string) => void;
   theme: string;
 }
 
