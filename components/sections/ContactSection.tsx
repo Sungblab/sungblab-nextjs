@@ -32,7 +32,7 @@ export const ContactSection: React.FC = () => {
                theme === "dark" ? "text-gray-400" : "text-gray-600"
              }`}
           >
-            {translate("contact.description").split('\n').map((line: string, i: number) => (
+            {translate("contact.description").split('\n').map((line: string, i: number): JSX.Element => (
               <span key={i}>
                 {line}
                 {i === 0 && <br className="hidden md:block" />}

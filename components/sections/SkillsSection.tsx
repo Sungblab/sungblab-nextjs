@@ -4,7 +4,12 @@ import { useTheme } from "../../components/features/ThemeContext";
 import { useLanguage } from "../../components/features/LanguageContext";
 import { AnimatedSection } from "../../components/ui/AnimatedSection";
 
-const skillCategories = [
+interface SkillCategory {
+  id: string;
+  skills: string[];
+}
+
+const skillCategories: SkillCategory[] = [
   {
     id: "frontend",
     skills: ["React", "HTML/CSS", "JavaScript", "Tailwind CSS"],
@@ -44,7 +49,7 @@ export const SkillsSection: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {skillCategories.map((category, idx) => (
+            {skillCategories.map((category: SkillCategory, idx: number): JSX.Element => (
               <SpotlightCard key={category.id} category={category} idx={idx} theme={theme} translate={translate} />
             ))}
           </div>
@@ -54,12 +59,22 @@ export const SkillsSection: React.FC = () => {
   );
 };
 
-const SpotlightCard = ({ category, idx, theme, translate }: { category: any; idx: number; theme: string; translate: any }) => {
+const SpotlightCard: React.FC<{ 
+  category: SkillCategory; 
+  idx: number; 
+  theme: string; 
+  translate: (key: string) => string 
+}> = ({ 
+  category, 
+  idx, 
+  theme, 
+  translate 
+}) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (!divRef.current) return;
 
     const div = divRef.current;
@@ -68,19 +83,19 @@ const SpotlightCard = ({ category, idx, theme, translate }: { category: any; idx
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
-  const handleFocus = () => {
+  const handleFocus = (): void => {
     setOpacity(1);
   };
 
-  const handleBlur = () => {
+  const handleBlur = (): void => {
     setOpacity(0);
   };
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = (): void => {
     setOpacity(1);
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (): void => {
     setOpacity(0);
   };
 
@@ -119,7 +134,7 @@ const SpotlightCard = ({ category, idx, theme, translate }: { category: any; idx
       </h3>
 
       <ul className="space-y-3 relative z-10">
-        {category.skills.map((skill: any) => (
+        {category.skills.map((skill: string): JSX.Element => (
           <li key={skill} className="flex items-center gap-3">
             <div className={`w-1.5 h-1.5 rounded-full ${theme === 'dark' ? 'bg-gray-600 group-hover:bg-purple-400' : 'bg-gray-300 group-hover:bg-purple-500'} transition-colors duration-300`} />
             <span className={`font-medium ${theme === 'dark' ? 'text-gray-400 group-hover:text-gray-200' : 'text-gray-600 group-hover:text-gray-900'} transition-colors duration-300`}>

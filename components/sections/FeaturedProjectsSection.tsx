@@ -46,7 +46,7 @@ export const FeaturedProjectsSection: React.FC<FeaturedProjectsSectionProps> = (
           </div>
 
           <div className="space-y-24">
-            {projects.slice(0, 3).map((project, idx) => (
+            {projects.slice(0, 3).map((project: Project, idx: number): JSX.Element => (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 40 }}
@@ -78,11 +78,11 @@ export const FeaturedProjectsSection: React.FC<FeaturedProjectsSectionProps> = (
                        {project.title}
                      </h3>
                      <p className={`text-lg leading-relaxed mb-8 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                       {useLanguage().language === 'en' && project.description_en ? project.description_en : project.description}
+                       {translate("projects.description")}
                      </p>
                      
                      <div className="flex flex-wrap gap-2 mb-8">
-                       {project.technologies.map((tech) => (
+                       {project.technologies.map((tech: string): JSX.Element => (
                          <span key={tech} className={`px-4 py-1.5 rounded-full text-sm font-medium ${
                            theme === 'dark' ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-700'
                          }`}>

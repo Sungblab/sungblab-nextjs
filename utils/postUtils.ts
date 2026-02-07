@@ -6,10 +6,10 @@ export const getRelatedPosts = (
   limit: number = 3
 ): Post[] => {
   // 현재 포스트 제외
-  const otherPosts = allPosts.filter((post) => post.slug !== currentPost.slug);
+  const otherPosts = allPosts.filter((post: Post): boolean => post.slug !== currentPost.slug);
 
   // 포스트별 관련도 점수 계산
-  const scoredPosts = otherPosts.map((post) => {
+  const scoredPosts = otherPosts.map((post: Post): { post: Post; score: number } => {
     let score = 0;
 
     // 같은 카테고리면 높은 점수
@@ -18,8 +18,8 @@ export const getRelatedPosts = (
     }
 
     // 공통 태그당 점수 추가
-    const commonTags = post.frontmatter.tags?.filter((tag) =>
-      currentPost.frontmatter.tags?.includes(tag)
+    const commonTags = post.frontmatter.tags?.filter((tag: string): boolean =>
+      currentPost.frontmatter.tags?.includes(tag) || false
     );
     score += (commonTags?.length || 0) * 3;
 
@@ -36,7 +36,7 @@ export const getRelatedPosts = (
 
   // 점수순 정렬 후 상위 n개 반환
   return scoredPosts
-    .sort((a, b) => b.score - a.score)
+    .sort((a: { score: number }, b: { score: number }): number => b.score - a.score)
     .slice(0, limit)
-    .map((item) => item.post);
+    .map((item: { post: Post }): Post => item.post);
 };

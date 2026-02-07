@@ -58,10 +58,10 @@ interface MathProps {
   block?: boolean;
 }
 
-const Math = ({ math, block = false }: MathProps) => {
+const Math: React.FC<MathProps> = ({ math, block = false }) => {
   const mathRef = useRef<HTMLSpanElement>(null);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (mathRef.current) {
       try {
         katex.render(math, mathRef.current, {

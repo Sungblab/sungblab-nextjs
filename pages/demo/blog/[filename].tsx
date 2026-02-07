@@ -6,8 +6,15 @@ import Head from 'next/head'
 import { useTina } from 'tinacms/dist/react'
 import { TinaMarkdown } from 'tinacms/dist/rich-text'
 import client from '../../../tina/__generated__/client'
+import { GetStaticProps, GetStaticPaths } from 'next'
 
-const BlogPage = (props) => {
+interface PostProps {
+  variables: any;
+  data: any;
+  query: any;
+}
+
+const BlogPage = (props: PostProps): JSX.Element => {
   const { data } = useTina({
     query: props.query,
     variables: props.variables,
@@ -53,17 +60,17 @@ const BlogPage = (props) => {
   )
 }
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   let data = {}
   let query = {}
-  let variables = { relativePath: `${params.filename}.mdx` }
+  let variables = { relativePath: `${params?.filename}.mdx` }
   try {
     const res = await client.queries.post(variables)
     query = res.query
     data = res.data
     variables = res.variables
   } catch (error) {
-    console.error(`Error fetching post ${params.filename}:`, error)
+    console.error(`Error fetching post ${params?.filename}:`, error)
   }
 
   // Ensure and validate data.post exists before returning
@@ -78,25 +85,24 @@ export const getStaticProps = async ({ params }) => {
       variables: variables,
       data: data,
       query: query,
-      //myOtherProp: 'some-other-data',
     },
   }
 }
 
-export const getStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const postsListData = await client.queries.postConnection()
 
   return {
-    paths: postsListData.data.postConnection.edges.map((post) => ({
+    paths: postsListData.data.postConnection.edges?.map((post: any) => ({
       params: { filename: post.node._sys.filename },
-    })),
+    })) || [],
     fallback: false,
   }
 }
 
 export default BlogPage
 
-const PageSection = (props) => {
+const PageSection = (props: { heading: string; content: string }): JSX.Element => {
   return (
     <>
       <h2>{props.heading}</h2>
@@ -109,7 +115,7 @@ const components = {
   PageSection: PageSection,
 }
 
-const ContentSection = ({ content }) => {
+const ContentSection = ({ content }: { content: any }): JSX.Element => {
   return (
     <div className='relative py-16 bg-white overflow-hidden text-black'>
       <div className='hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full'>

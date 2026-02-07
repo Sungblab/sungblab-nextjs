@@ -14,8 +14,8 @@ export const Header: React.FC = () => {
   const router = useRouter();
 
   // Handle scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
+  useEffect((): (() => void) => {
+    const handleScroll = (): void => {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
@@ -78,7 +78,7 @@ export const Header: React.FC = () => {
                   : "bg-white/50 border border-gray-200/50"
               } backdrop-blur-sm`}
             >
-              {navItems.map((item) => {
+              {navItems.map((item: string): JSX.Element => {
                 const path = item === "Home" ? "/" : `/${item.toLowerCase()}`;
                 const isActive = router.pathname === path;
                 const label = translate(`nav.${item.toLowerCase()}`);
@@ -184,7 +184,7 @@ export const Header: React.FC = () => {
             } backdrop-blur-xl`}
           >
             <div className="px-4 py-4 space-y-2">
-              {navItems.map((item) => (
+              {navItems.map((item: string): JSX.Element => (
                 <Link
                   key={item}
                   href={item === "Home" ? "/" : `/${item.toLowerCase()}`}

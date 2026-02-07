@@ -17,7 +17,6 @@ import {
   FaListUl,
   FaBookmark,
 } from "react-icons/fa";
-import RelatedPosts from "../../components/blog/RelatedPosts";
 import { getRelatedPosts } from "../../utils/postUtils";
 import {
   getPostBySlug,
@@ -48,11 +47,18 @@ interface TocItem {
   level: number;
 }
 
-const BlogContainer = styled.article`
-  background: ${({ theme }) => theme.colors.background};
+interface ThemeType {
+  colors: {
+    background: string;
+    border: string;
+  };
+}
+
+const BlogContainer = styled.article<{ theme: ThemeType }>`
+  background: ${({ theme }): string => theme.colors.background};
   padding: 2rem;
   border-radius: 1rem;
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  border: 1px solid ${({ theme }): string => theme.colors.border};
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
@@ -67,7 +73,6 @@ const BlogPost: NextPage<BlogPostProps> = ({
   frontMatter,
   mdxSource,
   toc,
-  post,
   relatedPosts,
   prevPost,
   nextPost,
@@ -78,7 +83,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
   const [showScrollButtons, setShowScrollButtons] = useState(false);
   const [showToc, setShowToc] = useState(false);
 
-  const generateId = (text: string) => {
+  const generateId = (text: string): string => {
     return text
       .toString()
       .replace(/[^가-힣a-zA-Z0-9\s]/g, "")
@@ -87,7 +92,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
       .toLowerCase();
   };
 
-  const scrollToHeader = (id: string) => {
+  const scrollToHeader = (id: string): void => {
     const element = document.getElementById(id);
     if (element) {
       const offset = 80;
@@ -101,8 +106,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
     }
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
+  useEffect((): void => {
+    const handleScroll = (): void => {
       const totalHeight =
         document.documentElement.scrollHeight - window.innerHeight;
       const progress = (window.scrollY / totalHeight) * 100;
@@ -114,16 +119,16 @@ const BlogPost: NextPage<BlogPostProps> = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
-  const scrollToBottom = () =>
+  const scrollToTop = (): void => window.scrollTo({ top: 0, behavior: "smooth" });
+  const scrollToBottom = (): void =>
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 
-  const copyPostUrl = () => {
+  const copyPostUrl = (): void => {
     navigator.clipboard.writeText(window.location.href);
     alert(translate("blog.urlCopied"));
   };
 
-  const sharePost = () => {
+  const sharePost = (): void => {
     if (navigator.share) {
       navigator
         .share({
@@ -138,7 +143,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
   const MDXComponents = {
     Math,
-    h1: (props: any) => {
+    h1: (props: any): JSX.Element => {
       const id = generateId(props.children);
       return (
         <h1
@@ -150,7 +155,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         />
       );
     },
-    h2: (props: any) => {
+    h2: (props: any): JSX.Element => {
       const id = generateId(props.children);
       return (
         <h2
@@ -162,7 +167,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         />
       );
     },
-    h3: (props: any) => (
+    h3: (props: any): JSX.Element => (
       <h3
         className={`text-xl md:text-2xl font-medium mt-6 md:mt-8 mb-3 md:mb-4 tracking-tight ${
           theme === "dark" ? "text-gray-300" : "text-gray-700"
@@ -170,7 +175,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    p: (props: any) => (
+    p: (props: any): JSX.Element => (
       <p
         className={`my-4 md:my-6 text-base md:text-lg leading-7 md:leading-8 ${
           theme === "dark" ? "text-gray-300" : "text-gray-700"
@@ -178,7 +183,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    ul: (props: any) => (
+    ul: (props: any): JSX.Element => (
       <ul
         className={`list-disc ml-6 my-4 space-y-1 ${
           theme === "dark" ? "text-gray-300" : "text-gray-700"
@@ -186,7 +191,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    ol: (props: any) => (
+    ol: (props: any): JSX.Element => (
       <ol
         className={`list-decimal ml-6 my-4 space-y-1 ${
           theme === "dark" ? "text-gray-300" : "text-gray-700"
@@ -194,8 +199,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    li: (props: any) => <li className="pl-2">{props.children}</li>,
-    a: (props: any) => (
+    li: (props: any): JSX.Element => <li className="pl-2">{props.children}</li>,
+    a: (props: any): JSX.Element => (
       <a
         className={`font-medium underline decoration-2 underline-offset-2 transition-colors duration-200 ${
           theme === "dark"
@@ -205,7 +210,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    code: (props: any) => (
+    code: (props: any): JSX.Element => (
       <code
         className={`rounded-md px-2 py-1 font-mono text-sm ${
           theme === "dark"
@@ -215,7 +220,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    pre: (props: any) => (
+    pre: (props: any): JSX.Element => (
       <pre
         className={`rounded-lg p-6 my-8 overflow-x-auto text-sm leading-6 ${
           theme === "dark"
@@ -225,7 +230,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    img: (props: any) => (
+    img: (props: any): JSX.Element => (
       <span className="block my-8">
         <Image
           {...props}
@@ -242,7 +247,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         />
       </span>
     ),
-    blockquote: (props: any) => (
+    blockquote: (props: any): JSX.Element => (
       <blockquote
         className={`border-l-4 border-blue-500 pl-4 italic my-6 ${
           theme === "dark" ? "text-gray-400" : "text-gray-600"
@@ -250,7 +255,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    div: (props: any) => (
+    div: (props: any): JSX.Element => (
       <div
         className="max-w-full overflow-x-auto py-2 overflow-y-hidden scrollbar-hide"
         style={{ WebkitOverflowScrolling: "touch" }}
@@ -354,7 +359,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => setShowToc(!showToc)}
+                        onClick={(): void => setShowToc(!showToc)}
                         className={`lg:hidden inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
                           theme === "dark"
                             ? "bg-gray-800/40 text-gray-200 border-gray-700/50 hover:border-purple-700/50"
@@ -394,10 +399,10 @@ const BlogPost: NextPage<BlogPostProps> = ({
                           {translate("blog.toc")}
                         </h3>
                         <nav className="space-y-3">
-                          {toc.map((item) => (
+                          {toc.map((item: TocItem): JSX.Element => (
                             <button
                               key={item.id}
-                              onClick={() => {
+                              onClick={(): void => {
                                 scrollToHeader(item.id);
                                 setShowToc(false);
                               }}
@@ -473,7 +478,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                           {translate("blog.prevPost")}
                         </span>
                         <h3
-                          className={`
+                           className={`
                           font-medium line-clamp-2 transition-colors duration-300
                           ${
                             theme === "dark"
@@ -578,10 +583,10 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         {translate("blog.toc")}
                       </h3>
                       <nav className="space-y-3">
-                        {toc.map((item) => (
+                        {toc.map((item: TocItem): JSX.Element => (
                           <button
                             key={item.id}
-                            onClick={() => scrollToHeader(item.id)}
+                            onClick={(): void => scrollToHeader(item.id)}
                             className={`
                               block w-full text-left transition-colors duration-200
                               ${
@@ -613,7 +618,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       } transition-all duration-300 shadow-lg`}
                     >
                       <h3
-                        className={`text-lg font-semibold mb-4 flex items-center ${
+                         className={`text-lg font-semibold mb-4 flex items-center ${
                           theme === "dark"
                             ? "text-purple-300"
                             : "text-purple-600"
@@ -623,7 +628,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         {translate("blog.relatedPosts")}
                       </h3>
                       <div className="space-y-4">
-                        {relatedPosts.slice(0, 3).map((post) => (
+                        {relatedPosts.slice(0, 3).map((post: Post): JSX.Element => (
                           <Link
                             key={post.slug}
                             href={`/blog/${post.slug}`}
@@ -633,12 +638,12 @@ const BlogPost: NextPage<BlogPostProps> = ({
                                 theme === "dark"
                                   ? "hover:bg-gray-700/50 hover:text-purple-300"
                                   : "hover:bg-gray-50/50 hover:text-purple-600"
-                              }
+                               }
                               transition-all duration-200
                             `}
                           >
                             <h4
-                              className={`font-medium text-sm transition-colors duration-200 ${
+                               className={`font-medium text-sm transition-colors duration-200 ${
                                 theme === "dark"
                                   ? "group-hover:text-purple-300"
                                   : "group-hover:text-purple-600"
@@ -719,7 +724,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
 export const getStaticPaths: GetStaticPaths = async () => {
   const filePaths = getPostFilePaths();
 
-  const paths = filePaths.map((filePath) => ({
+  const paths = filePaths.map((filePath: string) => ({
     params: { slug: filePath.replace(".mdx", "") },
   }));
 
@@ -734,7 +739,7 @@ export const getStaticProps: GetStaticProps<BlogPostProps> = async ({
   const posts = getAllPosts();
 
   // 현재 포스트의 인덱스 찾기
-  const currentPostIndex = posts.findIndex((p) => p.slug === post.slug);
+  const currentPostIndex = posts.findIndex((p: Post): boolean => p.slug === post.slug);
 
   // 이전/다음 포스트 가져오기
   const prevPost =
@@ -742,7 +747,7 @@ export const getStaticProps: GetStaticProps<BlogPostProps> = async ({
   const nextPost = currentPostIndex > 0 ? posts[currentPostIndex - 1] : null;
 
   // TOC 생성 로직...
-  const generateId = (text: string) => {
+  const generateIdWithText = (text: string): string => {
     return text
       .toString()
       .replace(/[^가-힣a-zA-Z0-9\s]/g, "")
@@ -753,12 +758,12 @@ export const getStaticProps: GetStaticProps<BlogPostProps> = async ({
 
   const toc = post.content
     .split("\n")
-    .filter((line) => line.startsWith("#") || line.startsWith("##"))
-    .filter((line) => !line.startsWith("###"))
-    .map((line) => {
+    .filter((line: string): boolean => line.startsWith("#") || line.startsWith("##"))
+    .filter((line: string): boolean => !line.startsWith("###"))
+    .map((line: string): TocItem => {
       const level = line.split(" ")[0].length;
       const text = line.replace(/^#+\s/, "");
-      const id = generateId(text);
+      const id = generateIdWithText(text);
       return { id, text, level };
     });
 

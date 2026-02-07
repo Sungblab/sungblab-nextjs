@@ -56,7 +56,7 @@ export const BlogPreviewSection: React.FC<BlogPreviewSectionProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.slice(0, 3).map((post, idx) => (
+            {posts.slice(0, 3).map((post: Post, idx: number): JSX.Element => (
               <motion.div
                 key={post.slug}
                 initial={{ opacity: 0, y: 20 }}

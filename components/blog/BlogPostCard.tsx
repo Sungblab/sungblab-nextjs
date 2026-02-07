@@ -20,14 +20,14 @@ const BlogPostCard = ({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (!divRef.current) return;
     const rect = divRef.current.getBoundingClientRect();
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
-  const handleMouseEnter = () => setOpacity(1);
-  const handleMouseLeave = () => setOpacity(0);
+  const handleMouseEnter = (): void => setOpacity(1);
+  const handleMouseLeave = (): void => setOpacity(0);
 
   return (
     <motion.div
@@ -107,7 +107,7 @@ const BlogPostCard = ({
 
             <div className="pt-4 mt-auto border-t border-gray-100 dark:border-gray-800 flex flex-col gap-3">
               <div className="flex flex-wrap gap-2">
-                {post.frontmatter.tags?.slice(0, 3).map((tag: string) => (
+                {post.frontmatter.tags?.slice(0, 3).map((tag: string): JSX.Element => (
                   <span
                     key={tag}
                     className={`text-xs px-2.5 py-1 rounded-full font-medium ${

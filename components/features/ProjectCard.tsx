@@ -36,7 +36,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         </p>
         {technologies.length > 0 && (
           <div className="mb-4 flex flex-wrap gap-2">
-            {technologies.map((tech, index) => (
+            {technologies.map((tech: string, index: number): JSX.Element => (
               <span
                 key={index}
                 className={`px-2 py-1 rounded text-sm ${

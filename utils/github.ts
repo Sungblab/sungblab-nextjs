@@ -8,6 +8,8 @@ export interface GitHubRepo {
   topics: string[];
   stargazers_count: number;
   homepage: string;
+  fork: boolean;
+  updated_at: string;
 }
 
 export async function getGitHubRepos(username: string, limit: number = 6): Promise<GitHubRepo[]> {
@@ -27,7 +29,7 @@ export async function getGitHubRepos(username: string, limit: number = 6): Promi
       throw new Error("Failed to fetch repositories");
     }
 
-    const repos = await response.json();
+    const repos = await response.json() as GitHubRepo[];
     return repos;
   } catch (error) {
     console.error("Error fetching GitHub repos:", error);

@@ -55,7 +55,7 @@ export const Footer: React.FC = () => {
                 {translate("footer.navigation")}
               </h4>
               <ul className="space-y-4">
-                {["Home", "Projects", "Blog", "About"].map((item) => (
+                {["Home", "Projects", "Blog", "About"].map((item: string): JSX.Element => (
                   <li key={item}>
                     <Link
                       href={item === "Home" ? "/" : `/${item.toLowerCase()}`}

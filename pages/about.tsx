@@ -1,10 +1,8 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Layout, SocialButton, useTheme, useLanguage } from "../components/Components";
-import { FaDownload } from "react-icons/fa";
-import Giscus from "@giscus/react";
 import { AnimatedSection } from "../components/ui/AnimatedSection";
 
 const AboutPage: NextPage = () => {
@@ -12,7 +10,7 @@ const AboutPage: NextPage = () => {
   const { translate, language } = useLanguage();
 
   // 애니메이션 변수
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -22,7 +20,7 @@ const AboutPage: NextPage = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,

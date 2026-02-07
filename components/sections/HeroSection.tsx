@@ -46,7 +46,7 @@ export const HeroSection: React.FC = () => {
             className={`absolute -top-6 -right-8 px-3 py-1 text-xs font-bold rounded-full transform rotate-12 shadow-lg hidden sm:block ${
               theme === "dark"
                 ? "bg-yellow-500/10 text-yellow-300 border border-yellow-500/20"
-                : "bg-yellow-100 text-yellow-600 border border-yellow-200"
+                : "bg-yellow-101 text-yellow-600 border border-yellow-200"
             }`}
           >
             {translate("hero.openToWork")}
@@ -90,7 +90,7 @@ export const HeroSection: React.FC = () => {
             theme === "dark" ? "text-gray-400" : "text-gray-600"
           }`}
         >
-          {translate("hero.introduction").split('\n').map((line, i) => (
+          {translate("hero.introduction").split('\n').map((line: string, i: number): JSX.Element => (
             <React.Fragment key={i}>
               {line}
               <br className="hidden sm:block" />
@@ -158,11 +158,11 @@ export const HeroSection: React.FC = () => {
   );
 };
 
-const MagneticButton = ({ children }: { children: React.ReactNode }) => {
+const MagneticButton = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const ref = React.useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouse = (e: React.MouseEvent<HTMLDivElement>): void => {
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current?.getBoundingClientRect() || { height: 0, width: 0, left: 0, top: 0 };
     const middleX = clientX - (left + width / 2);
@@ -170,7 +170,7 @@ const MagneticButton = ({ children }: { children: React.ReactNode }) => {
     setPosition({ x: middleX * 0.2, y: middleY * 0.2 });
   };
 
-  const reset = () => {
+  const reset = (): void => {
     setPosition({ x: 0, y: 0 });
   };
 
@@ -188,4 +188,3 @@ const MagneticButton = ({ children }: { children: React.ReactNode }) => {
     </motion.div>
   );
 };
-

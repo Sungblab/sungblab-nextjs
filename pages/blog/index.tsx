@@ -42,7 +42,7 @@ interface ThemeType {
 }
 
 const BlogCard = styled(Card)<{ theme: ThemeType }>`
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }): string => theme.colors.background};
   margin-bottom: 1.5rem;
 `;
 
@@ -61,9 +61,9 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
     { id: "others", label: translate("blog.categories.others") },
   ];
 
-  useEffect(() => {
+  useEffect((): void => {
     const filtered = posts.filter(
-      (post) =>
+      (post: Post): boolean =>
         (selectedCategory === "all" ||
           post.frontmatter.category.toLowerCase() ===
             selectedCategory.toLowerCase()) &&
@@ -168,7 +168,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                   layout
                   className="grid grid-cols-1 md:grid-cols-2 gap-8"
                 >
-                  {currentPosts.map((post, index) => (
+                  {currentPosts.map((post: Post, index: number): JSX.Element => (
                     <BlogPostCard
                       key={post.slug}
                       post={post}
@@ -188,11 +188,11 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                   className="flex justify-center mt-12"
                 >
                   <div className="flex gap-2">
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                      (number) => (
+                    {Array.from({ length: totalPages }, (_: any, i: number): number => i + 1).map(
+                      (number: number): JSX.Element => (
                         <button
                           key={number}
-                          onClick={() => handlePageChange(number)}
+                          onClick={(): void => handlePageChange(number)}
                           className={`px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
                             currentPage === number
                               ? theme === "dark"

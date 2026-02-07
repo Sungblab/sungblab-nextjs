@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout, useTheme, useLanguage } from "../components/Components";
 import { Project } from "../data/projects";
-import { getGitHubRepos } from "../utils/github";
+import { getGitHubRepos, GitHubRepo } from "../utils/github";
 
 const AnimatedSection: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -37,14 +37,14 @@ const ProjectCard: React.FC<Project> = ({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (!divRef.current) return;
     const rect = divRef.current.getBoundingClientRect();
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
-  const handleMouseEnter = () => setOpacity(1);
-  const handleMouseLeave = () => setOpacity(0);
+  const handleMouseEnter = (): void => setOpacity(1);
+  const handleMouseLeave = (): void => setOpacity(0);
 
   return (
     <motion.div
@@ -114,7 +114,7 @@ const ProjectCard: React.FC<Project> = ({
         <div className="space-y-6 mt-auto">
           {/* Technologies */}
           <div className="flex flex-wrap gap-2">
-            {technologies.slice(0, 4).map((tech) => (
+            {technologies.slice(0, 4).map((tech: string): JSX.Element => (
               <span
                 key={tech}
                 className={`px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide ${
@@ -160,12 +160,12 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
   const { theme } = useTheme();
   const { translate } = useLanguage();
 
-  useEffect(() => {
+  useEffect((): void => {
     const filtered = projects.filter(
-      (project) =>
+      (project: Project): boolean =>
         project.title.toLowerCase().includes(filter.toLowerCase()) ||
         project.description.toLowerCase().includes(filter.toLowerCase()) ||
-        project.technologies.some((tech) =>
+        project.technologies.some((tech: string): boolean =>
           tech.toLowerCase().includes(filter.toLowerCase())
         )
     );
@@ -245,7 +245,7 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                         : "bg-white text-gray-900 border-transparent focus:border-purple-200 placeholder-gray-400"
                     } focus:outline-none`}
                     value={filter}
-                    onChange={(e) => setFilter(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setFilter(e.target.value)}
                   />
                   <div className={`absolute right-5 top-1/2 transform -translate-y-1/2 p-2 rounded-lg transition-colors ${
                       theme === "dark" ? "bg-gray-800/50 text-gray-400" : "bg-gray-100 text-gray-500"
@@ -272,7 +272,7 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                   layout
                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
-                  {filteredProjects.map((project, index) => (
+                  {filteredProjects.map((project: Project): JSX.Element => (
                     <ProjectCard key={project.id} {...project} />
                   ))}
                 </motion.div>
@@ -300,7 +300,7 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                     {translate("projects.tryDifferent")}
                   </p>
                   <button
-                    onClick={() => setFilter("")}
+                    onClick={(): void => setFilter("")}
                     className={`mt-6 px-6 py-2 rounded-full border-2 ${
                       theme === "dark"
                         ? "border-purple-500 text-purple-300 hover:bg-purple-900/20"
@@ -325,8 +325,8 @@ export const getStaticProps: GetStaticProps = async () => {
   
   // Transform to Project format
   const githubProjects: Project[] = repos
-    .filter((repo: any) => !repo.fork) // Keep filtering out forks
-    .map((repo: any) => ({
+    .filter((repo: GitHubRepo): boolean => !repo.fork)
+    .map((repo: GitHubRepo): Project => ({
       id: repo.id,
       title: repo.name,
       description: repo.description || "", // Empty string if no description

@@ -19,11 +19,11 @@ export const Comments: React.FC<CommentsProps> = ({ postSlug }) => {
   const [content, setContent] = useState("");
   const { theme } = useTheme();
 
-  useEffect(() => {
+  useEffect((): void => {
     fetchComments();
   }, [postSlug]);
 
-  const fetchComments = async () => {
+  const fetchComments = async (): Promise<void> => {
     try {
       const response = await axios.get(`/api/comments?postSlug=${postSlug}`);
       setComments(response.data);
@@ -32,7 +32,7 @@ export const Comments: React.FC<CommentsProps> = ({ postSlug }) => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
       await axios.post("/api/comments", { postSlug, name, content });
@@ -57,7 +57,7 @@ export const Comments: React.FC<CommentsProps> = ({ postSlug }) => {
         <input
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setName(e.target.value)}
           placeholder="Your name"
           className={`w-full p-2 mb-2 border rounded ${
             theme === "dark"
@@ -68,7 +68,7 @@ export const Comments: React.FC<CommentsProps> = ({ postSlug }) => {
         />
         <textarea
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void => setContent(e.target.value)}
           placeholder="Your comment"
           className={`w-full p-2 mb-2 border rounded ${
             theme === "dark"
@@ -85,7 +85,7 @@ export const Comments: React.FC<CommentsProps> = ({ postSlug }) => {
         </button>
       </form>
       <div>
-        {comments.map((comment) => (
+        {comments.map((comment: Comment): JSX.Element => (
           <div
             key={comment._id}
             className={`mb-4 p-4 rounded ${

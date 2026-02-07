@@ -14,7 +14,7 @@ import { SkillsSection } from "../components/sections/SkillsSection";
 import { FeaturedProjectsSection } from "../components/sections/FeaturedProjectsSection";
 import { ContactSection } from "../components/sections/ContactSection";
 
-import { getGitHubRepos } from "../utils/github";
+import { getGitHubRepos, GitHubRepo } from "../utils/github";
 import { Project } from "../data/projects";
 
 interface HomeProps {
@@ -77,7 +77,7 @@ const Home: NextPage<HomeProps> = ({ posts, projects }) => {
 export const getStaticProps: GetStaticProps = async () => {
   const posts = getAllPosts();
   // Sort by date (descending)
-  const sortedPosts = posts.sort((a, b) => {
+  const sortedPosts = posts.sort((a: Post, b: Post): number => {
     return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
   });
 
@@ -85,17 +85,16 @@ export const getStaticProps: GetStaticProps = async () => {
   const repos = await getGitHubRepos("Sungblab");
   
   // Transform to Project format
-  // Transform to Project format
   const githubProjects: Project[] = repos
-    .filter((repo: any) => !repo.fork) // Keep filtering out forks if desired, or remove this line too if you want forks. Usually forks are not main projects. Let's keep fork filter but remove description filter.
-    .map((repo: any) => ({
+    .filter((repo: GitHubRepo): boolean => !repo.fork)
+    .map((repo: GitHubRepo): Project => ({
       id: repo.id,
       title: repo.name,
       description: repo.description || "", // Empty string if no description
       link: repo.html_url,
       // Use GitHub Open Graph image service for dynamic preview
       image: `https://opengraph.githubassets.com/1/Sungblab/${repo.name}`,
-      technologies: [repo.language, ...(repo.topics || [])].filter(Boolean),
+      technologies: [repo.language, ...(repo.topics || [])].filter(Boolean) as string[],
       date: repo.updated_at,
     }));
 

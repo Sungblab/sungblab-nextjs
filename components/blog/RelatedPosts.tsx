@@ -19,7 +19,7 @@ const RelatedPosts = ({ posts, theme }: RelatedPostsProps): JSX.Element => {
         관련 포스트
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {posts.map((post) => (
+        {posts.map((post: Post): JSX.Element => (
           <Link
             key={post.slug}
             href={`/blog/${post.slug}`}

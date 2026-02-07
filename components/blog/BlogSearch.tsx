@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { useLanguage } from "../features/LanguageContext";
 
 interface BlogSearchProps {
   searchTerm: string;
@@ -6,11 +7,12 @@ interface BlogSearchProps {
   theme: string;
 }
 
-const BlogSearch = ({
+const BlogSearch: React.FC<BlogSearchProps> = ({
   searchTerm,
   onSearch,
   theme,
-}: BlogSearchProps): JSX.Element => {
+}) => {
+  const { translate } = useLanguage();
   const handleSearch = (e: ChangeEvent<HTMLInputElement>): void => {
     onSearch(e.target.value);
   };
@@ -19,7 +21,7 @@ const BlogSearch = ({
     <div className="relative flex-1">
       <input
         type="text"
-        placeholder="포스트 검색..."
+        placeholder={translate("blog.searchPlaceholder") || "Search posts..."}
         className={`w-full p-4 pr-12 rounded-xl border ${
           theme === "dark"
             ? "bg-gray-800/50 text-white border-gray-700 placeholder-gray-400 focus:border-purple-700/50"
