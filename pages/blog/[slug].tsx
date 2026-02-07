@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
-import { Layout, useTheme } from "../../components/Components";
+import { Layout, useTheme, useLanguage } from "../../components/Components";
 import Giscus from "@giscus/react";
 import { useState, useEffect } from "react";
 import Math from "../../components/Math";
@@ -73,6 +73,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
   nextPost,
 }) => {
   const { theme } = useTheme();
+  const { translate, language } = useLanguage();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollButtons, setShowScrollButtons] = useState(false);
   const [showToc, setShowToc] = useState(false);
@@ -119,7 +120,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
   const copyPostUrl = () => {
     navigator.clipboard.writeText(window.location.href);
-    alert("게시글 주소가 클립보드에 복사되었습니다.");
+    alert(translate("blog.urlCopied"));
   };
 
   const sharePost = () => {
@@ -131,7 +132,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         })
         .catch(console.error);
     } else {
-      alert("공유 기능 지원되지 않는 브라우저입니다.");
+      alert(translate("blog.shareNotSupported"));
     }
   };
 
@@ -278,9 +279,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
-          <div className="container mx-auto py-12 relative">
+          <div className="container mx-auto px-4 pt-40 pb-12 relative">
             <div className="flex flex-col lg:flex-row gap-8">
-              <div className="flex-1 px-2 sm:px-4">
+              <div className="flex-1 lg:w-[calc(100%-20rem)]">
                 <motion.div
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -296,7 +297,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     }`}
                   >
                     <FaArrowLeft className="mr-2 transition-transform duration-300 group-hover:translate-x-[-4px]" />
-                    블로그 목록으로 돌아가기
+                    {translate("blog.backToBlog")}
                   </Link>
 
                   <div className="space-y-6">
@@ -336,7 +337,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                             : "bg-purple-600 text-white border-purple-600 hover:bg-purple-700"
                         } hover:shadow-xl`}
                       >
-                        <FaCopy className="mr-2" /> URL 복사
+                        <FaCopy className="mr-2" /> {translate("blog.copyUrl")}
                       </motion.button>
                       <motion.button
                         whileHover={{ scale: 1.05 }}
@@ -348,7 +349,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                             : "bg-purple-600 text-white border-purple-600 hover:bg-purple-700"
                         } hover:shadow-xl`}
                       >
-                        <FaShare className="mr-2" /> 공유하기
+                        <FaShare className="mr-2" /> {translate("blog.share")}
                       </motion.button>
                       <motion.button
                         whileHover={{ scale: 1.05 }}
@@ -360,7 +361,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                             : "bg-white/80 text-gray-700 border-gray-200/50 hover:border-purple-300/50"
                         }`}
                       >
-                        <FaListUl className="mr-2" /> 목차
+                        <FaListUl className="mr-2" /> {translate("blog.toc")}
                       </motion.button>
                     </div>
                   </div>
@@ -390,7 +391,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                           }`}
                         >
                           <FaListUl className="mr-2" />
-                          목차
+                          {translate("blog.toc")}
                         </h3>
                         <nav className="space-y-3">
                           {toc.map((item) => (
@@ -431,12 +432,16 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                   className={`prose prose-lg max-w-none px-0 ${
-                    theme === "dark" ? "prose-invert prose-dark" : "prose-light"
+                    theme === "dark" 
+                      ? "prose-invert prose-p:text-gray-300 prose-headings:text-gray-100 prose-strong:text-white" 
+                      : "prose-p:text-gray-700 prose-headings:text-gray-900 prose-strong:text-gray-900"
                   }`}
                 >
                   <div
-                    className={`rounded-xl p-2 sm:p-8 ${
-                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    className={`rounded-2xl p-6 sm:p-10 backdrop-blur-md border shadow-xl ${
+                      theme === "dark" 
+                        ? "bg-gray-800/40 border-gray-700/50" 
+                        : "bg-white/60 border-gray-200/50"
                     }`}
                   >
                     <MDXRemote {...mdxSource} components={MDXComponents} />
@@ -465,7 +470,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                               : "text-purple-600"
                           }`}
                         >
-                          이전 포스트
+                          {translate("blog.prevPost")}
                         </span>
                         <h3
                           className={`
@@ -502,7 +507,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                               : "text-purple-600"
                           }`}
                         >
-                          다음 포스트
+                          {translate("blog.nextPost")}
                         </span>
                         <h3
                           className={`
@@ -539,7 +544,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       emitMetadata="0"
                       inputPosition="top"
                       theme={theme === "dark" ? "dark" : "light"}
-                      lang="ko"
+                      lang={language === "ko" ? "ko" : "en"}
                     />
                   </div>
                 </div>
@@ -570,7 +575,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         }`}
                       >
                         <FaListUl className="mr-2" />
-                        목차
+                        {translate("blog.toc")}
                       </h3>
                       <nav className="space-y-3">
                         {toc.map((item) => (
@@ -615,7 +620,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         }`}
                       >
                         <FaBookmark className="mr-2" />
-                        관련 포스트
+                        {translate("blog.relatedPosts")}
                       </h3>
                       <div className="space-y-4">
                         {relatedPosts.slice(0, 3).map((post) => (

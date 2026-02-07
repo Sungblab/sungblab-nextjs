@@ -11,8 +11,9 @@ export interface Project {
   id: number;
   title: string;
   description: string;
+  description_en?: string;
   link: string;
-  image: StaticImageData;
+  image: StaticImageData | string;
   technologies: string[];
   date: string;
 }
@@ -21,8 +22,8 @@ export const projects: Project[] = [
   {
     id: 1,
     title: "Sungblab",
-    description:
-      "React와 Next.js를 사용하여 개발한 반응형 개인 포트폴리오 웹사이트입니다.",
+    description: "React와 Next.js를 사용하여 개발한 반응형 개인 포트폴리오 웹사이트입니다.",
+    description_en: "A responsive personal portfolio website developed using React and Next.js.",
     link: "https://github.com/Sungblab/sungblab-nextjs",
     image: sbImage,
     technologies: ["React", "Next.js", "Tailwind CSS"],
@@ -31,8 +32,8 @@ export const projects: Project[] = [
   {
     id: 2,
     title: "Codelab",
-    description:
-      "HTML과 Tailwind css를 사용하여 개발한 동아리 포트폴리오 사이트입니다.",
+    description: "HTML과 Tailwind css를 사용하여 개발한 동아리 포트폴리오 사이트입니다.",
+    description_en: "A club portfolio site developed using HTML and Tailwind CSS.",
     link: "https://github.com/Sungblab/Codelap",
     image: clImage,
     technologies: ["HTML", "Tailwind CSS"],
@@ -41,8 +42,8 @@ export const projects: Project[] = [
   {
     id: 3,
     title: "WDJ",
-    description:
-      "완·대·전은 완도고등학교 대신 전해드립니다 의 줄임말로, 완도고등학교 학생들을 위한 종합 커뮤니티 플랫폼입니다. 우리 학교 학생들의 소통과 정보 공유를 위해 제작했습니다.",
+    description: "완·대·전은 완도고등학교 대신 전해드립니다 의 줄임말로, 완도고등학교 학생들을 위한 종합 커뮤니티 플랫폼입니다. 우리 학교 학생들의 소통과 정보 공유를 위해 제작했습니다.",
+    description_en: "WDJ is a comprehensive community platform for Wando High School students, designed for communication and information sharing among students.",
     link: "https://wdj.kr/",
     image: wdjImage,
     technologies: ["HTML", "Tailwind CSS", "Node.js", "Express.js", "MongoDB"],
@@ -51,8 +52,8 @@ export const projects: Project[] = [
   {
     id: 4,
     title: "attendance_system",
-    description:
-      "고등학교 생활중 학급에서 얼굴인식 출결관리 시스템을 하면 좋겠다는 생각에 얼굴인식 기술을 활용해 파이썬으로 구현해 보았습니다.",
+    description: "고등학교 생활중 학급에서 얼굴인식 출결관리 시스템을 하면 좋겠다는 생각에 얼굴인식 기술을 활용해 파이썬으로 구현해 보았습니다.",
+    description_en: "Implemented a facial recognition attendance management system using Python and computer vision for high school classroom use.",
     link: "https://github.com/Sungblab/SB_face_recognition_system",
     image: attImage,
     technologies: ["Python", "open_cv", "face_recognition"],
@@ -61,8 +62,8 @@ export const projects: Project[] = [
   {
     id: 5,
     title: "ai_career_advisor",
-    description:
-      "고등학교 행사중 과학수학 페스티벌에 출전하기 위해 LLM api를 이용한 프롬프트 엔지니어링 인공지능 진로 탐색 서비스를 만들었습니다",
+    description: "고등학교 행사중 과학수학 페스티벌에 출전하기 위해 LLM api를 이용한 프롬프트 엔지니어링 인공지능 진로 탐색 서비스를 만들었습니다",
+    description_en: "Created an AI career exploration service using LLM API and prompt engineering for a high school science and math festival.",
     link: "https://github.com/Sungblab",
     image: aiImage,
     technologies: ["Python", "Flask", "Claude 3.5 sonnet api", "Tailwind CSS"],
@@ -71,8 +72,8 @@ export const projects: Project[] = [
   {
     id: 6,
     title: "QR attend system",
-    description:
-      "이 프로젝트는 QR 코드를 사용한 출석 시스템입니다. 사용자는 모바일 웹을 통해 QR 코드를 스캔하여 출석을 확인할 수 있습니다. 제 학교 학급에서 실제로 사용하기 위해 개발했습니다. ",
+    description: "이 프로젝트는 QR 코드를 사용한 출석 시스템입니다. 사용자는 모바일 웹을 통해 QR 코드를 스캔하여 출석을 확인할 수 있습니다. 제 학교 학급에서 실제로 사용하기 위해 개발했습니다. ",
+    description_en: "A QR code-based attendance system where users can check attendance by scanning QR codes via mobile web, developed for actual classroom use.",
     link: "https://github.com/Sungblab",
     image: qrImage,
     technologies: ["HTML", "Tailwind CSS", "Node.js", "Express.js", "MongoDB"],
@@ -81,8 +82,8 @@ export const projects: Project[] = [
   {
     id: 7,
     title: "fine-tuning EEVE-Korean-10.8B voice assistant",
-    description:
-      "이 프로젝트는 RTX 4070 ti super 모델을 ai 연산, 추론에 활용해보기위해 solar 모델 한국어 파인튜닝 모델을 활용해서 음성인식 보이스 어시스턴트를 만들어 보았습니다.",
+    description: "이 프로젝트는 RTX 4070 ti super 모델을 ai 연산, 추론에 활용해보기위해 solar 모델 한국어 파인튜닝 모델을 활용해서 음성인식 보이스 어시스턴트를 만들어 보았습니다.",
+    description_en: "Created a voice assistant using a fine-tuned Solar-based Korean model to leverage RTX 4070 Ti Super for AI computations and inference.",
     link: "https://youtu.be/OIVoiqm4ZuU?si=vgzCIqXWaoPyy7Y-",
     image: llamaImage,
     technologies: [

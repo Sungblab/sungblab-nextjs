@@ -1,7 +1,7 @@
 import { GetStaticProps, NextPage } from "next";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Layout, useTheme, Card } from "../../components/Components";
+import { Layout, useTheme, Card, useLanguage } from "../../components/Components";
 import BlogPostCard from "../../components/blog/BlogPostCard";
 import BlogSearch from "../../components/blog/BlogSearch";
 import BlogCategories from "../../components/blog/BlogCategories";
@@ -17,12 +17,8 @@ interface BlogPageProps {
 
 const POSTS_PER_PAGE = 10;
 
-const categories = [
-  { id: "all", label: "전체" },
-  { id: "develop", label: "개발" },
-  { id: "AI", label: "인공지능" },
-  { id: "others", label: "기타" },
-];
+// Categories are now defined within the component for translation support
+
 
 const AnimatedSection: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -74,6 +70,14 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const { theme } = useTheme();
+  const { translate } = useLanguage();
+
+  const categories = [
+    { id: "all", label: translate("blog.categories.all") },
+    { id: "develop", label: translate("blog.categories.develop") },
+    { id: "AI", label: translate("blog.categories.AI") },
+    { id: "others", label: translate("blog.categories.others") },
+  ];
 
   useEffect(() => {
     const filtered = posts.filter(
@@ -105,8 +109,8 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
   return (
     <Layout>
       <SEO
-        title="Blog | Sungblab"
-        description="Sungblab의 개발 블로그 - 웹 개발, AI, 그리고 기술 이야기"
+        title={`${translate("blog.title")} | Sungblab`}
+        description={translate("blog.description")}
       />
 
       <motion.main
@@ -127,28 +131,30 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
-          <div className="container mx-auto px-4 py-12 relative">
+          <div className="container mx-auto px-4 pt-40 pb-12 relative">
             <AnimatedSection>
               {/* 헤더 섹션 */}
               <motion.div
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="text-center mb-12"
+                className="text-center mb-16"
               >
                 <h1
-                  className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-6 ${
-                    theme === "dark" ? "text-purple-300" : "text-purple-600"
+                  className={`text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r ${
+                    theme === "dark" 
+                    ? "from-white via-purple-200 to-purple-400" 
+                    : "from-gray-900 via-purple-800 to-purple-600"
                   }`}
                 >
-                  Blog
+                  {translate("blog.title")}
                 </h1>
                 <p
-                  className={`text-lg ${
-                    theme === "dark" ? "text-gray-300" : "text-gray-600"
+                  className={`text-lg md:text-xl max-w-2xl mx-auto ${
+                    theme === "dark" ? "text-gray-400" : "text-gray-600"
                   }`}
                 >
-                  개발과 기술에 대한 이야기를 공유합니다
+                  {translate("blog.description")}
                 </p>
               </motion.div>
 
@@ -157,7 +163,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="mb-8 space-y-6"
+                className="mb-12 space-y-8"
               >
                 <div className="max-w-xl mx-auto">
                   <BlogSearch
@@ -235,14 +241,14 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                       theme === "dark" ? "text-gray-300" : "text-gray-600"
                     }`}
                   >
-                    검색 결과가 없습니다
+                    {translate("blog.noResults")}
                   </p>
                   <p
                     className={
                       theme === "dark" ? "text-gray-400" : "text-gray-500"
                     }
                   >
-                    다른 키워드로 검색해보세요
+                    {translate("blog.tryDifferent")}
                   </p>
                 </motion.div>
               )}
