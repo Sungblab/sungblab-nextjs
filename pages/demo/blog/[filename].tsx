@@ -56,14 +56,21 @@ const BlogPage = (props) => {
 export const getStaticProps = async ({ params }) => {
   let data = {}
   let query = {}
-  let variables = { relativePath: `${params.filename}.md` }
+  let variables = { relativePath: `${params.filename}.mdx` }
   try {
     const res = await client.queries.post(variables)
     query = res.query
     data = res.data
     variables = res.variables
-  } catch {
-    // swallow errors related to document creation
+  } catch (error) {
+    console.error(`Error fetching post ${params.filename}:`, error)
+  }
+
+  // Ensure and validate data.post exists before returning
+  if (!data || !data.post) {
+    return {
+      notFound: true,
+    }
   }
 
   return {
