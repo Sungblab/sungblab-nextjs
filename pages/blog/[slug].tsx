@@ -6,7 +6,7 @@ import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import { Layout, useTheme, useLanguage } from "../../components/Components";
 import Giscus from "@giscus/react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Math from "../../components/Math";
 import {
   FaArrowUp,
@@ -25,7 +25,6 @@ import {
 } from "../../utils/mdxUtils";
 import { Post } from "../../types/post";
 import { motion, AnimatePresence } from "framer-motion";
-import styled from "styled-components";
 
 interface BlogPostProps {
   frontMatter: {
@@ -47,27 +46,6 @@ interface TocItem {
   level: number;
 }
 
-interface ThemeType {
-  colors: {
-    background: string;
-    border: string;
-  };
-}
-
-const BlogContainer = styled.article<{ theme: ThemeType }>`
-  background: ${({ theme }): string => theme.colors.background};
-  padding: 2rem;
-  border-radius: 1rem;
-  border: 1px solid ${({ theme }): string => theme.colors.border};
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-      0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  }
-`;
 
 const BlogPost: NextPage<BlogPostProps> = ({
   frontMatter,
@@ -106,7 +84,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
     }
   };
 
-  useEffect((): void => {
+  useEffect(() => {
     const handleScroll = (): void => {
       const totalHeight =
         document.documentElement.scrollHeight - window.innerHeight;
@@ -144,7 +122,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
   const MDXComponents = {
     Math,
     h1: (props: any): JSX.Element => {
-      const id = generateId(props.children);
+      const id = generateId(String(props.children || ""));
       return (
         <h1
           id={id}
@@ -156,7 +134,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
       );
     },
     h2: (props: any): JSX.Element => {
-      const id = generateId(props.children);
+      const id = generateId(String(props.children || ""));
       return (
         <h2
           id={id}
@@ -167,7 +145,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         />
       );
     },
-    h3: (props: any): JSX.Element => (
+    h3: (props: React.HTMLAttributes<HTMLHeadingElement>): JSX.Element => (
       <h3
         className={`text-xl md:text-2xl font-medium mt-6 md:mt-8 mb-3 md:mb-4 tracking-tight ${
           theme === "dark" ? "text-gray-300" : "text-gray-700"
@@ -175,7 +153,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    p: (props: any): JSX.Element => (
+    p: (props: React.HTMLAttributes<HTMLParagraphElement>): JSX.Element => (
       <p
         className={`my-4 md:my-6 text-base md:text-lg leading-7 md:leading-8 ${
           theme === "dark" ? "text-gray-300" : "text-gray-700"
@@ -183,7 +161,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    ul: (props: any): JSX.Element => (
+    ul: (props: React.HTMLAttributes<HTMLUListElement>): JSX.Element => (
       <ul
         className={`list-disc ml-6 my-4 space-y-1 ${
           theme === "dark" ? "text-gray-300" : "text-gray-700"
@@ -191,7 +169,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    ol: (props: any): JSX.Element => (
+    ol: (props: React.HTMLAttributes<HTMLOListElement>): JSX.Element => (
       <ol
         className={`list-decimal ml-6 my-4 space-y-1 ${
           theme === "dark" ? "text-gray-300" : "text-gray-700"
@@ -199,8 +177,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    li: (props: any): JSX.Element => <li className="pl-2">{props.children}</li>,
-    a: (props: any): JSX.Element => (
+    li: (props: React.HTMLAttributes<HTMLLIElement>): JSX.Element => <li className="pl-2">{props.children}</li>,
+    a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>): JSX.Element => (
       <a
         className={`font-medium underline decoration-2 underline-offset-2 transition-colors duration-200 ${
           theme === "dark"
@@ -210,7 +188,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    code: (props: any): JSX.Element => (
+    code: (props: React.HTMLAttributes<HTMLElement>): JSX.Element => (
       <code
         className={`rounded-md px-2 py-1 font-mono text-sm ${
           theme === "dark"
@@ -220,7 +198,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         {...props}
       />
     ),
-    pre: (props: any): JSX.Element => (
+    pre: (props: React.HTMLAttributes<HTMLPreElement>): JSX.Element => (
       <pre
         className={`rounded-lg p-6 my-8 overflow-x-auto text-sm leading-6 ${
           theme === "dark"
@@ -233,7 +211,6 @@ const BlogPost: NextPage<BlogPostProps> = ({
     img: (props: any): JSX.Element => (
       <span className="block my-8">
         <Image
-          {...props}
           width={800}
           height={600}
           style={{
@@ -244,10 +221,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
           }}
           alt={props.alt || "blog image"}
           className="rounded-lg shadow-md mx-auto"
+          {...props}
         />
       </span>
     ),
-    blockquote: (props: any): JSX.Element => (
+    blockquote: (props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>): JSX.Element => (
       <blockquote
         className={`border-l-4 border-blue-500 pl-4 italic my-6 ${
           theme === "dark" ? "text-gray-400" : "text-gray-600"

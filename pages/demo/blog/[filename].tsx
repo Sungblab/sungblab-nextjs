@@ -60,8 +60,8 @@ const BlogPage = (props: PostProps): JSX.Element => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  let data = {}
-  let query = {}
+  let data: any = {}
+  let query: any = {}
   let variables = { relativePath: `${params?.filename}.mdx` }
   try {
     const res = await client.queries.post(variables)
