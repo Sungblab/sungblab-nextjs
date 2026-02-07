@@ -226,7 +226,7 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                 className="text-center mb-16"
               >
                 <h1
-                  className={`text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r ${
+                  className={`text-4xl md:text-6xl font-bold mb-6 pb-2 bg-clip-text text-transparent bg-gradient-to-r ${
                     theme === "dark" 
                     ? "from-white via-purple-200 to-purple-400" 
                     : "from-gray-900 via-purple-800 to-purple-600"

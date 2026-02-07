@@ -14,11 +14,23 @@ export const getPostBySlug = (slug: string): Post => {
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContents);
 
+  // 썸네일이 없을 경우 본문에서 첫 번째 이미지 추출
+  let thumbnail = data.thumbnail;
+  if (!thumbnail) {
+    const imgMatch = content.match(/!\[.*?\]\((.*?)\)/);
+    if (imgMatch && imgMatch[1]) {
+      thumbnail = imgMatch[1];
+    }
+  }
+
   return {
     slug,
-    frontmatter: data as Post["frontmatter"],
+    frontmatter: {
+      ...(data as Post["frontmatter"]),
+      thumbnail: thumbnail || null,
+    },
     content,
-    excerpt: content.slice(0, 150) + "...",
+    excerpt: (data.description || content.slice(0, 150)) + "...",
   };
 };
 
@@ -29,6 +41,10 @@ export const getAllPosts = (): Post[] => {
     .map((filePath) => {
       const slug = filePath.replace(".mdx", "");
       return getPostBySlug(slug);
+    })
+    .filter((post) => {
+      // 배포 환경에서는 드래프트 제외 (로컬 개발 시에는 확인 가능하도록 처리 가능하나 일단 단순화)
+      return post.frontmatter.draft !== true;
     })
     .sort((a, b) => {
       return (

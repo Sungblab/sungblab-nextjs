@@ -59,6 +59,24 @@ export default defineConfig({
             required: true,
           },
           {
+            type: "image",
+            name: "thumbnail",
+            label: "Thumbnail",
+          },
+          {
+            type: "string",
+            name: "description",
+            label: "Description",
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "boolean",
+            name: "draft",
+            label: "Draft",
+          },
+          {
             type: "rich-text",
             name: "body",
             label: "Body",

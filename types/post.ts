@@ -10,6 +10,7 @@ export interface PostMetadata {
     name: string;
     avatar: string;
   };
+  draft?: boolean;
 }
 
 export interface Post {
