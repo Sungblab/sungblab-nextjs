@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { translations, Language } from "../../utils/translations";
 
 interface LanguageContextType {
   language: Language;
   toggleLanguage: () => void;
-  translate: (key: string) => string;
+  translate: (_translationKey: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -35,14 +36,14 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const translate = (key: string): string => {
     const keys = key.split(".");
-    let current: any = translations[language];
+    let current: Record<string, unknown> | string = translations[language];
     for (const k of keys) {
-      if (current[k] === undefined) {
+      if (typeof current !== "object" || current === null || (current as Record<string, unknown>)[k] === undefined) {
         return key;
       }
-      current = current[k];
+      current = (current as Record<string, unknown>)[k] as Record<string, unknown> | string;
     }
-    return current;
+    return current as string;
   };
 
   return (

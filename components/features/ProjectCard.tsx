@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { useTheme } from "./ThemeContext";
 
 interface ProjectCardProps {
@@ -50,12 +51,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             ))}
           </div>
         )}
-        <a
+        <Link
           href="/projects"
           className="inline-block bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition-colors duration-300"
         >
           View Project
-        </a>
+        </Link>
       </div>
     </div>
   );

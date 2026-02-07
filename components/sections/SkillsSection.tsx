@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "../../components/features/ThemeContext";
@@ -63,7 +64,7 @@ const SpotlightCard: React.FC<{
   category: SkillCategory; 
   idx: number; 
   theme: string; 
-  translate: (key: string) => string 
+  translate: (_key: string) => string 
 }> = ({ 
   category, 
   idx, 

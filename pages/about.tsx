@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import { Layout, SocialButton, useTheme, useLanguage } from "../components/Components";
+import Giscus from "@giscus/react";
 import { AnimatedSection } from "../components/ui/AnimatedSection";
 
 const AboutPage: NextPage = () => {
@@ -169,9 +170,12 @@ const AboutPage: NextPage = () => {
             <div className={`overflow-hidden rounded-2xl p-4 transition-transform duration-300 hover:scale-[1.01] ${
               theme === "dark" ? "bg-gray-900 border border-gray-700" : "bg-white border border-gray-200 shadow-sm"
             }`}>
-              <img
+              <Image
                 src={`https://ghchart.rshah.org/${theme === 'dark' ? 'a855f7' : '7e22ce'}/sungblab`}
                 alt="GitHub Contribution Graph"
+                width={800}
+                height={200}
+                unoptimized
                 className="w-full h-auto"
               />
             </div>
@@ -181,9 +185,12 @@ const AboutPage: NextPage = () => {
                 <div className={`overflow-hidden rounded-2xl transition-transform duration-300 hover:scale-[1.02] ${
                   theme === "dark" ? "bg-gray-900 border border-gray-700" : "bg-white border border-gray-200 shadow-sm"
                 }`}>
-                  <img
+                  <Image
                     src={`https://github-profile-summary-cards.vercel.app/api/cards/stats?username=sungblab&theme=${theme === 'dark' ? 'radical' : 'default'}`}
                     alt="GitHub Stats"
+                    width={400}
+                    height={200}
+                    unoptimized
                     className="w-full h-auto"
                   />
                 </div>
@@ -192,9 +199,12 @@ const AboutPage: NextPage = () => {
                 <div className={`overflow-hidden rounded-2xl transition-transform duration-300 hover:scale-[1.02] ${
                   theme === "dark" ? "bg-gray-900 border border-gray-700" : "bg-white border border-gray-200 shadow-sm"
                 }`}>
-                  <img
+                  <Image
                     src={`https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=sungblab&theme=${theme === 'dark' ? 'radical' : 'default'}`}
                     alt="Top Languages"
+                    width={400}
+                    height={200}
+                    unoptimized
                     className="w-full h-auto"
                   />
                 </div>
@@ -206,9 +216,12 @@ const AboutPage: NextPage = () => {
               <div className={`overflow-hidden rounded-2xl transition-transform duration-300 hover:scale-[1.01] ${
                 theme === "dark" ? "bg-gray-900 border border-gray-700" : "bg-white border border-gray-200 shadow-sm"
               }`}>
-                <img
+                <Image
                   src={`https://streak-stats.demolab.com/?user=sungblab&theme=${theme === 'dark' ? 'radical' : 'default'}&background=00000000&hide_border=true&stroke=${theme === 'dark' ? 'a855f7' : '7e22ce'}`}
                   alt="GitHub Streak"
+                  width={800}
+                  height={200}
+                  unoptimized
                   className="w-full h-auto"
                 />
               </div>
