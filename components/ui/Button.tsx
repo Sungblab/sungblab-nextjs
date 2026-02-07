@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ThemeType } from "../features/ThemeContext";
 
 export const Button = styled.button<{ theme: ThemeType }>`
-  background: ${({ theme }) => theme?.colors?.primary || "#7C3AED"};
+  background: ${({ theme }): string => theme?.colors?.primary || "#7C3AED"};
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;

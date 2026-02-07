@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion, HTMLMotionProps, Variants } from "framer-motion";
 
 interface AnimatedSectionProps extends HTMLMotionProps<"div"> {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   viewportAmount = 0.2,
   ...props
 }) => {
-  const getVariants = () => {
+  const getVariants = (): Variants => {
     const base = {
       hidden: { opacity: 0 },
       visible: {
