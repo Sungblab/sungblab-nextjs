@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useTheme } from "./ThemeContext";
 
@@ -19,18 +19,18 @@ export const Comments: React.FC<CommentsProps> = ({ postSlug }) => {
   const [content, setContent] = useState("");
   const { theme } = useTheme();
 
-  useEffect((): void => {
-    fetchComments();
-  }, [postSlug]);
-
-  const fetchComments = async (): Promise<void> => {
+  const fetchComments = useCallback(async (): Promise<void> => {
     try {
       const response = await axios.get(`/api/comments?postSlug=${postSlug}`);
       setComments(response.data);
     } catch (error) {
       console.error("Failed to fetch comments", error);
     }
-  };
+  }, [postSlug]);
+
+  useEffect((): void => {
+    fetchComments();
+  }, [fetchComments]);
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();

@@ -3,7 +3,7 @@ import { useLanguage } from "../features/LanguageContext";
 
 interface BlogSearchProps {
   searchTerm: string;
-  onSearch: (value: string) => void;
+  onSearch: (_value: string) => void;
   theme: string;
 }
 
