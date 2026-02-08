@@ -3,6 +3,9 @@
 코딩만 하기엔 인생은 짧고, 내 작업물을 그냥 썩히기엔 너무 아깝습니다. 그래서 만들었습니다.  
 **Sungblab**은 Next.js 14의 파워와 TinaCMS의 편리함, 그리고 '약간의' 감성을 버무린 개인 포트폴리오 겸 블로그입니다.
 
+![Uploading Screenshot 2026-02-08 154335.png…]()
+
+
 [https://sungblab.vercel.app](https://sungblab.vercel.app)
 
 ---
