@@ -1,9 +1,9 @@
 export const siteMetadata = {
-  title: "Sungblab Blog",
-  description: "개발 및 기술 관련 블로그",
+  title: "Sungblab",
+  description: "웹 개발과 AI 기술에 대한 인사이트를 공유하는 풀스택 개발자 김성빈의 블로그입니다.",
   siteUrl: "https://sungblab.com",
   siteName: "Sungblab",
   language: "ko",
-  author: "Sungb", // 작성자 이름으로 변경해주세요
-  socialBanner: "/images/social-banner.png", // 소셜 미디어 공유용 이미지
+  author: "Sungbin Kim",
+  socialBanner: "/images/social-banner.png",
 };

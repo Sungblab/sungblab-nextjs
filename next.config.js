@@ -35,11 +35,22 @@ const nextConfig = {
   headers: async () => {
     return [
       {
-        source: '/(.*)',
+        // 정적 자산 (이미지, 폰트, JS/CSS 번들)은 1년 캐시
+        source: '/_next/static/(.*)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // public 폴더 이미지 등 정적 파일
+        source: '/images/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate=604800',
           },
         ],
       },

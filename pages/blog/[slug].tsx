@@ -6,7 +6,7 @@ import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import { Layout, useTheme, useLanguage } from "../../components/Components";
 import Giscus from "@giscus/react";
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Math from "../../components/Math";
 import {
   FaArrowUp,
@@ -25,12 +25,16 @@ import {
 } from "../../utils/mdxUtils";
 import { Post } from "../../types/post";
 import { motion, AnimatePresence } from "framer-motion";
+import { generateId } from "../../utils/generateId";
+import { useToast } from "../../components/ui/Toast";
 
 interface BlogPostProps {
   frontMatter: {
     title: string;
     date: string;
     category: string;
+    description?: string | null;
+    thumbnail?: string | null;
   };
   mdxSource: MDXRemoteSerializeResult;
   toc: TocItem[];
@@ -46,7 +50,6 @@ interface TocItem {
   level: number;
 }
 
-
 const BlogPost: NextPage<BlogPostProps> = ({
   frontMatter,
   mdxSource,
@@ -57,30 +60,18 @@ const BlogPost: NextPage<BlogPostProps> = ({
 }) => {
   const { theme } = useTheme();
   const { translate, language } = useLanguage();
+  const { showToast } = useToast();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollButtons, setShowScrollButtons] = useState(false);
   const [showToc, setShowToc] = useState(false);
-
-  const generateId = (text: string): string => {
-    return text
-      .toString()
-      .replace(/[^가-힣a-zA-Z0-9\s]/g, "")
-      .trim()
-      .replace(/\s+/g, "-")
-      .toLowerCase();
-  };
 
   const scrollToHeader = (id: string): void => {
     const element = document.getElementById(id);
     if (element) {
       const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+      const offsetPosition =
+        element.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
     }
   };
 
@@ -92,161 +83,217 @@ const BlogPost: NextPage<BlogPostProps> = ({
       setScrollProgress(progress);
       setShowScrollButtons(window.scrollY > 200);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToTop = (): void => window.scrollTo({ top: 0, behavior: "smooth" });
+  const scrollToTop = (): void =>
+    window.scrollTo({ top: 0, behavior: "smooth" });
   const scrollToBottom = (): void =>
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 
   const copyPostUrl = (): void => {
     navigator.clipboard.writeText(window.location.href);
-    alert(translate("blog.urlCopied"));
+    showToast(translate("blog.urlCopied"), "success");
   };
 
   const sharePost = (): void => {
     if (navigator.share) {
       navigator
-        .share({
-          title: frontMatter.title,
-          url: window.location.href,
-        })
+        .share({ title: frontMatter.title, url: window.location.href })
         .catch(console.error);
     } else {
-      alert(translate("blog.shareNotSupported"));
+      showToast(translate("blog.shareNotSupported"), "info");
     }
   };
 
-  const MDXComponents = {
-    Math,
-    h1: (props: any): JSX.Element => {
-      const id = generateId(String(props.children || ""));
-      return (
-        <h1
-          id={id}
-          className={`text-3xl md:text-4xl font-bold mt-8 md:mt-12 mb-6 md:mb-8 tracking-tight ${
-            theme === "dark" ? "text-gray-100" : "text-gray-900"
+  // MDXComponents를 useMemo로 감싸 매 렌더링 시 새 객체 생성 방지
+  const MDXComponents = useMemo(
+    () => ({
+      Math,
+      h1: (props: React.HTMLAttributes<HTMLHeadingElement>): JSX.Element => {
+        const id = generateId(String(props.children || ""));
+        return (
+          <h1
+            id={id}
+            className={`text-3xl md:text-4xl font-bold mt-8 md:mt-12 mb-6 md:mb-8 tracking-tight ${
+              theme === "dark" ? "text-gray-100" : "text-gray-900"
+            }`}
+            {...props}
+          />
+        );
+      },
+      h2: (props: React.HTMLAttributes<HTMLHeadingElement>): JSX.Element => {
+        const id = generateId(String(props.children || ""));
+        return (
+          <h2
+            id={id}
+            className={`text-2xl md:text-3xl font-semibold mt-8 md:mt-10 mb-4 md:mb-6 tracking-tight ${
+              theme === "dark" ? "text-gray-200" : "text-gray-800"
+            }`}
+            {...props}
+          />
+        );
+      },
+      h3: (props: React.HTMLAttributes<HTMLHeadingElement>): JSX.Element => (
+        <h3
+          className={`text-xl md:text-2xl font-medium mt-6 md:mt-8 mb-3 md:mb-4 tracking-tight ${
+            theme === "dark" ? "text-gray-300" : "text-gray-700"
           }`}
           {...props}
         />
-      );
-    },
-    h2: (props: any): JSX.Element => {
-      const id = generateId(String(props.children || ""));
-      return (
-        <h2
-          id={id}
-          className={`text-2xl md:text-3xl font-semibold mt-8 md:mt-10 mb-4 md:mb-6 tracking-tight ${
-            theme === "dark" ? "text-gray-200" : "text-gray-800"
+      ),
+      p: (props: React.HTMLAttributes<HTMLParagraphElement>): JSX.Element => (
+        <p
+          className={`my-4 md:my-6 text-base md:text-lg leading-7 md:leading-8 ${
+            theme === "dark" ? "text-gray-300" : "text-gray-700"
           }`}
           {...props}
         />
-      );
-    },
-    h3: (props: React.HTMLAttributes<HTMLHeadingElement>): JSX.Element => (
-      <h3
-        className={`text-xl md:text-2xl font-medium mt-6 md:mt-8 mb-3 md:mb-4 tracking-tight ${
-          theme === "dark" ? "text-gray-300" : "text-gray-700"
-        }`}
-        {...props}
-      />
-    ),
-    p: (props: React.HTMLAttributes<HTMLParagraphElement>): JSX.Element => (
-      <p
-        className={`my-4 md:my-6 text-base md:text-lg leading-7 md:leading-8 ${
-          theme === "dark" ? "text-gray-300" : "text-gray-700"
-        }`}
-        {...props}
-      />
-    ),
-    ul: (props: React.HTMLAttributes<HTMLUListElement>): JSX.Element => (
-      <ul
-        className={`list-disc ml-6 my-4 space-y-1 ${
-          theme === "dark" ? "text-gray-300" : "text-gray-700"
-        }`}
-        {...props}
-      />
-    ),
-    ol: (props: React.HTMLAttributes<HTMLOListElement>): JSX.Element => (
-      <ol
-        className={`list-decimal ml-6 my-4 space-y-1 ${
-          theme === "dark" ? "text-gray-300" : "text-gray-700"
-        }`}
-        {...props}
-      />
-    ),
-    li: (props: React.HTMLAttributes<HTMLLIElement>): JSX.Element => <li className="pl-2">{props.children}</li>,
-    a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>): JSX.Element => (
-      <a
-        className={`font-medium underline decoration-2 underline-offset-2 transition-colors duration-200 ${
-          theme === "dark"
-            ? "text-blue-400 hover:text-blue-300"
-            : "text-blue-600 hover:text-blue-800"
-        }`}
-        {...props}
-      />
-    ),
-    code: (props: React.HTMLAttributes<HTMLElement>): JSX.Element => (
-      <code
-        className={`rounded-md px-2 py-1 font-mono text-sm ${
-          theme === "dark"
-            ? "bg-gray-800 text-pink-300"
-            : "bg-gray-100 text-pink-800"
-        }`}
-        {...props}
-      />
-    ),
-    pre: (props: React.HTMLAttributes<HTMLPreElement>): JSX.Element => (
-      <pre
-        className={`rounded-lg p-6 my-8 overflow-x-auto text-sm leading-6 ${
-          theme === "dark"
-            ? "bg-gray-800 text-gray-200"
-            : "bg-gray-100 text-gray-800"
-        } shadow-lg max-w-full`}
-        {...props}
-      />
-    ),
-    img: (props: any): JSX.Element => (
-      <span className="block my-8">
-        <Image
-          width={800}
-          height={600}
-          style={{
-            maxHeight: "600px",
-            width: "auto",
-            margin: "0 auto",
-            objectFit: "contain",
-          }}
-          alt={props.alt || "blog image"}
-          className="rounded-lg shadow-md mx-auto"
+      ),
+      ul: (props: React.HTMLAttributes<HTMLUListElement>): JSX.Element => (
+        <ul
+          className={`list-disc ml-6 my-4 space-y-1 ${
+            theme === "dark" ? "text-gray-300" : "text-gray-700"
+          }`}
           {...props}
         />
-      </span>
-    ),
-    blockquote: (props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>): JSX.Element => (
-      <blockquote
-        className={`border-l-4 border-blue-500 pl-4 italic my-6 ${
-          theme === "dark" ? "text-gray-400" : "text-gray-600"
-        }`}
-        {...props}
-      />
-    ),
-    div: (props: any): JSX.Element => (
-      <div
-        className="max-w-full overflow-x-auto py-2 overflow-y-hidden scrollbar-hide"
-        style={{ WebkitOverflowScrolling: "touch" }}
-        {...props}
-      />
-    ),
-  };
+      ),
+      ol: (props: React.HTMLAttributes<HTMLOListElement>): JSX.Element => (
+        <ol
+          className={`list-decimal ml-6 my-4 space-y-1 ${
+            theme === "dark" ? "text-gray-300" : "text-gray-700"
+          }`}
+          {...props}
+        />
+      ),
+      li: (props: React.HTMLAttributes<HTMLLIElement>): JSX.Element => (
+        <li className="pl-2">{props.children}</li>
+      ),
+      a: (
+        props: React.AnchorHTMLAttributes<HTMLAnchorElement>
+      ): JSX.Element => (
+        <a
+          className={`font-medium underline decoration-2 underline-offset-2 transition-colors duration-200 ${
+            theme === "dark"
+              ? "text-blue-400 hover:text-blue-300"
+              : "text-blue-600 hover:text-blue-800"
+          }`}
+          {...props}
+        />
+      ),
+      code: (props: React.HTMLAttributes<HTMLElement>): JSX.Element => (
+        <code
+          className={`rounded-md px-2 py-1 font-mono text-sm ${
+            theme === "dark"
+              ? "bg-gray-800 text-pink-300"
+              : "bg-gray-100 text-pink-800"
+          }`}
+          {...props}
+        />
+      ),
+      pre: (props: React.HTMLAttributes<HTMLPreElement>): JSX.Element => (
+        <pre
+          className={`rounded-lg p-6 my-8 overflow-x-auto text-sm leading-6 ${
+            theme === "dark"
+              ? "bg-gray-800 text-gray-200"
+              : "bg-gray-100 text-gray-800"
+          } shadow-lg max-w-full`}
+          {...props}
+        />
+      ),
+      img: (
+        props: React.ImgHTMLAttributes<HTMLImageElement> & { src?: string }
+      ): JSX.Element => (
+        <span className="block my-8">
+          <Image
+            width={800}
+            height={600}
+            style={{
+              maxHeight: "600px",
+              width: "auto",
+              margin: "0 auto",
+              objectFit: "contain",
+            }}
+            src={props.src || ""}
+            alt={props.alt || "blog image"}
+            className="rounded-lg shadow-md mx-auto"
+          />
+        </span>
+      ),
+      blockquote: (
+        props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>
+      ): JSX.Element => (
+        <blockquote
+          className={`border-l-4 border-purple-500 pl-4 italic my-6 ${
+            theme === "dark" ? "text-gray-400" : "text-gray-600"
+          }`}
+          {...props}
+        />
+      ),
+      table: (
+        props: React.TableHTMLAttributes<HTMLTableElement>
+      ): JSX.Element => (
+        <div className="overflow-x-auto my-6">
+          <table
+            className={`min-w-full text-sm border-collapse ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            }`}
+            {...props}
+          />
+        </div>
+      ),
+      th: (
+        props: React.ThHTMLAttributes<HTMLTableCellElement>
+      ): JSX.Element => (
+        <th
+          className={`px-4 py-2 text-left font-semibold border-b ${
+            theme === "dark"
+              ? "border-gray-700 text-gray-200"
+              : "border-gray-300 text-gray-800"
+          }`}
+          {...props}
+        />
+      ),
+      td: (
+        props: React.TdHTMLAttributes<HTMLTableCellElement>
+      ): JSX.Element => (
+        <td
+          className={`px-4 py-2 border-b ${
+            theme === "dark" ? "border-gray-800" : "border-gray-200"
+          }`}
+          {...props}
+        />
+      ),
+    }),
+    [theme]
+  );
+
+  const ogDescription =
+    frontMatter.description || `${frontMatter.title} - Sungblab Blog`;
+  const postUrl = `https://sungblab.com/blog/${encodeURIComponent(frontMatter.title)}`;
 
   return (
     <Layout>
       <Head>
-        <title>{`${frontMatter.title} | Sungblab's Blog`}</title>
+        <title>{`${frontMatter.title} | Sungblab`}</title>
+        <meta name="description" content={ogDescription} />
+        <meta property="og:title" content={`${frontMatter.title} | Sungblab`} />
+        <meta property="og:description" content={ogDescription} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={postUrl} />
+        <meta property="og:site_name" content="Sungblab" />
+        {frontMatter.thumbnail && (
+          <meta property="og:image" content={frontMatter.thumbnail} />
+        )}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={frontMatter.title} />
+        <meta name="twitter:description" content={ogDescription} />
+        {frontMatter.thumbnail && (
+          <meta name="twitter:image" content={frontMatter.thumbnail} />
+        )}
       </Head>
+
       <div
         className={`min-h-screen ${
           theme === "dark" ? "bg-gray-900" : "bg-gray-50"
@@ -264,6 +311,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
           <div className="container mx-auto px-4 pt-40 pb-12 relative">
             <div className="flex flex-col lg:flex-row gap-8">
+              {/* Main Content */}
               <div className="flex-1 lg:w-[calc(100%-20rem)]">
                 <motion.div
                   initial={{ y: -20, opacity: 0 }}
@@ -279,7 +327,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         : "text-gray-600 hover:text-purple-600"
                     }`}
                   >
-                    <FaArrowLeft className="mr-2 transition-transform duration-300 group-hover:translate-x-[-4px]" />
+                    <FaArrowLeft className="mr-2 transition-transform duration-300 group-hover:-translate-x-1" />
                     {translate("blog.backToBlog")}
                   </Link>
 
@@ -302,8 +350,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <span
                         className={`px-3 py-1 rounded-full text-sm font-medium ${
                           theme === "dark"
-                            ? "bg-gray-800/60 text-gray-300 border border-gray-700"
-                            : "bg-gray-100/80 text-gray-700 border border-gray-200"
+                            ? "bg-purple-900/30 text-purple-300 border border-purple-700/50"
+                            : "bg-purple-100/50 text-purple-700 border border-purple-200"
                         }`}
                       >
                         {frontMatter.category}
@@ -314,11 +362,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={copyPostUrl}
-                        className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
+                        className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
                           theme === "dark"
-                            ? "bg-purple-700 text-white border-purple-700 hover:bg-purple-800"
-                            : "bg-purple-600 text-white border-purple-600 hover:bg-purple-700"
-                        } hover:shadow-xl`}
+                            ? "bg-gray-800/60 text-gray-200 border-gray-700/50 hover:border-purple-700/50"
+                            : "bg-white/80 text-gray-700 border-gray-200/50 hover:border-purple-300/50"
+                        } hover:shadow-lg`}
                       >
                         <FaCopy className="mr-2" /> {translate("blog.copyUrl")}
                       </motion.button>
@@ -326,11 +374,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={sharePost}
-                        className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
+                        className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
                           theme === "dark"
-                            ? "bg-purple-700 text-white border-purple-700 hover:bg-purple-800"
-                            : "bg-purple-600 text-white border-purple-600 hover:bg-purple-700"
-                        } hover:shadow-xl`}
+                            ? "bg-gray-800/60 text-gray-200 border-gray-700/50 hover:border-purple-700/50"
+                            : "bg-white/80 text-gray-700 border-gray-200/50 hover:border-purple-300/50"
+                        } hover:shadow-lg`}
                       >
                         <FaShare className="mr-2" /> {translate("blog.share")}
                       </motion.button>
@@ -338,9 +386,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={(): void => setShowToc(!showToc)}
-                        className={`lg:hidden inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
+                        className={`lg:hidden inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
                           theme === "dark"
-                            ? "bg-gray-800/40 text-gray-200 border-gray-700/50 hover:border-purple-700/50"
+                            ? "bg-gray-800/60 text-gray-200 border-gray-700/50 hover:border-purple-700/50"
                             : "bg-white/80 text-gray-700 border-gray-200/50 hover:border-purple-300/50"
                         }`}
                       >
@@ -357,7 +405,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className="lg:hidden mb-8"
+                      className="lg:hidden mb-8 overflow-hidden"
                     >
                       <div
                         className={`rounded-xl p-6 ${
@@ -377,53 +425,53 @@ const BlogPost: NextPage<BlogPostProps> = ({
                           {translate("blog.toc")}
                         </h3>
                         <nav className="space-y-3">
-                          {toc.map((item: TocItem): JSX.Element => (
-                            <button
-                              key={item.id}
-                              onClick={(): void => {
-                                scrollToHeader(item.id);
-                                setShowToc(false);
-                              }}
-                              className={`
-                                block w-full text-left transition-colors duration-200
-                                ${
+                          {toc.map(
+                            (item: TocItem): JSX.Element => (
+                              <button
+                                key={item.id}
+                                onClick={(): void => {
+                                  scrollToHeader(item.id);
+                                  setShowToc(false);
+                                }}
+                                className={`block w-full text-left transition-colors duration-200 ${
                                   item.level === 1
                                     ? `text-base font-medium ${
                                         theme === "dark"
-                                          ? "hover:text-purple-300"
-                                          : "hover:text-purple-600"
+                                          ? "text-gray-200 hover:text-purple-300"
+                                          : "text-gray-800 hover:text-purple-600"
                                       }`
                                     : `text-sm pl-4 ${
                                         theme === "dark"
                                           ? "text-gray-400 hover:text-purple-300"
                                           : "text-gray-600 hover:text-purple-600"
                                       }`
-                                }
-                              `}
-                            >
-                              {item.text}
-                            </button>
-                          ))}
+                                }`}
+                              >
+                                {item.text}
+                              </button>
+                            )
+                          )}
                         </nav>
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
 
+                {/* Article Body */}
                 <motion.article
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className={`prose prose-lg max-w-none px-0 ${
-                    theme === "dark" 
-                      ? "prose-invert prose-p:text-gray-300 prose-headings:text-gray-100 prose-strong:text-white" 
+                  className={`prose prose-lg max-w-none ${
+                    theme === "dark"
+                      ? "prose-invert prose-p:text-gray-300 prose-headings:text-gray-100 prose-strong:text-white"
                       : "prose-p:text-gray-700 prose-headings:text-gray-900 prose-strong:text-gray-900"
                   }`}
                 >
                   <div
                     className={`rounded-2xl p-6 sm:p-10 backdrop-blur-md border shadow-xl ${
-                      theme === "dark" 
-                        ? "bg-gray-800/40 border-gray-700/50" 
+                      theme === "dark"
+                        ? "bg-gray-800/40 border-gray-700/50"
                         : "bg-white/60 border-gray-200/50"
                     }`}
                   >
@@ -431,39 +479,34 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   </div>
                 </motion.article>
 
+                {/* Prev / Next Navigation */}
                 <div className="mt-12 mb-16">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {prevPost && (
                       <Link
                         href={`/blog/${prevPost.slug}`}
-                        className={`
-                          group p-6 rounded-xl backdrop-blur-sm border
-                          ${
-                            theme === "dark"
-                              ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
-                              : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
-                          }
-                          transition-all duration-300 shadow-lg hover:shadow-xl
-                        `}
+                        className={`group p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 shadow-lg hover:shadow-xl ${
+                          theme === "dark"
+                            ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
+                            : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
+                        }`}
                       >
                         <span
-                          className={`text-sm mb-2 block ${
+                          className={`text-xs font-semibold uppercase tracking-wider mb-2 flex items-center gap-1 ${
                             theme === "dark"
-                              ? "text-purple-300"
+                              ? "text-purple-400"
                               : "text-purple-600"
                           }`}
                         >
+                          <FaArrowLeft className="w-3 h-3" />
                           {translate("blog.prevPost")}
                         </span>
                         <h3
-                           className={`
-                          font-medium line-clamp-2 transition-colors duration-300
-                          ${
+                          className={`font-medium line-clamp-2 transition-colors duration-300 ${
                             theme === "dark"
                               ? "text-gray-200 group-hover:text-purple-300"
                               : "text-gray-800 group-hover:text-purple-600"
-                          }
-                        `}
+                          }`}
                         >
                           {prevPost.frontmatter.title}
                         </h3>
@@ -473,34 +516,40 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     {nextPost && (
                       <Link
                         href={`/blog/${nextPost.slug}`}
-                        className={`
-                          group p-6 rounded-xl backdrop-blur-sm border
-                          ${
-                            theme === "dark"
-                              ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
-                              : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
-                          }
-                          transition-all duration-300 shadow-lg hover:shadow-xl
-                        `}
+                        className={`group p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 shadow-lg hover:shadow-xl ${
+                          theme === "dark"
+                            ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
+                            : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
+                        } ${!prevPost ? "md:col-start-2" : ""}`}
                       >
                         <span
-                          className={`text-sm mb-2 block ${
+                          className={`text-xs font-semibold uppercase tracking-wider mb-2 flex items-center justify-end gap-1 ${
                             theme === "dark"
-                              ? "text-purple-300"
+                              ? "text-purple-400"
                               : "text-purple-600"
                           }`}
                         >
                           {translate("blog.nextPost")}
+                          <svg
+                            className="w-3 h-3"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
                         </span>
                         <h3
-                          className={`
-                          font-medium line-clamp-2 transition-colors duration-300
-                          ${
+                          className={`font-medium line-clamp-2 text-right transition-colors duration-300 ${
                             theme === "dark"
                               ? "text-gray-200 group-hover:text-purple-300"
                               : "text-gray-800 group-hover:text-purple-600"
-                          }
-                        `}
+                          }`}
                         >
                           {nextPost.frontmatter.title}
                         </h3>
@@ -509,7 +558,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   </div>
                 </div>
 
-                <div className="mt-16">
+                {/* Comments */}
+                <div className="mt-8">
                   <div
                     className={`rounded-xl p-0 sm:p-8 backdrop-blur-sm border ${
                       theme === "dark"
@@ -533,21 +583,23 @@ const BlogPost: NextPage<BlogPostProps> = ({
                 </div>
               </div>
 
+              {/* Sidebar */}
               <div className="hidden lg:block lg:w-72 space-y-8">
-                <div className="relative">
-                  <motion.div
-                    initial={{ x: 20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    className={`sticky top-24 ${
-                      theme === "dark" ? "text-gray-300" : "text-gray-700"
-                    }`}
-                  >
+                <motion.div
+                  initial={{ x: 20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className={`sticky top-24 ${
+                    theme === "dark" ? "text-gray-300" : "text-gray-700"
+                  }`}
+                >
+                  {/* TOC */}
+                  {toc.length > 0 && (
                     <div
                       className={`rounded-xl p-6 backdrop-blur-sm border ${
                         theme === "dark"
-                          ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
-                          : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
+                          ? "bg-gray-800/40 border-gray-700/50"
+                          : "bg-white/80 border-gray-200/50"
                       } transition-all duration-300 shadow-lg mb-8`}
                     >
                       <h3
@@ -560,43 +612,45 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         <FaListUl className="mr-2" />
                         {translate("blog.toc")}
                       </h3>
-                      <nav className="space-y-3">
-                        {toc.map((item: TocItem): JSX.Element => (
-                          <button
-                            key={item.id}
-                            onClick={(): void => scrollToHeader(item.id)}
-                            className={`
-                              block w-full text-left transition-colors duration-200
-                              ${
+                      <nav className="space-y-2">
+                        {toc.map(
+                          (item: TocItem): JSX.Element => (
+                            <button
+                              key={item.id}
+                              onClick={(): void => scrollToHeader(item.id)}
+                              className={`block w-full text-left transition-colors duration-200 rounded px-2 py-1 ${
                                 item.level === 1
-                                  ? `text-base font-medium ${
+                                  ? `text-sm font-medium ${
                                       theme === "dark"
-                                        ? "hover:text-purple-300"
-                                        : "hover:text-purple-600"
+                                        ? "text-gray-200 hover:text-purple-300 hover:bg-gray-700/30"
+                                        : "text-gray-800 hover:text-purple-600 hover:bg-purple-50"
                                     }`
-                                  : `text-sm pl-4 ${
+                                  : `text-xs pl-4 ${
                                       theme === "dark"
-                                        ? "text-gray-400 hover:text-purple-300"
-                                        : "text-gray-600 hover:text-purple-600"
+                                        ? "text-gray-400 hover:text-purple-300 hover:bg-gray-700/30"
+                                        : "text-gray-500 hover:text-purple-600 hover:bg-purple-50"
                                     }`
-                              }
-                            `}
-                          >
-                            {item.text}
-                          </button>
-                        ))}
+                              }`}
+                            >
+                              {item.text}
+                            </button>
+                          )
+                        )}
                       </nav>
                     </div>
+                  )}
 
+                  {/* Related Posts */}
+                  {relatedPosts.length > 0 && (
                     <div
                       className={`rounded-xl p-6 backdrop-blur-sm border ${
                         theme === "dark"
-                          ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
-                          : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
+                          ? "bg-gray-800/40 border-gray-700/50"
+                          : "bg-white/80 border-gray-200/50"
                       } transition-all duration-300 shadow-lg`}
                     >
                       <h3
-                         className={`text-lg font-semibold mb-4 flex items-center ${
+                        className={`text-lg font-semibold mb-4 flex items-center ${
                           theme === "dark"
                             ? "text-purple-300"
                             : "text-purple-600"
@@ -605,56 +659,55 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         <FaBookmark className="mr-2" />
                         {translate("blog.relatedPosts")}
                       </h3>
-                      <div className="space-y-4">
-                        {relatedPosts.slice(0, 3).map((post: Post): JSX.Element => (
-                          <Link
-                            key={post.slug}
-                            href={`/blog/${post.slug}`}
-                            className={`
-                              block group p-3 rounded-lg
-                              ${
+                      <div className="space-y-3">
+                        {relatedPosts.slice(0, 3).map(
+                          (post: Post): JSX.Element => (
+                            <Link
+                              key={post.slug}
+                              href={`/blog/${post.slug}`}
+                              className={`block group p-3 rounded-lg transition-all duration-200 ${
                                 theme === "dark"
-                                  ? "hover:bg-gray-700/50 hover:text-purple-300"
-                                  : "hover:bg-gray-50/50 hover:text-purple-600"
-                               }
-                              transition-all duration-200
-                            `}
-                          >
-                            <h4
-                               className={`font-medium text-sm transition-colors duration-200 ${
-                                theme === "dark"
-                                  ? "group-hover:text-purple-300"
-                                  : "group-hover:text-purple-600"
+                                  ? "hover:bg-gray-700/50"
+                                  : "hover:bg-gray-50"
                               }`}
                             >
-                              {post.frontmatter.title}
-                            </h4>
-                            <p
-                              className={`text-xs mt-1 ${
-                                theme === "dark"
-                                  ? "text-gray-400"
-                                  : "text-gray-500"
-                              }`}
-                            >
-                              {post.frontmatter.date}
-                            </p>
-                          </Link>
-                        ))}
+                              <h4
+                                className={`font-medium text-sm transition-colors duration-200 ${
+                                  theme === "dark"
+                                    ? "text-gray-300 group-hover:text-purple-300"
+                                    : "text-gray-700 group-hover:text-purple-600"
+                                }`}
+                              >
+                                {post.frontmatter.title}
+                              </h4>
+                              <p
+                                className={`text-xs mt-1 ${
+                                  theme === "dark"
+                                    ? "text-gray-500"
+                                    : "text-gray-400"
+                                }`}
+                              >
+                                {post.frontmatter.date}
+                              </p>
+                            </Link>
+                          )
+                        )}
                       </div>
                     </div>
-                  </motion.div>
-                </div>
+                  )}
+                </motion.div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Progress Bar */}
+        {/* Reading Progress Bar */}
         <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: scrollProgress / 100 }}
-          className={`fixed top-0 left-0 right-0 h-1 ${
-            theme === "dark" ? "bg-purple-700" : "bg-purple-600"
+          style={{ scaleX: scrollProgress / 100 }}
+          className={`fixed top-0 left-0 right-0 h-[3px] ${
+            theme === "dark"
+              ? "bg-gradient-to-r from-purple-600 to-indigo-500"
+              : "bg-gradient-to-r from-purple-500 to-indigo-400"
           } transform origin-left z-50`}
         />
 
@@ -665,16 +718,17 @@ const BlogPost: NextPage<BlogPostProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="fixed bottom-8 right-8 flex flex-col space-y-4"
+              className="fixed bottom-8 right-8 flex flex-col space-y-3"
             >
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={scrollToTop}
+                aria-label="맨 위로"
                 className={`p-3 rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
                   theme === "dark"
-                    ? "bg-purple-700 text-white border-purple-700 hover:bg-purple-800"
-                    : "bg-purple-600 text-white border-purple-600 hover:bg-purple-700"
+                    ? "bg-gray-800/80 text-gray-200 border-gray-700 hover:border-purple-700"
+                    : "bg-white/80 text-gray-700 border-gray-200 hover:border-purple-300"
                 }`}
               >
                 <FaArrowUp />
@@ -683,10 +737,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={scrollToBottom}
+                aria-label="맨 아래로"
                 className={`p-3 rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
                   theme === "dark"
-                    ? "bg-indigo-700 text-white border-indigo-700 hover:bg-indigo-800"
-                    : "bg-indigo-600 text-white border-indigo-600 hover:bg-indigo-700"
+                    ? "bg-gray-800/80 text-gray-200 border-gray-700 hover:border-purple-700"
+                    : "bg-white/80 text-gray-700 border-gray-200 hover:border-purple-300"
                 }`}
               >
                 <FaArrowDown />
@@ -701,11 +756,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const filePaths = getPostFilePaths();
-
   const paths = filePaths.map((filePath: string) => ({
     params: { slug: filePath.replace(".mdx", "") },
   }));
-
   return { paths, fallback: false };
 };
 
@@ -716,34 +769,32 @@ export const getStaticProps: GetStaticProps<BlogPostProps> = async ({
   const mdxSource = await serialize(post.content);
   const posts = getAllPosts();
 
-  // 현재 포스트의 인덱스 찾기
-  const currentPostIndex = posts.findIndex((p: Post): boolean => p.slug === post.slug);
+  const currentPostIndex = posts.findIndex(
+    (p: Post): boolean => p.slug === post.slug
+  );
 
-  // 이전/다음 포스트 가져오기
   const prevPost =
     currentPostIndex < posts.length - 1 ? posts[currentPostIndex + 1] : null;
   const nextPost = currentPostIndex > 0 ? posts[currentPostIndex - 1] : null;
 
-  // TOC 생성 로직...
-  const generateIdWithText = (text: string): string => {
-    return text
-      .toString()
-      .replace(/[^가-힣a-zA-Z0-9\s]/g, "")
-      .trim()
-      .replace(/\s+/g, "-")
-      .toLowerCase();
-  };
+  // generateId를 공유 유틸리티에서 가져와 컴포넌트와 동일한 로직으로 TOC 생성
+  const { generateId: makeId } = require("../../utils/generateId");
 
-  const toc = post.content
+  const toc: TocItem[] = post.content
     .split("\n")
-    .filter((line: string): boolean => line.startsWith("#") || line.startsWith("##"))
-    .filter((line: string): boolean => !line.startsWith("###"))
-    .map((line: string): TocItem => {
-      const level = line.split(" ")[0].length;
-      const text = line.replace(/^#+\s/, "");
-      const id = generateIdWithText(text);
-      return { id, text, level };
-    });
+    .filter(
+      (line: string): boolean =>
+        (line.startsWith("#") || line.startsWith("##")) &&
+        !line.startsWith("###")
+    )
+    .map(
+      (line: string): TocItem => {
+        const level = line.split(" ")[0].length;
+        const text = line.replace(/^#+\s/, "");
+        const id = makeId(text);
+        return { id, text, level };
+      }
+    );
 
   const relatedPosts = getRelatedPosts(post, posts);
 
@@ -753,6 +804,8 @@ export const getStaticProps: GetStaticProps<BlogPostProps> = async ({
         title: post.frontmatter.title,
         date: post.frontmatter.date,
         category: post.frontmatter.category,
+        description: post.frontmatter.description || null,
+        thumbnail: post.frontmatter.thumbnail || null,
       },
       mdxSource,
       toc,

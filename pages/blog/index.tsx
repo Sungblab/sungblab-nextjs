@@ -84,10 +84,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
         description={translate("blog.description")}
       />
 
-      <motion.main
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
+      <div
         className={`min-h-screen ${
           theme === "dark" ? "bg-gray-900" : "bg-gray-50"
         }`}
@@ -226,7 +223,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
             </AnimatedSection>
           </div>
         </div>
-      </motion.main>
+      </div>
     </Layout>
   );
 };
@@ -237,6 +234,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       posts,
     },
+    revalidate: 3600,
   };
 };
 
