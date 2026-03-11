@@ -44,7 +44,7 @@ const Home: NextPage<HomeProps> = ({ posts, projects }) => {
           content={translate("home.metaDescription")}
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://sungblab.vercel.app/" />
+        <meta property="og:url" content="https://sungblab.com/" />
         {/* Verification meta tags preserved */}
         <meta
           name="google-site-verification"
