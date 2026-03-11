@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/Sungbin/Documents/GitHub/sungblab-nextjs -name metadata.* -o -name _document.*)",
+      "Bash(grep -r \"favicon\\\\|<link.*rel.*icon\\\\|Sungblab\\\\.\" /c/Users/Sungbin/Documents/GitHub/sungblab-nextjs/pages /c/Users/Sungbin/Documents/GitHub/sungblab-nextjs/components --include=*.tsx --include=*.ts)",
+      "Bash(npx next:*)"
+    ]
+  }
+}

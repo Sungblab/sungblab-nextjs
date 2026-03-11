@@ -2,6 +2,7 @@ import { useTheme } from "../features/ThemeContext";
 import { useLanguage } from "../features/LanguageContext";
 import { SocialButton } from "../ui/SocialButton";
 import Link from "next/link";
+import { Logo } from "../ui/Logo";
 
 export const Footer: React.FC = () => {
   const { theme } = useTheme();
@@ -25,13 +26,7 @@ export const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block mb-6">
-              <span
-                className={`text-3xl font-bold tracking-tighter ${
-                  theme === "dark" ? "text-white" : "text-gray-900"
-                }`}
-              >
-                Sungblab<span className="text-purple-500">.</span>
-              </span>
+              <Logo size="lg" />
             </Link>
             <p className="max-w-md text-lg leading-relaxed mb-8">
               {translate("hero.description")}

@@ -5,6 +5,7 @@ import { useTheme } from "../features/ThemeContext";
 import { useLanguage } from "../features/LanguageContext";
 import { FaSun, FaMoon, FaBars, FaTimes } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { Logo } from "../ui/Logo";
 
 export const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -60,13 +61,7 @@ export const Header: React.FC = () => {
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
           <Link href="/" className="relative group z-50">
-            <span
-              className={`text-2xl sm:text-3xl font-bold tracking-tighter ${
-                theme === "dark" ? "text-white" : "text-gray-900"
-              }`}
-            >
-              Sungblab<span className="text-purple-500">.</span>
-            </span>
+            <Logo size="md" />
           </Link>
 
           {/* Desktop Navigation */}
