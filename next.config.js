@@ -22,6 +22,16 @@ const nextConfig = {
     maxInactiveAge: 10 * 1000,
     pagesBufferLength: 1,
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'sungblab.vercel.app' }],
+        destination: 'https://sungblab.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
   headers: async () => {
     return [
       {
