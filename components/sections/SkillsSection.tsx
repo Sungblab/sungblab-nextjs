@@ -13,19 +13,19 @@ interface SkillCategory {
 const skillCategories: SkillCategory[] = [
   {
     id: "frontend",
-    skills: ["React", "HTML/CSS", "JavaScript", "Tailwind CSS"],
+    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
   },
   {
     id: "backend",
-    skills: ["Node.js", "Python", "Flask", "Express.js"],
+    skills: ["Node.js", "Python", "Express.js", "Flask"],
   },
   {
     id: "database",
-    skills: ["MongoDB", "SQLite", "PostgreSQL"],
+    skills: ["PostgreSQL", "MongoDB", "SQLite"],
   },
   {
     id: "devops",
-    skills: ["GitHub", "Vercel", "Cloudtype"],
+    skills: ["GitHub", "Vercel", "Docker", "Cloudtype"],
   },
 ];
 

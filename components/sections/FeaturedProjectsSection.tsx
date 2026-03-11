@@ -22,11 +22,11 @@ export const FeaturedProjectsSection: React.FC<FeaturedProjectsSectionProps> = (
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div>
-              <motion.span 
+              <motion.span
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 className={`inline-block px-4 py-1.5 rounded-full text-sm font-semibold mb-4 ${
-                  theme === "dark" ? "bg-blue-900/30 text-blue-300 border border-blue-700/50" : "bg-blue-100/50 text-blue-700 border border-blue-200"
+                  theme === "dark" ? "bg-purple-900/30 text-purple-300 border border-purple-700/50" : "bg-purple-100/50 text-purple-700 border border-purple-200"
                 }`}
               >
                 {translate("projects.selectedWork")}
@@ -38,7 +38,7 @@ export const FeaturedProjectsSection: React.FC<FeaturedProjectsSectionProps> = (
              <Link
               href="/projects"
               className={`hidden md:inline-flex items-center gap-2 text-lg font-medium transition-colors ${
-                theme === "dark" ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-700"
+                theme === "dark" ? "text-purple-400 hover:text-purple-300" : "text-purple-600 hover:text-purple-700"
               }`}
             >
               {translate("projects.viewAll")} <span className="text-xl">→</span>
@@ -78,7 +78,7 @@ export const FeaturedProjectsSection: React.FC<FeaturedProjectsSectionProps> = (
                        {project.title}
                      </h3>
                      <p className={`text-lg leading-relaxed mb-8 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                       {translate("projects.description")}
+                       {project.description}
                      </p>
                      
                      <div className="flex flex-wrap gap-2 mb-8">
@@ -95,9 +95,9 @@ export const FeaturedProjectsSection: React.FC<FeaturedProjectsSectionProps> = (
                        href={project.link}
                        target="_blank"
                        className={`inline-flex items-center gap-2 font-bold text-lg border-b-2 border-transparent pb-0.5 transition-all ${
-                         theme === 'dark' 
-                         ? 'text-white hover:border-blue-400 hover:text-blue-400' 
-                         : 'text-gray-900 hover:border-blue-600 hover:text-blue-600'
+                         theme === 'dark'
+                         ? 'text-white hover:border-purple-400 hover:text-purple-400'
+                         : 'text-gray-900 hover:border-purple-600 hover:text-purple-600'
                        }`}
                      >
                        {translate("projects.visitWebsite")} 
