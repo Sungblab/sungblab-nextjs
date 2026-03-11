@@ -4,7 +4,7 @@ interface BlogCategoriesProps {
     label: string;
   }>;
   selectedCategory: string;
-  onCategorySelect: (_: string) => void;
+  onCategorySelect: (category: string) => void;
   theme: string;
 }
 

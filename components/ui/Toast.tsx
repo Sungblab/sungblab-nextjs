@@ -15,14 +15,14 @@ interface Toast {
 }
 
 interface ToastContextValue {
-  showToast: (message: string, type?: ToastType) => void;
+  showToast: (_message: string, _type?: ToastType) => void;
 }
 
 const ToastContext = createContext<ToastContextValue | null>(null);
 
 let toastId = 0;
 
-export function ToastProvider({ children }: { children: React.ReactNode }) {
+export function ToastProvider({ children }: { children: React.ReactNode }): React.ReactElement {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   const showToast = useCallback((message: string, type: ToastType = "success") => {

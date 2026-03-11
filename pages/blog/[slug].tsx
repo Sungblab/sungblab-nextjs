@@ -2,12 +2,14 @@ import { GetStaticProps, GetStaticPaths, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import { Layout, useTheme, useLanguage } from "../../components/Components";
-import Giscus from "@giscus/react";
 import React, { useMemo, useState, useEffect } from "react";
-import Math from "../../components/Math";
+
+const Math = dynamic(() => import("../../components/Math"), { ssr: false });
+const Giscus = dynamic(() => import("@giscus/react"), { ssr: false });
 import {
   FaArrowUp,
   FaArrowDown,
@@ -84,7 +86,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
       setShowScrollButtons(window.scrollY > 200);
     };
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return (): void => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToTop = (): void =>
@@ -778,8 +780,6 @@ export const getStaticProps: GetStaticProps<BlogPostProps> = async ({
   const nextPost = currentPostIndex > 0 ? posts[currentPostIndex - 1] : null;
 
   // generateId를 공유 유틸리티에서 가져와 컴포넌트와 동일한 로직으로 TOC 생성
-  const { generateId: makeId } = require("../../utils/generateId");
-
   const toc: TocItem[] = post.content
     .split("\n")
     .filter(
@@ -791,7 +791,7 @@ export const getStaticProps: GetStaticProps<BlogPostProps> = async ({
       (line: string): TocItem => {
         const level = line.split(" ")[0].length;
         const text = line.replace(/^#+\s/, "");
-        const id = makeId(text);
+        const id = generateId(text);
         return { id, text, level };
       }
     );
