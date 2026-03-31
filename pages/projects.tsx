@@ -215,7 +215,7 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                 </h1>
                 <p
                   className={`text-lg md:text-xl max-w-2xl mx-auto ${
-                    theme === "dark" ? "text-[#888]" : "text-[#666]"
+                    theme === "dark" ? "text-[#bbb]" : "text-[#444]"
                   }`}
                 >
                   {translate("projects.description")}
