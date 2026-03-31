@@ -48,11 +48,11 @@ export const ContactSection: React.FC = () => {
 
         <a
           data-contact-anim
-          href="mailto:sungblab1119@gmail.com"
+          href="mailto:sungblab@gmail.com"
           className="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-terracotta text-white rounded-lg font-medium text-sm hover:bg-terracotta-light transition-colors"
         >
           <Mail size={16} />
-          sungblab1119@gmail.com
+          sungblab@gmail.com
         </a>
 
         <div data-contact-anim className="flex justify-center gap-4 mt-6">
