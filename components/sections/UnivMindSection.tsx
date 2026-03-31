@@ -77,7 +77,7 @@ export const UnivMindSection: React.FC = () => {
             </ul>
 
             <a
-              href="https://univmind.me"
+              href="https://univmind.net"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 mt-8 px-5 py-2.5 bg-terracotta text-white rounded-lg font-medium text-sm hover:bg-terracotta-light transition-colors"
@@ -108,7 +108,7 @@ export const UnivMindSection: React.FC = () => {
                     isDark ? "text-[#555]" : "text-[#999]"
                   }`}
                 >
-                  univmind.me
+                  univmind.net
                 </div>
               </div>
               <div

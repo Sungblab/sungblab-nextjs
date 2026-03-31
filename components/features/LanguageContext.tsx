@@ -13,12 +13,15 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [language, setLanguage] = useState<Language>("en");
+  const [language, setLanguage] = useState<Language>("ko");
 
   useEffect((): void => {
     const storedLanguage = localStorage.getItem("language") as Language | null;
     if (storedLanguage) {
       setLanguage(storedLanguage);
+    } else {
+      const browserLang = navigator.language || (navigator as any).userLanguage || "";
+      setLanguage(browserLang.startsWith("ko") ? "ko" : "en");
     }
   }, []);
 

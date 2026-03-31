@@ -62,7 +62,7 @@ export const HeroSection: React.FC = () => {
 
         <div data-hero-anim className="mt-10 flex items-center justify-center gap-4">
           <Link
-            href="https://univmind.me"
+            href="https://univmind.net"
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 bg-terracotta text-white rounded-lg font-medium text-sm hover:bg-terracotta-light transition-colors"
