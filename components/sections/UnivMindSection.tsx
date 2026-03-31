@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 import { useTheme } from "../features/ThemeContext";
 import { gsap } from "../../utils/gsap";
 import { ExternalLink } from "lucide-react";
@@ -37,9 +38,10 @@ export const UnivMindSection: React.FC = () => {
   }, []);
 
   const features = [
-    "멀티 AI 모델 통합 (Claude, Gemini, DeepSeek, Perplexity)",
-    "대학생 맞춤 학습 도우미",
-    "실시간 AI 채팅 인터페이스",
+    "7개의 전문 AI 에이전트가 분석부터 코칭까지 자동 처리",
+    "녹음, PDF, 필기 사진 — 뭘 올려도 구조화된 노트로 변환",
+    "과목을 넘나드는 지식 그래프로 숨겨진 개념 연결 발견",
+    "내 자료 기반 AI 과외 — 출처 명시, 환각 없는 답변",
   ];
 
   return (
@@ -54,12 +56,19 @@ export const UnivMindSection: React.FC = () => {
               UnivMind
             </h2>
             <p
-              className={`mt-4 text-base leading-relaxed ${
+              className={`mt-4 text-lg leading-relaxed ${
+                isDark ? "text-[#ccc]" : "text-[#444]"
+              }`}
+            >
+              수업 하나에 앱 네 개가 필요 없잖아
+            </p>
+            <p
+              className={`mt-2 text-sm leading-relaxed ${
                 isDark ? "text-[#888]" : "text-[#666]"
               }`}
             >
-              대학생을 위한 AI 학습 플랫폼. 여러 AI 모델을 하나의 인터페이스에서
-              사용할 수 있습니다.
+              녹음, PDF, 필기 사진을 올리면 7개의 AI 에이전트가 분석부터 코칭까지
+              전 과정을 처리합니다. 대학생이 만든, 대학생을 위한 AI 학습 플랫폼.
             </p>
 
             <ul className="mt-6 space-y-3">
@@ -82,17 +91,18 @@ export const UnivMindSection: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 mt-8 px-5 py-2.5 bg-terracotta text-white rounded-lg font-medium text-sm hover:bg-terracotta-light transition-colors"
             >
-              서비스 바로가기
+              지금 시작하기
               <ExternalLink size={14} />
             </a>
           </div>
 
           <div data-um-right>
             <div
-              className={`rounded-xl overflow-hidden border ${
+              className={`rounded-xl overflow-hidden border shadow-lg ${
                 isDark ? "border-[#2a2a2a]" : "border-warm-200"
               }`}
             >
+              {/* Browser bar */}
               <div
                 className={`flex items-center gap-2 px-4 py-3 ${
                   isDark ? "bg-[#1a1a1a]" : "bg-warm-100"
@@ -111,16 +121,14 @@ export const UnivMindSection: React.FC = () => {
                   univmind.net
                 </div>
               </div>
-              <div
-                className={`aspect-[16/10] flex items-center justify-center ${
-                  isDark
-                    ? "bg-gradient-to-br from-[#1a1a1a] to-terracotta-dark"
-                    : "bg-gradient-to-br from-warm-50 to-terracotta-bg"
-                }`}
-              >
-                <span className="font-heading text-4xl font-bold text-terracotta/30">
-                  UnivMind
-                </span>
+              {/* Screenshot */}
+              <div className="relative aspect-[16/10]">
+                <Image
+                  src="/images/univmind.png"
+                  alt="UnivMind - AI 학습 플랫폼"
+                  fill
+                  className="object-cover object-top"
+                />
               </div>
             </div>
           </div>
