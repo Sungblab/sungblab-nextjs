@@ -227,7 +227,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>
       ): JSX.Element => (
         <blockquote
-          className={`border-l-4 border-terracotta-500 pl-4 italic my-6 ${
+          className={`border-l-4 border-terracotta pl-4 italic my-6 ${
             theme === "dark" ? "text-[#888]" : "text-[#666]"
           }`}
           {...props}
@@ -325,8 +325,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     href="/blog"
                     className={`inline-flex items-center mb-8 text-sm font-medium transition-all duration-300 group ${
                       theme === "dark"
-                        ? "text-[#888] hover:text-terracotta-300"
-                        : "text-[#666] hover:text-terracotta-600"
+                        ? "text-[#888] hover:text-terracotta-light"
+                        : "text-[#666] hover:text-terracotta"
                     }`}
                   >
                     <ArrowLeft className="mr-2 w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
@@ -336,7 +336,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   <div className="space-y-6">
                     <h1
                       className={`text-3xl lg:text-4xl font-bold leading-tight tracking-tight ${
-                        theme === "dark" ? "text-terracotta-300" : "text-terracotta-700"
+                        theme === "dark" ? "text-terracotta-light" : "text-terracotta"
                       }`}
                     >
                       {frontMatter.title}
@@ -352,8 +352,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <span
                         className={`px-3 py-1 rounded-full text-sm font-medium ${
                           theme === "dark"
-                            ? "bg-terracotta-900/30 text-terracotta-300 border border-terracotta-700/50"
-                            : "bg-terracotta-100/50 text-terracotta-700 border border-terracotta-200"
+                            ? "bg-terracotta-dark/30 text-terracotta-light border border-terracotta/50"
+                            : "bg-terracotta-bg/50 text-terracotta border border-terracotta-pale"
                         }`}
                       >
                         {frontMatter.category}
@@ -366,8 +366,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         onClick={copyPostUrl}
                         className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
                           theme === "dark"
-                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta-700/50"
-                            : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-300/50"
+                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta/50"
+                            : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-light/50"
                         } hover:shadow-lg`}
                       >
                         <Copy className="mr-2 w-4 h-4" /> {translate("blog.copyUrl")}
@@ -378,8 +378,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         onClick={sharePost}
                         className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
                           theme === "dark"
-                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta-700/50"
-                            : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-300/50"
+                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta/50"
+                            : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-light/50"
                         } hover:shadow-lg`}
                       >
                         <Share2 className="mr-2 w-4 h-4" /> {translate("blog.share")}
@@ -390,8 +390,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         onClick={(): void => setShowToc(!showToc)}
                         className={`lg:hidden inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
                           theme === "dark"
-                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta-700/50"
-                            : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-300/50"
+                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta/50"
+                            : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-light/50"
                         }`}
                       >
                         <List className="mr-2 w-4 h-4" /> {translate("blog.toc")}
@@ -419,8 +419,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         <h3
                           className={`text-lg font-semibold mb-4 flex items-center ${
                             theme === "dark"
-                              ? "text-terracotta-300"
-                              : "text-terracotta-600"
+                              ? "text-terracotta-light"
+                              : "text-terracotta"
                           }`}
                         >
                           <List className="mr-2 w-4 h-4" />
@@ -439,13 +439,13 @@ const BlogPost: NextPage<BlogPostProps> = ({
                                   item.level === 1
                                     ? `text-base font-medium ${
                                         theme === "dark"
-                                          ? "text-[#f5ece6] hover:text-terracotta-300"
-                                          : "text-warm-800 hover:text-terracotta-600"
+                                          ? "text-[#f5ece6] hover:text-terracotta-light"
+                                          : "text-warm-800 hover:text-terracotta"
                                       }`
                                     : `text-sm pl-4 ${
                                         theme === "dark"
-                                          ? "text-[#888] hover:text-terracotta-300"
-                                          : "text-[#666] hover:text-terracotta-600"
+                                          ? "text-[#888] hover:text-terracotta-light"
+                                          : "text-[#666] hover:text-terracotta"
                                       }`
                                 }`}
                               >
@@ -489,15 +489,15 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         href={`/blog/${prevPost.slug}`}
                         className={`group p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 shadow-lg hover:shadow-xl ${
                           theme === "dark"
-                            ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta-700/50"
-                            : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta-300/50"
+                            ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta/50"
+                            : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta-light/50"
                         }`}
                       >
                         <span
                           className={`text-xs font-semibold uppercase tracking-wider mb-2 flex items-center gap-1 ${
                             theme === "dark"
-                              ? "text-terracotta-400"
-                              : "text-terracotta-600"
+                              ? "text-terracotta-light"
+                              : "text-terracotta"
                           }`}
                         >
                           <ArrowLeft className="w-3 h-3" />
@@ -506,8 +506,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         <h3
                           className={`font-medium line-clamp-2 transition-colors duration-300 ${
                             theme === "dark"
-                              ? "text-[#f5ece6] group-hover:text-terracotta-300"
-                              : "text-warm-800 group-hover:text-terracotta-600"
+                              ? "text-[#f5ece6] group-hover:text-terracotta-light"
+                              : "text-warm-800 group-hover:text-terracotta"
                           }`}
                         >
                           {prevPost.frontmatter.title}
@@ -520,15 +520,15 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         href={`/blog/${nextPost.slug}`}
                         className={`group p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 shadow-lg hover:shadow-xl ${
                           theme === "dark"
-                            ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta-700/50"
-                            : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta-300/50"
+                            ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta/50"
+                            : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta-light/50"
                         } ${!prevPost ? "md:col-start-2" : ""}`}
                       >
                         <span
                           className={`text-xs font-semibold uppercase tracking-wider mb-2 flex items-center justify-end gap-1 ${
                             theme === "dark"
-                              ? "text-terracotta-400"
-                              : "text-terracotta-600"
+                              ? "text-terracotta-light"
+                              : "text-terracotta"
                           }`}
                         >
                           {translate("blog.nextPost")}
@@ -549,8 +549,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         <h3
                           className={`font-medium line-clamp-2 text-right transition-colors duration-300 ${
                             theme === "dark"
-                              ? "text-[#f5ece6] group-hover:text-terracotta-300"
-                              : "text-warm-800 group-hover:text-terracotta-600"
+                              ? "text-[#f5ece6] group-hover:text-terracotta-light"
+                              : "text-warm-800 group-hover:text-terracotta"
                           }`}
                         >
                           {nextPost.frontmatter.title}
@@ -607,8 +607,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <h3
                         className={`text-lg font-semibold mb-4 flex items-center ${
                           theme === "dark"
-                            ? "text-terracotta-300"
-                            : "text-terracotta-600"
+                            ? "text-terracotta-light"
+                            : "text-terracotta"
                         }`}
                       >
                         <List className="mr-2 w-4 h-4" />
@@ -624,13 +624,13 @@ const BlogPost: NextPage<BlogPostProps> = ({
                                 item.level === 1
                                   ? `text-sm font-medium ${
                                       theme === "dark"
-                                        ? "text-[#f5ece6] hover:text-terracotta-300 hover:bg-[#2a2a2a]/30"
-                                        : "text-warm-800 hover:text-terracotta-600 hover:bg-terracotta-50"
+                                        ? "text-[#f5ece6] hover:text-terracotta-light hover:bg-[#2a2a2a]/30"
+                                        : "text-warm-800 hover:text-terracotta hover:bg-terracotta-bg"
                                     }`
                                   : `text-xs pl-4 ${
                                       theme === "dark"
-                                        ? "text-[#888] hover:text-terracotta-300 hover:bg-[#2a2a2a]/30"
-                                        : "text-[#888] hover:text-terracotta-600 hover:bg-terracotta-50"
+                                        ? "text-[#888] hover:text-terracotta-light hover:bg-[#2a2a2a]/30"
+                                        : "text-[#888] hover:text-terracotta hover:bg-terracotta-bg"
                                     }`
                               }`}
                             >
@@ -654,8 +654,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <h3
                         className={`text-lg font-semibold mb-4 flex items-center ${
                           theme === "dark"
-                            ? "text-terracotta-300"
-                            : "text-terracotta-600"
+                            ? "text-terracotta-light"
+                            : "text-terracotta"
                         }`}
                       >
                         <Bookmark className="mr-2 w-4 h-4" />
@@ -676,8 +676,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                               <h4
                                 className={`font-medium text-sm transition-colors duration-200 ${
                                   theme === "dark"
-                                    ? "text-[#ccc] group-hover:text-terracotta-300"
-                                    : "text-[#444] group-hover:text-terracotta-600"
+                                    ? "text-[#ccc] group-hover:text-terracotta-light"
+                                    : "text-[#444] group-hover:text-terracotta"
                                 }`}
                               >
                                 {post.frontmatter.title}
@@ -708,8 +708,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
           style={{ scaleX: scrollProgress / 100 }}
           className={`fixed top-0 left-0 right-0 h-[3px] ${
             theme === "dark"
-              ? "bg-gradient-to-r from-terracotta-600 to-terracotta-400"
-              : "bg-gradient-to-r from-terracotta-500 to-terracotta-300"
+              ? "bg-gradient-to-r from-terracotta to-terracotta-light"
+              : "bg-gradient-to-r from-terracotta-bg0 to-terracotta-light"
           } transform origin-left z-50`}
         />
 
@@ -729,8 +729,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                 aria-label="맨 위로"
                 className={`p-3 rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
                   theme === "dark"
-                    ? "bg-[#1a1a1a]/80 text-[#f5ece6] border-[#2a2a2a] hover:border-terracotta-700"
-                    : "bg-white/80 text-warm-800 border-warm-200 hover:border-terracotta-300"
+                    ? "bg-[#1a1a1a]/80 text-[#f5ece6] border-[#2a2a2a] hover:border-terracotta"
+                    : "bg-white/80 text-warm-800 border-warm-200 hover:border-terracotta-light"
                 }`}
               >
                 <ArrowUp className="w-4 h-4" />
@@ -742,8 +742,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                 aria-label="맨 아래로"
                 className={`p-3 rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
                   theme === "dark"
-                    ? "bg-[#1a1a1a]/80 text-[#f5ece6] border-[#2a2a2a] hover:border-terracotta-700"
-                    : "bg-white/80 text-warm-800 border-warm-200 hover:border-terracotta-300"
+                    ? "bg-[#1a1a1a]/80 text-[#f5ece6] border-[#2a2a2a] hover:border-terracotta"
+                    : "bg-white/80 text-warm-800 border-warm-200 hover:border-terracotta-light"
                 }`}
               >
                 <ArrowDown className="w-4 h-4" />

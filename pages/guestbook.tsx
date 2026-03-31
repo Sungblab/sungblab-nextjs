@@ -38,7 +38,7 @@ const Guestbook: NextPage = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
               className={`text-4xl md:text-5xl font-bold mb-4 ${
-                theme === "dark" ? "text-terracotta-300" : "text-terracotta-600"
+                theme === "dark" ? "text-terracotta-light" : "text-terracotta"
               }`}
             >
               {translate("guestbook.title")}

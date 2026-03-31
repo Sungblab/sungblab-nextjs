@@ -89,8 +89,8 @@ const BlogPostCard = ({
                <h2
                 className={`text-xl font-bold leading-tight ${
                   theme === "dark"
-                    ? "text-[#f5ece6] group-hover:text-terracotta-300"
-                    : "text-warm-900 group-hover:text-terracotta-600"
+                    ? "text-[#f5ece6] group-hover:text-terracotta-light"
+                    : "text-warm-900 group-hover:text-terracotta"
                 } transition-colors duration-300`}
               >
                 {post.frontmatter.title}
@@ -137,8 +137,8 @@ const BlogPostCard = ({
                 <span
                   className={`px-3 py-1 rounded-full font-semibold ${
                     theme === "dark"
-                      ? "bg-terracotta-900/30 text-terracotta-300 border border-terracotta-800/50"
-                      : "bg-terracotta-50 text-terracotta-700 border border-terracotta-100"
+                      ? "bg-terracotta-dark/30 text-terracotta-light border border-terracotta-dark/50"
+                      : "bg-terracotta-bg text-terracotta border border-terracotta-bg"
                   }`}
                 >
                   {post.frontmatter.category}

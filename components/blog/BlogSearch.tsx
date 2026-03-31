@@ -24,19 +24,19 @@ const BlogSearch: React.FC<BlogSearchProps> = ({
         placeholder={translate("blog.searchPlaceholder") || "Search posts..."}
         className={`w-full p-4 pr-12 rounded-xl border ${
           theme === "dark"
-            ? "bg-[#1a1a1a]/50 text-white border-[#2a2a2a] placeholder-[#888] focus:border-terracotta-700/50"
-            : "bg-white/80 text-warm-800 border-warm-200 placeholder-[#888] focus:border-terracotta-300/50"
+            ? "bg-[#1a1a1a]/50 text-white border-[#2a2a2a] placeholder-[#888] focus:border-terracotta/50"
+            : "bg-white/80 text-warm-800 border-warm-200 placeholder-[#888] focus:border-terracotta-light/50"
         } focus:outline-none focus:ring-2 ${
           theme === "dark"
-            ? "focus:ring-terracotta-700/30"
-            : "focus:ring-terracotta-500/30"
+            ? "focus:ring-terracotta/30"
+            : "focus:ring-terracotta-bg0/30"
         } backdrop-blur-sm transition-all duration-300`}
         value={searchTerm}
         onChange={handleSearch}
       />
       <svg
         className={`absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
-          theme === "dark" ? "text-terracotta-300" : "text-terracotta-500"
+          theme === "dark" ? "text-terracotta-light" : "text-terracotta-bg0"
         }`}
         fill="none"
         stroke="currentColor"

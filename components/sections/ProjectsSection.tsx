@@ -107,7 +107,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 )}
               </div>
               <div className="p-5">
-                <h3 className="font-heading font-bold text-base">
+                <h3 className="font-heading font-bold text-base truncate">
                   {project.title}
                 </h3>
                 <p

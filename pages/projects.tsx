@@ -93,7 +93,7 @@ const ProjectCard: React.FC<Project> = ({
       {/* Content Section */}
       <div className="relative flex-1 p-6 flex flex-col z-20">
         <div className="flex justify-between items-start mb-4">
-           <h2 className={`text-2xl font-bold tracking-tight ${
+           <h2 className={`text-2xl font-bold tracking-tight truncate max-w-[70%] ${
              theme === "dark" ? "text-white" : "text-warm-900"
            }`}>
              {title}
@@ -119,8 +119,8 @@ const ProjectCard: React.FC<Project> = ({
                 key={tech}
                 className={`px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide ${
                   theme === "dark"
-                    ? "bg-[#1a1a1a] text-terracotta-300 border border-[#2a2a2a]"
-                    : "bg-terracotta-50 text-terracotta-700 border border-terracotta-100"
+                    ? "bg-[#1a1a1a] text-terracotta-light border border-[#2a2a2a]"
+                    : "bg-terracotta-bg text-terracotta border border-terracotta-bg"
                 }`}
               >
                 {tech}
@@ -207,8 +207,8 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                 <h1
                   className={`text-4xl md:text-6xl font-bold mb-6 pb-2 bg-clip-text text-transparent bg-gradient-to-r ${
                     theme === "dark"
-                    ? "from-white via-terracotta-200 to-terracotta-400"
-                    : "from-warm-900 via-terracotta-800 to-terracotta-600"
+                    ? "from-white via-terracotta-pale to-terracotta-light"
+                    : "from-warm-900 via-terracotta-dark to-terracotta"
                   }`}
                 >
                   {translate("projects.title")}
@@ -230,16 +230,16 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
               >
                 <div className={`relative group p-1 rounded-2xl transition-all duration-300 ${
                   theme === "dark"
-                  ? "bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] focus-within:from-terracotta-900/50 focus-within:to-[#0f0f0f]"
-                  : "bg-gradient-to-br from-white to-warm-50 shadow-xl focus-within:shadow-2xl focus-within:shadow-terracotta-200"
+                  ? "bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] focus-within:from-terracotta-dark/50 focus-within:to-[#0f0f0f]"
+                  : "bg-gradient-to-br from-white to-warm-50 shadow-xl focus-within:shadow-2xl focus-within:shadow-terracotta-pale"
                 }`}>
                   <input
                     type="text"
                     placeholder={translate("projects.searchPlaceholder")}
                     className={`w-full p-5 pl-6 pr-14 text-lg rounded-xl border-2 transition-all duration-300 ${
                       theme === "dark"
-                        ? "bg-[#0f0f0f] text-white border-transparent focus:border-terracotta-500/50 placeholder-[#888]"
-                        : "bg-white text-warm-900 border-transparent focus:border-terracotta-200 placeholder-[#888]"
+                        ? "bg-[#0f0f0f] text-white border-transparent focus:border-terracotta/50 placeholder-[#888]"
+                        : "bg-white text-warm-900 border-transparent focus:border-terracotta-pale placeholder-[#888]"
                     } focus:outline-none`}
                     value={filter}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setFilter(e.target.value)}
@@ -300,8 +300,8 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                     onClick={(): void => setFilter("")}
                     className={`mt-6 px-6 py-2 rounded-full border-2 ${
                       theme === "dark"
-                        ? "border-terracotta-500 text-terracotta-300 hover:bg-terracotta-900/20"
-                        : "border-terracotta-500 text-terracotta-600 hover:bg-terracotta-50"
+                        ? "border-terracotta text-terracotta-light hover:bg-terracotta-dark/20"
+                        : "border-terracotta text-terracotta hover:bg-terracotta-bg"
                     } transition-colors duration-300`}
                   >
                     {translate("projects.viewAll")}

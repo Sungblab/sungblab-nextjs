@@ -111,8 +111,8 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                 <h1
                   className={`text-4xl md:text-6xl font-bold mb-6 pb-2 bg-clip-text text-transparent bg-gradient-to-r ${
                     theme === "dark"
-                    ? "from-white via-terracotta-200 to-terracotta-400"
-                    : "from-warm-900 via-terracotta-800 to-terracotta-600"
+                    ? "from-white via-terracotta-pale to-terracotta-light"
+                    : "from-warm-900 via-terracotta-dark to-terracotta"
                   }`}
                 >
                   {translate("blog.title")}
@@ -181,12 +181,10 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                           onClick={(): void => handlePageChange(number)}
                           className={`px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
                             currentPage === number
-                              ? theme === "dark"
-                                ? "bg-terracotta-700 text-white border-terracotta-700"
-                                : "bg-terracotta-600 text-white border-terracotta-600"
+                              ? "bg-terracotta text-white border-terracotta"
                               : theme === "dark"
-                              ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta-700/50 text-[#ccc]"
-                              : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta-300/50 text-[#666]"
+                              ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta/50 text-[#ccc]"
+                              : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta/50 text-[#666]"
                           }`}
                         >
                           {number}
