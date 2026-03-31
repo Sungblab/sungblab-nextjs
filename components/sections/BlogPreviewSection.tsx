@@ -5,17 +5,22 @@ import { useTheme } from "../features/ThemeContext";
 import { useLanguage } from "../features/LanguageContext";
 import { gsap } from "../../utils/gsap";
 import { ArrowRight } from "lucide-react";
-
-interface Post {
-  slug: string;
-  title: string;
-  date: string;
-  excerpt?: string;
-  category?: string;
-}
+import type { Post } from "../../types/post";
 
 interface BlogPreviewSectionProps {
   posts: Post[];
+}
+
+function stripMdx(text: string): string {
+  return text
+    .replace(/^#+\s+/gm, "")
+    .replace(/\*\*(.*?)\*\*/g, "$1")
+    .replace(/\*(.*?)\*/g, "$1")
+    .replace(/`(.*?)`/g, "$1")
+    .replace(/!\[.*?\]\(.*?\)/g, "")
+    .replace(/\[([^\]]*)\]\(.*?\)/g, "$1")
+    .replace(/\n+/g, " ")
+    .trim();
 }
 
 export const BlogPreviewSection: React.FC<BlogPreviewSectionProps> = ({
@@ -87,19 +92,19 @@ export const BlogPreviewSection: React.FC<BlogPreviewSectionProps> = ({
                     isDark ? "text-[#555]" : "text-[#999]"
                   }`}
                 >
-                  {post.date}
+                  {post.frontmatter.date}
                 </span>
                 <h3 className="mt-2 font-heading font-bold text-base line-clamp-2">
-                  {post.title}
+                  {post.frontmatter.title}
                 </h3>
                 <p
                   className={`mt-2 text-sm line-clamp-3 ${
                     isDark ? "text-[#888]" : "text-[#666]"
                   }`}
                 >
-                  {post.excerpt}
+                  {post.frontmatter.description || stripMdx(post.excerpt)}
                 </p>
-                {post.category && (
+                {post.frontmatter.category && (
                   <span
                     className={`inline-block mt-4 text-xs px-2 py-0.5 rounded ${
                       isDark
@@ -107,7 +112,7 @@ export const BlogPreviewSection: React.FC<BlogPreviewSectionProps> = ({
                         : "bg-terracotta-bg text-terracotta"
                     }`}
                   >
-                    {post.category}
+                    {post.frontmatter.category}
                   </span>
                 )}
               </Link>
