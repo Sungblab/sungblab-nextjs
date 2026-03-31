@@ -10,65 +10,79 @@ export const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
   const { theme } = useTheme();
 
   const dims = {
-    sm: { width: 130, height: 32, fontSize: 26, dotR: 3.5, dotCx: 122, dotCy: 27 },
-    md: { width: 160, height: 40, fontSize: 32, dotR: 4, dotCx: 150, dotCy: 34 },
-    lg: { width: 190, height: 48, fontSize: 38, dotR: 5, dotCx: 178, dotCy: 40 },
+    sm: { icon: 28, fontSize: 20, gap: 8, height: 28 },
+    md: { icon: 36, fontSize: 24, gap: 10, height: 36 },
+    lg: { icon: 44, fontSize: 30, gap: 12, height: 44 },
   };
 
-  const { width, height, fontSize, dotR, dotCx, dotCy } = dims[size];
-  const textColor = theme === "dark" ? "#ffffff" : "#111827";
+  const { icon, fontSize, gap, height } = dims[size];
+  const rx = Math.round(icon * 0.25);
+  const textColor = theme === "dark" ? "#f5ece6" : "#1a1a1a";
+  const totalWidth = icon + gap + fontSize * 5;
 
   return (
     <svg
-      width={width}
+      width={totalWidth}
       height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      viewBox={`0 0 ${totalWidth} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       aria-label="Sungblab"
       role="img"
     >
+      <rect width={icon} height={icon} rx={rx} fill="#c4704b" />
       <text
-        x="0"
-        y={height * 0.78}
-        fontFamily="'Outfit', system-ui, -apple-system, sans-serif"
+        x={icon / 2}
+        y={icon / 2}
+        dominantBaseline="central"
+        textAnchor="middle"
+        fontFamily="'Inter', system-ui, sans-serif"
+        fontSize={Math.round(icon * 0.55)}
+        fontWeight="800"
+        fill="#ffffff"
+      >
+        S
+      </text>
+      <text
+        x={icon + gap}
+        y={height * 0.72}
+        fontFamily="'Inter', system-ui, sans-serif"
         fontSize={fontSize}
-        fontWeight="700"
-        letterSpacing="-1"
+        fontWeight="600"
+        letterSpacing="-0.5"
         fill={textColor}
       >
-        Sungblab
+        sungblab
       </text>
-      <circle cx={dotCx} cy={dotCy} r={dotR} fill="#a855f7" />
     </svg>
   );
 };
 
-/** Standalone S icon mark for favicon / tab icon */
 export const LogoIcon: React.FC<{ size?: number; className?: string }> = ({
   size = 40,
   className = "",
 }) => {
+  const rx = Math.round(size * 0.25);
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox={`0 0 ${size} ${size}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       aria-label="Sungblab icon"
       role="img"
     >
-      <rect width="40" height="40" rx="10" fill="#a855f7" />
+      <rect width={size} height={size} rx={rx} fill="#c4704b" />
       <text
         x="50%"
         y="50%"
         dominantBaseline="central"
         textAnchor="middle"
-        fontFamily="'Outfit', system-ui, sans-serif"
-        fontSize="26"
+        fontFamily="'Inter', system-ui, sans-serif"
+        fontSize={Math.round(size * 0.55)}
         fontWeight="800"
         fill="#ffffff"
       >

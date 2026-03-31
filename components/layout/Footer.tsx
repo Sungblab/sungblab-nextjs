@@ -1,83 +1,90 @@
+import React from "react";
+import Link from "next/link";
+import { Github, Linkedin } from "lucide-react";
 import { useTheme } from "../features/ThemeContext";
 import { useLanguage } from "../features/LanguageContext";
-import { SocialButton } from "../ui/SocialButton";
-import Link from "next/link";
 import { Logo } from "../ui/Logo";
 
 export const Footer: React.FC = () => {
   const { theme } = useTheme();
   const { translate } = useLanguage();
-  const currentYear = new Date().getFullYear();
+  const isDark = theme === "dark";
+
+  const navLinks = [
+    { href: "/", label: translate("nav.home") },
+    { href: "/projects", label: translate("nav.projects") },
+    { href: "/blog", label: translate("nav.blog") },
+    { href: "/about", label: translate("nav.about") },
+  ];
+
+  const socialLinks = [
+    { href: "https://github.com/Sungblab", icon: Github, label: "GitHub" },
+    { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
+  ];
 
   return (
     <footer
-      className={`relative pt-20 pb-10 overflow-hidden ${
-        theme === "dark" ? "bg-gray-900 text-gray-400" : "bg-gray-50 text-gray-600"
+      className={`border-t ${
+        isDark ? "border-[#2a2a2a]" : "border-warm-200"
       }`}
     >
-        {/* Background Elements */}
-        <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
-            <div className={`absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl mix-blend-multiply filter pointer-events-none ${theme === 'dark' ? 'bg-purple-900/20' : 'bg-purple-200'} animate-blob`}></div>
-            <div className={`absolute bottom-0 right-1/4 w-96 h-96 rounded-full blur-3xl mix-blend-multiply filter pointer-events-none ${theme === 'dark' ? 'bg-indigo-900/20' : 'bg-indigo-200'} animate-blob animation-delay-2000`}></div>
-        </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 z-10 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-16">
-          {/* Brand Column */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-6">
-              <Logo size="lg" />
-            </Link>
-            <p className="max-w-md text-lg leading-relaxed mb-8">
-              {translate("hero.description")}
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+          <div>
+            <Logo size="sm" />
+            <p
+              className={`mt-3 text-sm ${
+                isDark ? "text-[#888]" : "text-[#666]"
+              }`}
+            >
+              AI와 함께 만듭니다.
             </p>
-            <div className="flex flex-wrap gap-4 gap-y-4">
-              <SocialButton href="https://github.com/sungblab" icon="github" label="GitHub" />
-              <SocialButton href="https://www.threads.com/@kimsungbin1119" icon="threads" label="Threads" />
-              <SocialButton href="https://www.linkedin.com/in/sungblab" icon="linkedin" label="LinkedIn" />
-              <SocialButton href="mailto:sungblab@gmail.com" icon="email" label="Email" />
-            </div>
           </div>
 
-          {/* Links Column */}
-          <div className="flex lg:justify-end">
-            <div className="min-w-[150px]">
-              <h4
-                className={`text-sm font-bold uppercase tracking-wider mb-6 ${
-                  theme === "dark" ? "text-white" : "text-gray-900"
+          <nav className="flex gap-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-sm transition-colors ${
+                  isDark
+                    ? "text-[#888] hover:text-[#f5ece6]"
+                    : "text-[#666] hover:text-warm-800"
                 }`}
               >
-                {translate("footer.navigation")}
-              </h4>
-              <ul className="space-y-4">
-                {["Home", "Projects", "Blog", "About"].map((item: string): JSX.Element => (
-                  <li key={item}>
-                    <Link
-                      href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                      className={`transition-colors duration-200 hover:text-purple-500 ${
-                        theme === "dark" ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      {translate(`nav.${item.toLowerCase()}`)}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex gap-4">
+            {socialLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-2 rounded-md transition-colors ${
+                  isDark
+                    ? "text-[#888] hover:text-[#f5ece6] hover:bg-[#2a2a2a]"
+                    : "text-[#666] hover:text-warm-800 hover:bg-warm-200"
+                }`}
+                aria-label={link.label}
+              >
+                <link.icon size={20} />
+              </a>
+            ))}
           </div>
         </div>
 
         <div
-          className={`pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-4 ${
-            theme === "dark" ? "border-gray-800" : "border-gray-200"
+          className={`mt-8 pt-8 border-t text-sm text-center ${
+            isDark
+              ? "border-[#2a2a2a] text-[#555]"
+              : "border-warm-200 text-[#999]"
           }`}
         >
-          <p className="text-sm">
-            {translate("footer.rights").replace("2024", currentYear.toString())}
-          </p>
-          <p className="text-sm flex items-center gap-2">
-            {translate("footer.madeWith")}
-          </p>
+          © {new Date().getFullYear()} sungblab
         </div>
       </div>
     </footer>

@@ -1,202 +1,146 @@
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/router";
+import { motion, AnimatePresence } from "motion/react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "../features/ThemeContext";
 import { useLanguage } from "../features/LanguageContext";
-import { FaSun, FaMoon, FaBars, FaTimes } from "react-icons/fa";
-import { useRouter } from "next/router";
 import { Logo } from "../ui/Logo";
 
 export const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
-  const { language, toggleLanguage, translate } = useLanguage();
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const { language, setLanguage, translate } = useLanguage();
   const router = useRouter();
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Handle scroll effect
-  useEffect((): (() => void) => {
-    const handleScroll = (): void => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const menuVariants = {
-    closed: {
-      opacity: 0,
-      height: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut",
-      },
-    },
-    open: {
-      opacity: 1,
-      height: "auto",
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut",
-      },
-    },
-  };
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [router.pathname]);
 
-  const navItems = ["Home", "Projects", "Blog", "About"];
+  const navItems = [
+    { href: "/", label: translate("nav.home") },
+    { href: "/projects", label: translate("nav.projects") },
+    { href: "/blog", label: translate("nav.blog") },
+    { href: "/about", label: translate("nav.about") },
+  ];
+
+  const isActive = (href: string) =>
+    href === "/" ? router.pathname === "/" : router.pathname.startsWith(href);
+
+  const isDark = theme === "dark";
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? theme === "dark"
-            ? "bg-gray-900/80 backdrop-blur-md border-b border-gray-800"
-            : "bg-white/80 backdrop-blur-md border-b border-gray-200"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 sm:h-20">
-          {/* Logo */}
-          <Link href="/" className="relative group z-50">
-            <Logo size="md" />
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? isDark
+              ? "bg-warm-900/80 backdrop-blur-xl border-b border-[#2a2a2a]"
+              : "bg-warm-50/80 backdrop-blur-xl border-b border-warm-200"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/" aria-label="Home">
+            <Logo size="sm" />
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            <div
-              className={`flex items-center px-2 py-1 rounded-full ${
-                theme === "dark"
-                  ? "bg-gray-800/50 border border-gray-700/50"
-                  : "bg-white/50 border border-gray-200/50"
-              } backdrop-blur-sm`}
-            >
-              {navItems.map((item: string): JSX.Element => {
-                const path = item === "Home" ? "/" : `/${item.toLowerCase()}`;
-                const isActive = router.pathname === path;
-                const label = translate(`nav.${item.toLowerCase()}`);
-
-                return (
-                  <Link
-                    key={item}
-                    href={path}
-                    className={`relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 ${
-                      isActive
-                        ? theme === "dark"
-                          ? "text-white"
-                          : "text-gray-900"
-                        : theme === "dark"
-                        ? "text-gray-400 hover:text-gray-200"
-                        : "text-gray-600 hover:text-gray-900"
-                    }`}
-                  >
-                    {isActive && (
-                      <motion.div
-                        layoutId="nav-pill"
-                        className={`absolute inset-0 rounded-full ${
-                          theme === "dark" ? "bg-gray-700" : "bg-gray-100"
-                        }`}
-                        transition={{
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 30,
-                        }}
-                      />
-                    )}
-                    <span className="relative z-10">{label}</span>
-                  </Link>
-                );
-              })}
-            </div>
+          <nav className="hidden md:flex items-center gap-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`relative text-sm font-medium transition-colors ${
+                  isActive(item.href)
+                    ? "text-terracotta"
+                    : isDark
+                      ? "text-[#888] hover:text-[#f5ece6]"
+                      : "text-[#666] hover:text-warm-800"
+                }`}
+              >
+                {item.label}
+                {isActive(item.href) && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-terracotta rounded-full"
+                  />
+                )}
+              </Link>
+            ))}
           </nav>
 
-          {/* Theme Toggle & Language Toggle & Mobile Menu Button */}
           <div className="flex items-center gap-3">
-            <motion.button
-              onClick={toggleLanguage}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-3 py-1.5 rounded-full backdrop-blur-md transition-colors duration-300 text-sm font-medium ${
-                theme === "dark"
-                  ? "bg-gray-800/50 text-gray-200 hover:bg-gray-700/50"
-                  : "bg-white/50 text-gray-700 hover:bg-gray-100/50"
+            <button
+              onClick={() => setLanguage(language === "ko" ? "en" : "ko")}
+              className={`text-xs font-medium px-2.5 py-1 rounded-md transition-colors ${
+                isDark
+                  ? "text-[#888] hover:text-[#f5ece6] hover:bg-[#2a2a2a]"
+                  : "text-[#666] hover:text-warm-800 hover:bg-warm-200"
               }`}
             >
               {language === "ko" ? "EN" : "KR"}
-            </motion.button>
-
-            <motion.button
-              onClick={toggleTheme}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`p-2.5 rounded-full backdrop-blur-md transition-colors duration-300 ${
-                theme === "dark"
-                  ? "bg-gray-800/50 text-yellow-400 hover:bg-gray-700/50"
-                  : "bg-white/50 text-gray-600 hover:bg-gray-100/50"
-              }`}
-              aria-label="Toggle Theme"
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={theme}
-                  initial={{ y: -20, opacity: 0, rotate: -90 }}
-                  animate={{ y: 0, opacity: 1, rotate: 0 }}
-                  exit={{ y: 20, opacity: 0, rotate: 90 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {theme === "dark" ? <FaSun size={18} /> : <FaMoon size={18} />}
-                </motion.div>
-              </AnimatePresence>
-            </motion.button>
+            </button>
 
             <button
-              className={`md:hidden p-2 rounded-lg transition-colors ${
-                theme === "dark" ? "text-gray-300" : "text-gray-600"
+              onClick={toggleTheme}
+              className={`p-2 rounded-md transition-colors ${
+                isDark
+                  ? "text-[#888] hover:text-[#f5ece6] hover:bg-[#2a2a2a]"
+                  : "text-[#666] hover:text-warm-800 hover:bg-warm-200"
               }`}
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle Menu"
+              aria-label="Toggle theme"
             >
-              {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden p-2"
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
-        {isOpen && (
+        {mobileOpen && (
           <motion.div
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={menuVariants}
-            className={`md:hidden overflow-hidden ${
-              theme === "dark"
-                ? "bg-gray-900/95 border-b border-gray-800"
-                : "bg-white/95 border-b border-gray-200"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className={`fixed inset-0 top-16 z-40 ${
+              isDark ? "bg-warm-900/95" : "bg-warm-50/95"
             } backdrop-blur-xl`}
           >
-            <div className="px-4 py-4 space-y-2">
-              {navItems.map((item: string): JSX.Element => (
+            <nav className="flex flex-col items-center gap-8 pt-20">
+              {navItems.map((item) => (
                 <Link
-                  key={item}
-                  href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                  className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors ${
-                    theme === "dark"
-                      ? "text-gray-300 hover:text-white hover:bg-gray-800"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  key={item.href}
+                  href={item.href}
+                  className={`text-2xl font-heading font-bold ${
+                    isActive(item.href)
+                      ? "text-terracotta"
+                      : isDark
+                        ? "text-[#f5ece6]"
+                        : "text-warm-800"
                   }`}
-                  onClick={() => setIsOpen(false)}
                 >
-                  {translate(`nav.${item.toLowerCase()}`)}
+                  {item.label}
                 </Link>
               ))}
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 };
