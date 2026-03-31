@@ -1,11 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { useTheme } from "../features/ThemeContext";
+import { useLanguage } from "../features/LanguageContext";
 import { gsap } from "../../utils/gsap";
 import { ExternalLink } from "lucide-react";
+import { translations } from "../../utils/translations";
 
 export const UnivMindSection: React.FC = () => {
   const { theme } = useTheme();
+  const { language } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const isDark = theme === "dark";
 
@@ -37,12 +40,12 @@ export const UnivMindSection: React.FC = () => {
     return () => ctx.revert();
   }, []);
 
-  const features = [
-    "7개의 전문 AI 에이전트가 분석부터 코칭까지 자동 처리",
-    "녹음, PDF, 필기 사진 — 뭘 올려도 구조화된 노트로 변환",
-    "과목을 넘나드는 지식 그래프로 숨겨진 개념 연결 발견",
-    "내 자료 기반 AI 과외 — 출처 명시, 환각 없는 답변",
-  ];
+  const t = translations[language].univmind as {
+    tagline: string;
+    description: string;
+    features: string[];
+    cta: string;
+  };
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32">
@@ -60,19 +63,18 @@ export const UnivMindSection: React.FC = () => {
                 isDark ? "text-[#ccc]" : "text-[#444]"
               }`}
             >
-              수업 하나에 앱 네 개가 필요 없잖아
+              {t.tagline}
             </p>
             <p
               className={`mt-2 text-sm leading-relaxed ${
                 isDark ? "text-[#888]" : "text-[#666]"
               }`}
             >
-              녹음, PDF, 필기 사진을 올리면 7개의 AI 에이전트가 분석부터 코칭까지
-              전 과정을 처리합니다. 대학생이 만든, 대학생을 위한 AI 학습 플랫폼.
+              {t.description}
             </p>
 
             <ul className="mt-6 space-y-3">
-              {features.map((feature, i) => (
+              {t.features.map((feature, i) => (
                 <li
                   key={i}
                   className={`flex items-start gap-3 text-sm ${
@@ -91,7 +93,7 @@ export const UnivMindSection: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 mt-8 px-5 py-2.5 bg-terracotta text-white rounded-lg font-medium text-sm hover:bg-terracotta-light transition-colors"
             >
-              지금 시작하기
+              {t.cta}
               <ExternalLink size={14} />
             </a>
           </div>

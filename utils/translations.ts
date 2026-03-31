@@ -98,6 +98,17 @@ export const translations = {
       description: "방문해주셔서 감사합니다! 편하게 메시지를 남겨주세요.",
       metaDescription: "김성빈에게 메시지를 남겨보세요.",
     },
+    univmind: {
+      tagline: "수업 하나에 앱 네 개가 필요 없잖아",
+      description: "녹음, PDF, 필기 사진을 올리면 7개의 AI 에이전트가 분석부터 코칭까지 전 과정을 처리합니다. 대학생이 만든, 대학생을 위한 AI 학습 플랫폼.",
+      features: [
+        "7개의 전문 AI 에이전트가 분석부터 코칭까지 자동 처리",
+        "녹음, PDF, 필기 사진 — 뭘 올려도 구조화된 노트로 변환",
+        "과목을 넘나드는 지식 그래프로 숨겨진 개념 연결 발견",
+        "내 자료 기반 AI 과외 — 출처 명시, 환각 없는 답변",
+      ],
+      cta: "지금 시작하기",
+    },
     contact: {
       title: "함께 만들어봐요.",
       description: "새로운 아이디어나 협업 제안이 있으신가요?\n언제든지 편하게 연락주세요.",
@@ -211,6 +222,17 @@ export const translations = {
       title: "Guestbook",
       description: "Thanks for stopping by! Feel free to leave a message.",
       metaDescription: "Leave a message for Sungbin Kim.",
+    },
+    univmind: {
+      tagline: "You don't need four apps for one class",
+      description: "Upload recordings, PDFs, or handwritten notes — 7 AI agents handle everything from analysis to coaching. Built by a student, for students.",
+      features: [
+        "7 specialized AI agents automate analysis to coaching",
+        "Upload anything — recordings, PDFs, photos → structured notes",
+        "Knowledge graph discovers hidden connections across subjects",
+        "AI tutor based on your materials — cited sources, no hallucination",
+      ],
+      cta: "Get Started",
     },
     contact: {
       title: "Let's build together.",
