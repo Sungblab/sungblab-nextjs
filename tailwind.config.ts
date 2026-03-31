@@ -4,53 +4,38 @@ const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
+      colors: {
+        terracotta: {
+          DEFAULT: "#c4704b",
+          light: "#d4906e",
+          pale: "#e8c4b0",
+          bg: "#f5ece6",
+          dark: "#2a1f1a",
+        },
+        warm: {
+          50: "#faf7f5",
+          100: "#f5ece6",
+          200: "#e5ddd7",
+          800: "#1a1a1a",
+          900: "#111111",
+        },
+      },
       fontFamily: {
-        sans: ["Outfit", "Pretendard Variable", "Pretendard", "sans-serif"],
-
-      },
-      spacing: {
-        "blog-card": "300px",
-      },
-      gridTemplateColumns: {
-        "blog-cards": "repeat(auto-fit, minmax(300px, 1fr))",
-      },
-      animation: {
-        blob: "blob 7s infinite",
-        "gradient-x": "gradient-x 15s ease infinite",
-      },
-      keyframes: {
-        blob: {
-          "0%": {
-            transform: "translate(0px, 0px) scale(1)",
-          },
-          "33%": {
-            transform: "translate(30px, -50px) scale(1.1)",
-          },
-          "66%": {
-            transform: "translate(-20px, 20px) scale(0.9)",
-          },
-          "100%": {
-            transform: "translate(0px, 0px) scale(1)",
-          },
-        },
-        "gradient-x": {
-          "0%, 100%": {
-            "background-size": "200% 200%",
-            "background-position": "left center",
-          },
-          "50%": {
-            "background-size": "200% 200%",
-            "background-position": "right center",
-          },
-        },
+        heading: [
+          "Space Grotesk",
+          "Pretendard Variable",
+          "Pretendard",
+          "sans-serif",
+        ],
+        sans: ["Inter", "Pretendard Variable", "Pretendard", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
 
 export default config;

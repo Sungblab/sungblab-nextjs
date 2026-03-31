@@ -2,93 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Pretendard 폰트 설정 */
 @layer base {
   html {
-    font-family: "Pretendard Variable", "Pretendard", sans-serif;
+    font-family: "Inter", "Pretendard Variable", "Pretendard", sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-warm-50 text-warm-800;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Space Grotesk", "Pretendard Variable", sans-serif;
+    @apply font-bold;
   }
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animate-gradient {
-  animation: gradient 15s ease infinite;
-  background-size: 400% 400%;
-}
-
-@keyframes gradient-x {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-.animate-gradient-x {
-  animation: gradient-x 8s ease infinite;
-  background-size: 200% 200%;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-}
-
-.animate-blob {
-  animation: blob 7s infinite;
-}
-
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-.animation-delay-4000 {
-  animation-delay: 4s;
-}
-
-/* Add smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar — themed */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -98,32 +28,27 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d1d5db;
+  background: #e5ddd7;
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: #d4906e;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #374151;
+  background: #2a2a2a;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
+  background: #444;
 }
 
-/* Custom styles */
-body {
-  @apply bg-gray-50 text-gray-900;
+/* Prose overrides for blog */
+.prose a {
+  @apply text-terracotta hover:text-terracotta-light transition-colors;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply font-bold;
+.prose code {
+  font-family: "JetBrains Mono", monospace;
 }
