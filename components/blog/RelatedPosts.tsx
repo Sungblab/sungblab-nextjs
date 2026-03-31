@@ -47,8 +47,8 @@ const RelatedPosts = ({ posts, theme }: RelatedPostsProps): JSX.Element => {
               <span
                 className={`text-xs px-2 py-1 rounded-full ${
                   theme === "dark"
-                    ? "bg-purple-900/50 text-purple-200"
-                    : "bg-purple-100 text-purple-800"
+                    ? "bg-terracotta-900/50 text-terracotta-200"
+                    : "bg-terracotta-100 text-terracotta-800"
                 }`}
               >
                 {post.frontmatter.category}

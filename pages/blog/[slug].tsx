@@ -11,14 +11,14 @@ import React, { useMemo, useState, useEffect } from "react";
 const Math = dynamic(() => import("../../components/Math"), { ssr: false });
 const Giscus = dynamic(() => import("@giscus/react"), { ssr: false });
 import {
-  FaArrowUp,
-  FaArrowDown,
-  FaCopy,
-  FaShare,
-  FaArrowLeft,
-  FaListUl,
-  FaBookmark,
-} from "react-icons/fa";
+  ArrowUp,
+  ArrowDown,
+  Copy,
+  Share2,
+  ArrowLeft,
+  List,
+  Bookmark,
+} from "lucide-react";
 import { getRelatedPosts } from "../../utils/postUtils";
 import {
   getPostBySlug,
@@ -26,7 +26,7 @@ import {
   getPostFilePaths,
 } from "../../utils/mdxUtils";
 import { Post } from "../../types/post";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { generateId } from "../../utils/generateId";
 import { useToast } from "../../components/ui/Toast";
 
@@ -227,8 +227,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
         props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>
       ): JSX.Element => (
         <blockquote
-          className={`border-l-4 border-purple-500 pl-4 italic my-6 ${
-            theme === "dark" ? "text-gray-400" : "text-gray-600"
+          className={`border-l-4 border-terracotta-500 pl-4 italic my-6 ${
+            theme === "dark" ? "text-[#888]" : "text-[#666]"
           }`}
           {...props}
         />
@@ -298,17 +298,17 @@ const BlogPost: NextPage<BlogPostProps> = ({
 
       <div
         className={`min-h-screen ${
-          theme === "dark" ? "bg-gray-900" : "bg-gray-50"
+          theme === "dark" ? "bg-[#0f0f0f]" : "bg-warm-50"
         }`}
       >
         <div className="relative">
           <div className="absolute inset-0">
             <div
               className={`absolute inset-0 ${
-                theme === "dark" ? "bg-gray-900/90" : "bg-white/90"
+                theme === "dark" ? "bg-[#0f0f0f]/90" : "bg-white/90"
               }`}
             />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,84,56,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
           <div className="container mx-auto px-4 pt-40 pb-12 relative">
@@ -325,18 +325,18 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     href="/blog"
                     className={`inline-flex items-center mb-8 text-sm font-medium transition-all duration-300 group ${
                       theme === "dark"
-                        ? "text-gray-400 hover:text-purple-300"
-                        : "text-gray-600 hover:text-purple-600"
+                        ? "text-[#888] hover:text-terracotta-300"
+                        : "text-[#666] hover:text-terracotta-600"
                     }`}
                   >
-                    <FaArrowLeft className="mr-2 transition-transform duration-300 group-hover:-translate-x-1" />
+                    <ArrowLeft className="mr-2 w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
                     {translate("blog.backToBlog")}
                   </Link>
 
                   <div className="space-y-6">
                     <h1
                       className={`text-3xl lg:text-4xl font-bold leading-tight tracking-tight ${
-                        theme === "dark" ? "text-purple-300" : "text-purple-600"
+                        theme === "dark" ? "text-terracotta-300" : "text-terracotta-700"
                       }`}
                     >
                       {frontMatter.title}
@@ -344,7 +344,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     <div className="flex flex-wrap items-center gap-4">
                       <span
                         className={`text-sm ${
-                          theme === "dark" ? "text-gray-400" : "text-gray-600"
+                          theme === "dark" ? "text-[#888]" : "text-[#666]"
                         }`}
                       >
                         {frontMatter.date}
@@ -352,8 +352,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <span
                         className={`px-3 py-1 rounded-full text-sm font-medium ${
                           theme === "dark"
-                            ? "bg-purple-900/30 text-purple-300 border border-purple-700/50"
-                            : "bg-purple-100/50 text-purple-700 border border-purple-200"
+                            ? "bg-terracotta-900/30 text-terracotta-300 border border-terracotta-700/50"
+                            : "bg-terracotta-100/50 text-terracotta-700 border border-terracotta-200"
                         }`}
                       >
                         {frontMatter.category}
@@ -366,11 +366,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         onClick={copyPostUrl}
                         className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
                           theme === "dark"
-                            ? "bg-gray-800/60 text-gray-200 border-gray-700/50 hover:border-purple-700/50"
-                            : "bg-white/80 text-gray-700 border-gray-200/50 hover:border-purple-300/50"
+                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta-700/50"
+                            : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-300/50"
                         } hover:shadow-lg`}
                       >
-                        <FaCopy className="mr-2" /> {translate("blog.copyUrl")}
+                        <Copy className="mr-2 w-4 h-4" /> {translate("blog.copyUrl")}
                       </motion.button>
                       <motion.button
                         whileHover={{ scale: 1.05 }}
@@ -378,11 +378,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         onClick={sharePost}
                         className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
                           theme === "dark"
-                            ? "bg-gray-800/60 text-gray-200 border-gray-700/50 hover:border-purple-700/50"
-                            : "bg-white/80 text-gray-700 border-gray-200/50 hover:border-purple-300/50"
+                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta-700/50"
+                            : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-300/50"
                         } hover:shadow-lg`}
                       >
-                        <FaShare className="mr-2" /> {translate("blog.share")}
+                        <Share2 className="mr-2 w-4 h-4" /> {translate("blog.share")}
                       </motion.button>
                       <motion.button
                         whileHover={{ scale: 1.05 }}
@@ -390,11 +390,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         onClick={(): void => setShowToc(!showToc)}
                         className={`lg:hidden inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
                           theme === "dark"
-                            ? "bg-gray-800/60 text-gray-200 border-gray-700/50 hover:border-purple-700/50"
-                            : "bg-white/80 text-gray-700 border-gray-200/50 hover:border-purple-300/50"
+                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta-700/50"
+                            : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-300/50"
                         }`}
                       >
-                        <FaListUl className="mr-2" /> {translate("blog.toc")}
+                        <List className="mr-2 w-4 h-4" /> {translate("blog.toc")}
                       </motion.button>
                     </div>
                   </div>
@@ -412,18 +412,18 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <div
                         className={`rounded-xl p-6 ${
                           theme === "dark"
-                            ? "bg-gray-800/40 border border-gray-700/50"
-                            : "bg-white/80 border border-gray-200/50"
+                            ? "bg-[#1a1a1a]/40 border border-[#2a2a2a]/50"
+                            : "bg-white/80 border border-warm-200/50"
                         } backdrop-blur-sm`}
                       >
                         <h3
                           className={`text-lg font-semibold mb-4 flex items-center ${
                             theme === "dark"
-                              ? "text-purple-300"
-                              : "text-purple-600"
+                              ? "text-terracotta-300"
+                              : "text-terracotta-600"
                           }`}
                         >
-                          <FaListUl className="mr-2" />
+                          <List className="mr-2 w-4 h-4" />
                           {translate("blog.toc")}
                         </h3>
                         <nav className="space-y-3">
@@ -439,13 +439,13 @@ const BlogPost: NextPage<BlogPostProps> = ({
                                   item.level === 1
                                     ? `text-base font-medium ${
                                         theme === "dark"
-                                          ? "text-gray-200 hover:text-purple-300"
-                                          : "text-gray-800 hover:text-purple-600"
+                                          ? "text-[#f5ece6] hover:text-terracotta-300"
+                                          : "text-warm-800 hover:text-terracotta-600"
                                       }`
                                     : `text-sm pl-4 ${
                                         theme === "dark"
-                                          ? "text-gray-400 hover:text-purple-300"
-                                          : "text-gray-600 hover:text-purple-600"
+                                          ? "text-[#888] hover:text-terracotta-300"
+                                          : "text-[#666] hover:text-terracotta-600"
                                       }`
                                 }`}
                               >
@@ -466,15 +466,15 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   transition={{ duration: 0.5, delay: 0.2 }}
                   className={`prose prose-lg max-w-none ${
                     theme === "dark"
-                      ? "prose-invert prose-p:text-gray-300 prose-headings:text-gray-100 prose-strong:text-white"
-                      : "prose-p:text-gray-700 prose-headings:text-gray-900 prose-strong:text-gray-900"
+                      ? "prose-invert prose-p:text-[#ccc] prose-headings:text-[#f5ece6] prose-strong:text-white"
+                      : "prose-p:text-[#444] prose-headings:text-warm-900 prose-strong:text-warm-900"
                   }`}
                 >
                   <div
                     className={`rounded-2xl p-6 sm:p-10 backdrop-blur-md border shadow-xl ${
                       theme === "dark"
-                        ? "bg-gray-800/40 border-gray-700/50"
-                        : "bg-white/60 border-gray-200/50"
+                        ? "bg-[#1a1a1a]/40 border-[#2a2a2a]/50"
+                        : "bg-white/60 border-warm-200/50"
                     }`}
                   >
                     <MDXRemote {...mdxSource} components={MDXComponents} />
@@ -489,25 +489,25 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         href={`/blog/${prevPost.slug}`}
                         className={`group p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 shadow-lg hover:shadow-xl ${
                           theme === "dark"
-                            ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
-                            : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
+                            ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta-700/50"
+                            : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta-300/50"
                         }`}
                       >
                         <span
                           className={`text-xs font-semibold uppercase tracking-wider mb-2 flex items-center gap-1 ${
                             theme === "dark"
-                              ? "text-purple-400"
-                              : "text-purple-600"
+                              ? "text-terracotta-400"
+                              : "text-terracotta-600"
                           }`}
                         >
-                          <FaArrowLeft className="w-3 h-3" />
+                          <ArrowLeft className="w-3 h-3" />
                           {translate("blog.prevPost")}
                         </span>
                         <h3
                           className={`font-medium line-clamp-2 transition-colors duration-300 ${
                             theme === "dark"
-                              ? "text-gray-200 group-hover:text-purple-300"
-                              : "text-gray-800 group-hover:text-purple-600"
+                              ? "text-[#f5ece6] group-hover:text-terracotta-300"
+                              : "text-warm-800 group-hover:text-terracotta-600"
                           }`}
                         >
                           {prevPost.frontmatter.title}
@@ -520,15 +520,15 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         href={`/blog/${nextPost.slug}`}
                         className={`group p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 shadow-lg hover:shadow-xl ${
                           theme === "dark"
-                            ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50"
-                            : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50"
+                            ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta-700/50"
+                            : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta-300/50"
                         } ${!prevPost ? "md:col-start-2" : ""}`}
                       >
                         <span
                           className={`text-xs font-semibold uppercase tracking-wider mb-2 flex items-center justify-end gap-1 ${
                             theme === "dark"
-                              ? "text-purple-400"
-                              : "text-purple-600"
+                              ? "text-terracotta-400"
+                              : "text-terracotta-600"
                           }`}
                         >
                           {translate("blog.nextPost")}
@@ -549,8 +549,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         <h3
                           className={`font-medium line-clamp-2 text-right transition-colors duration-300 ${
                             theme === "dark"
-                              ? "text-gray-200 group-hover:text-purple-300"
-                              : "text-gray-800 group-hover:text-purple-600"
+                              ? "text-[#f5ece6] group-hover:text-terracotta-300"
+                              : "text-warm-800 group-hover:text-terracotta-600"
                           }`}
                         >
                           {nextPost.frontmatter.title}
@@ -565,8 +565,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   <div
                     className={`rounded-xl p-0 sm:p-8 backdrop-blur-sm border ${
                       theme === "dark"
-                        ? "bg-gray-800/40 border-gray-700/50"
-                        : "bg-white/80 border-gray-200/50"
+                        ? "bg-[#1a1a1a]/40 border-[#2a2a2a]/50"
+                        : "bg-white/80 border-warm-200/50"
                     } transition-all duration-300 shadow-lg`}
                   >
                     <Giscus
@@ -592,7 +592,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                   className={`sticky top-24 ${
-                    theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    theme === "dark" ? "text-[#ccc]" : "text-[#444]"
                   }`}
                 >
                   {/* TOC */}
@@ -600,18 +600,18 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     <div
                       className={`rounded-xl p-6 backdrop-blur-sm border ${
                         theme === "dark"
-                          ? "bg-gray-800/40 border-gray-700/50"
-                          : "bg-white/80 border-gray-200/50"
+                          ? "bg-[#1a1a1a]/40 border-[#2a2a2a]/50"
+                          : "bg-white/80 border-warm-200/50"
                       } transition-all duration-300 shadow-lg mb-8`}
                     >
                       <h3
                         className={`text-lg font-semibold mb-4 flex items-center ${
                           theme === "dark"
-                            ? "text-purple-300"
-                            : "text-purple-600"
+                            ? "text-terracotta-300"
+                            : "text-terracotta-600"
                         }`}
                       >
-                        <FaListUl className="mr-2" />
+                        <List className="mr-2 w-4 h-4" />
                         {translate("blog.toc")}
                       </h3>
                       <nav className="space-y-2">
@@ -624,13 +624,13 @@ const BlogPost: NextPage<BlogPostProps> = ({
                                 item.level === 1
                                   ? `text-sm font-medium ${
                                       theme === "dark"
-                                        ? "text-gray-200 hover:text-purple-300 hover:bg-gray-700/30"
-                                        : "text-gray-800 hover:text-purple-600 hover:bg-purple-50"
+                                        ? "text-[#f5ece6] hover:text-terracotta-300 hover:bg-[#2a2a2a]/30"
+                                        : "text-warm-800 hover:text-terracotta-600 hover:bg-terracotta-50"
                                     }`
                                   : `text-xs pl-4 ${
                                       theme === "dark"
-                                        ? "text-gray-400 hover:text-purple-300 hover:bg-gray-700/30"
-                                        : "text-gray-500 hover:text-purple-600 hover:bg-purple-50"
+                                        ? "text-[#888] hover:text-terracotta-300 hover:bg-[#2a2a2a]/30"
+                                        : "text-[#888] hover:text-terracotta-600 hover:bg-terracotta-50"
                                     }`
                               }`}
                             >
@@ -647,18 +647,18 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     <div
                       className={`rounded-xl p-6 backdrop-blur-sm border ${
                         theme === "dark"
-                          ? "bg-gray-800/40 border-gray-700/50"
-                          : "bg-white/80 border-gray-200/50"
+                          ? "bg-[#1a1a1a]/40 border-[#2a2a2a]/50"
+                          : "bg-white/80 border-warm-200/50"
                       } transition-all duration-300 shadow-lg`}
                     >
                       <h3
                         className={`text-lg font-semibold mb-4 flex items-center ${
                           theme === "dark"
-                            ? "text-purple-300"
-                            : "text-purple-600"
+                            ? "text-terracotta-300"
+                            : "text-terracotta-600"
                         }`}
                       >
-                        <FaBookmark className="mr-2" />
+                        <Bookmark className="mr-2 w-4 h-4" />
                         {translate("blog.relatedPosts")}
                       </h3>
                       <div className="space-y-3">
@@ -669,15 +669,15 @@ const BlogPost: NextPage<BlogPostProps> = ({
                               href={`/blog/${post.slug}`}
                               className={`block group p-3 rounded-lg transition-all duration-200 ${
                                 theme === "dark"
-                                  ? "hover:bg-gray-700/50"
-                                  : "hover:bg-gray-50"
+                                  ? "hover:bg-[#2a2a2a]/50"
+                                  : "hover:bg-warm-50"
                               }`}
                             >
                               <h4
                                 className={`font-medium text-sm transition-colors duration-200 ${
                                   theme === "dark"
-                                    ? "text-gray-300 group-hover:text-purple-300"
-                                    : "text-gray-700 group-hover:text-purple-600"
+                                    ? "text-[#ccc] group-hover:text-terracotta-300"
+                                    : "text-[#444] group-hover:text-terracotta-600"
                                 }`}
                               >
                                 {post.frontmatter.title}
@@ -685,8 +685,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                               <p
                                 className={`text-xs mt-1 ${
                                   theme === "dark"
-                                    ? "text-gray-500"
-                                    : "text-gray-400"
+                                    ? "text-[#888]"
+                                    : "text-[#888]"
                                 }`}
                               >
                                 {post.frontmatter.date}
@@ -708,8 +708,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
           style={{ scaleX: scrollProgress / 100 }}
           className={`fixed top-0 left-0 right-0 h-[3px] ${
             theme === "dark"
-              ? "bg-gradient-to-r from-purple-600 to-indigo-500"
-              : "bg-gradient-to-r from-purple-500 to-indigo-400"
+              ? "bg-gradient-to-r from-terracotta-600 to-terracotta-400"
+              : "bg-gradient-to-r from-terracotta-500 to-terracotta-300"
           } transform origin-left z-50`}
         />
 
@@ -729,11 +729,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                 aria-label="맨 위로"
                 className={`p-3 rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
                   theme === "dark"
-                    ? "bg-gray-800/80 text-gray-200 border-gray-700 hover:border-purple-700"
-                    : "bg-white/80 text-gray-700 border-gray-200 hover:border-purple-300"
+                    ? "bg-[#1a1a1a]/80 text-[#f5ece6] border-[#2a2a2a] hover:border-terracotta-700"
+                    : "bg-white/80 text-warm-800 border-warm-200 hover:border-terracotta-300"
                 }`}
               >
-                <FaArrowUp />
+                <ArrowUp className="w-4 h-4" />
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.1 }}
@@ -742,11 +742,11 @@ const BlogPost: NextPage<BlogPostProps> = ({
                 aria-label="맨 아래로"
                 className={`p-3 rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
                   theme === "dark"
-                    ? "bg-gray-800/80 text-gray-200 border-gray-700 hover:border-purple-700"
-                    : "bg-white/80 text-gray-700 border-gray-200 hover:border-purple-300"
+                    ? "bg-[#1a1a1a]/80 text-[#f5ece6] border-[#2a2a2a] hover:border-terracotta-700"
+                    : "bg-white/80 text-warm-800 border-warm-200 hover:border-terracotta-300"
                 }`}
               >
-                <FaArrowDown />
+                <ArrowDown className="w-4 h-4" />
               </motion.button>
             </motion.div>
           )}

@@ -2,7 +2,7 @@ import type { NextPage, GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { Layout, useTheme, useLanguage } from "../components/Components";
 import { Project } from "../data/projects";
 import { getGitHubRepos, GitHubRepo } from "../utils/github";
@@ -59,8 +59,8 @@ const ProjectCard: React.FC<Project> = ({
       transition={{ duration: 0.3 }}
       className={`group relative flex flex-col h-full rounded-3xl border transition-all duration-300 overflow-hidden ${
         theme === "dark"
-          ? "bg-gray-900 border-gray-800"
-          : "bg-white border-gray-100 shadow-xl"
+          ? "bg-[#0f0f0f] border-[#1a1a1a]"
+          : "bg-white border-warm-100 shadow-xl"
       }`}
     >
       {/* Spotlight Effect */}
@@ -69,7 +69,7 @@ const ProjectCard: React.FC<Project> = ({
         style={{
           opacity,
           background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${
-            theme === 'dark' ? 'rgba(168, 85, 247, 0.15)' : 'rgba(124, 58, 237, 0.1)'
+            theme === 'dark' ? 'rgba(196, 110, 80, 0.15)' : 'rgba(168, 84, 56, 0.1)'
           }, transparent 40%)`,
         }}
       />
@@ -94,19 +94,19 @@ const ProjectCard: React.FC<Project> = ({
       <div className="relative flex-1 p-6 flex flex-col z-20">
         <div className="flex justify-between items-start mb-4">
            <h2 className={`text-2xl font-bold tracking-tight ${
-             theme === "dark" ? "text-white" : "text-gray-900"
+             theme === "dark" ? "text-white" : "text-warm-900"
            }`}>
              {title}
            </h2>
            <span className={`text-xs font-mono px-2 py-1 rounded-md ${
-             theme === "dark" ? "bg-gray-800 text-gray-400" : "bg-gray-100 text-gray-500"
+             theme === "dark" ? "bg-[#1a1a1a] text-[#888]" : "bg-warm-100 text-[#666]"
            }`}>
              {date}
            </span>
         </div>
         
         <p className={`flex-1 text-sm leading-relaxed mb-6 line-clamp-3 ${
-          theme === "dark" ? "text-gray-400" : "text-gray-600"
+          theme === "dark" ? "text-[#888]" : "text-[#666]"
         }`}>
           {language === 'en' && description_en ? description_en : description}
         </p>
@@ -119,8 +119,8 @@ const ProjectCard: React.FC<Project> = ({
                 key={tech}
                 className={`px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide ${
                   theme === "dark"
-                    ? "bg-gray-800 text-purple-300 border border-gray-700"
-                    : "bg-purple-50 text-purple-700 border border-purple-100"
+                    ? "bg-[#1a1a1a] text-terracotta-300 border border-[#2a2a2a]"
+                    : "bg-terracotta-50 text-terracotta-700 border border-terracotta-100"
                 }`}
               >
                 {tech}
@@ -128,7 +128,7 @@ const ProjectCard: React.FC<Project> = ({
             ))}
             {technologies.length > 4 && (
                <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
-                 theme === "dark" ? "text-gray-500" : "text-gray-400"
+                 theme === "dark" ? "text-[#888]" : "text-[#888]"
                }`}>
                  +{technologies.length - 4}
                </span>
@@ -183,17 +183,17 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
       </Head>
       <div
         className={`min-h-screen ${
-          theme === "dark" ? "bg-gray-900" : "bg-gray-50"
+          theme === "dark" ? "bg-[#0f0f0f]" : "bg-warm-50"
         }`}
       >
         <div className="relative">
           <div className="absolute inset-0">
             <div
               className={`absolute inset-0 ${
-                theme === "dark" ? "bg-gray-900/90" : "bg-white/90"
+                theme === "dark" ? "bg-[#0f0f0f]/90" : "bg-white/90"
               }`}
             />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,84,56,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
           <div className="container mx-auto px-4 pt-40 pb-12 relative">
@@ -206,16 +206,16 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
               >
                 <h1
                   className={`text-4xl md:text-6xl font-bold mb-6 pb-2 bg-clip-text text-transparent bg-gradient-to-r ${
-                    theme === "dark" 
-                    ? "from-white via-purple-200 to-purple-400" 
-                    : "from-gray-900 via-purple-800 to-purple-600"
+                    theme === "dark"
+                    ? "from-white via-terracotta-200 to-terracotta-400"
+                    : "from-warm-900 via-terracotta-800 to-terracotta-600"
                   }`}
                 >
                   {translate("projects.title")}
                 </h1>
                 <p
                   className={`text-lg md:text-xl max-w-2xl mx-auto ${
-                    theme === "dark" ? "text-gray-400" : "text-gray-600"
+                    theme === "dark" ? "text-[#888]" : "text-[#666]"
                   }`}
                 >
                   {translate("projects.description")}
@@ -229,23 +229,23 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                 className="max-w-2xl mx-auto mb-16"
               >
                 <div className={`relative group p-1 rounded-2xl transition-all duration-300 ${
-                  theme === "dark" 
-                  ? "bg-gradient-to-br from-gray-800 to-gray-900 focus-within:from-purple-900/50 focus-within:to-blue-900/50" 
-                  : "bg-gradient-to-br from-white to-gray-50 shadow-xl focus-within:shadow-2xl focus-within:shadow-purple-200"
+                  theme === "dark"
+                  ? "bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] focus-within:from-terracotta-900/50 focus-within:to-[#0f0f0f]"
+                  : "bg-gradient-to-br from-white to-warm-50 shadow-xl focus-within:shadow-2xl focus-within:shadow-terracotta-200"
                 }`}>
                   <input
                     type="text"
                     placeholder={translate("projects.searchPlaceholder")}
                     className={`w-full p-5 pl-6 pr-14 text-lg rounded-xl border-2 transition-all duration-300 ${
                       theme === "dark"
-                        ? "bg-gray-900 text-white border-transparent focus:border-purple-500/50 placeholder-gray-500"
-                        : "bg-white text-gray-900 border-transparent focus:border-purple-200 placeholder-gray-400"
+                        ? "bg-[#0f0f0f] text-white border-transparent focus:border-terracotta-500/50 placeholder-[#888]"
+                        : "bg-white text-warm-900 border-transparent focus:border-terracotta-200 placeholder-[#888]"
                     } focus:outline-none`}
                     value={filter}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setFilter(e.target.value)}
                   />
                   <div className={`absolute right-5 top-1/2 transform -translate-y-1/2 p-2 rounded-lg transition-colors ${
-                      theme === "dark" ? "bg-gray-800/50 text-gray-400" : "bg-gray-100 text-gray-500"
+                      theme === "dark" ? "bg-[#1a1a1a]/50 text-[#888]" : "bg-warm-100 text-[#888]"
                   }`}>
                     <svg
                       className="w-5 h-5"
@@ -284,14 +284,14 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                 >
                   <p
                     className={`text-xl ${
-                      theme === "dark" ? "text-gray-300" : "text-gray-600"
+                      theme === "dark" ? "text-[#ccc]" : "text-[#666]"
                     }`}
                   >
                     {translate("projects.noResults")}
                   </p>
                   <p
                     className={`mt-2 ${
-                      theme === "dark" ? "text-gray-400" : "text-gray-500"
+                      theme === "dark" ? "text-[#888]" : "text-[#888]"
                     }`}
                   >
                     {translate("projects.tryDifferent")}
@@ -300,8 +300,8 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                     onClick={(): void => setFilter("")}
                     className={`mt-6 px-6 py-2 rounded-full border-2 ${
                       theme === "dark"
-                        ? "border-purple-500 text-purple-300 hover:bg-purple-900/20"
-                        : "border-purple-500 text-purple-600 hover:bg-purple-50"
+                        ? "border-terracotta-500 text-terracotta-300 hover:bg-terracotta-900/20"
+                        : "border-terracotta-500 text-terracotta-600 hover:bg-terracotta-50"
                     } transition-colors duration-300`}
                   >
                     {translate("projects.viewAll")}

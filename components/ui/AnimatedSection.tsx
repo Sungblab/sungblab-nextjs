@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, HTMLMotionProps, Variants } from "framer-motion";
+import { motion, HTMLMotionProps } from "motion/react";
 
 interface AnimatedSectionProps extends HTMLMotionProps<"div"> {
   children: React.ReactNode;
@@ -19,52 +19,32 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   viewportAmount = 0.2,
   ...props
 }) => {
-  const getVariants = (): Variants => {
-    const base = {
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: {
-          duration,
-          delay,
-          ease: "easeOut",
-        },
-      },
-    };
+  const getHidden = () => {
+    switch (direction) {
+      case "up":    return { opacity: 0, y: 40 };
+      case "down":  return { opacity: 0, y: -40 };
+      case "left":  return { opacity: 0, x: 40 };
+      case "right": return { opacity: 0, x: -40 };
+      default:      return { opacity: 0 };
+    }
+  };
 
+  const getVisible = () => {
     switch (direction) {
       case "up":
-        return {
-          hidden: { ...base.hidden, y: 40 },
-          visible: { ...base.visible, y: 0 },
-        };
-      case "down":
-        return {
-          hidden: { ...base.hidden, y: -40 },
-          visible: { ...base.visible, y: 0 },
-        };
+      case "down":  return { opacity: 1, y: 0 };
       case "left":
-        return {
-          hidden: { ...base.hidden, x: 40 },
-          visible: { ...base.visible, x: 0 },
-        };
-      case "right":
-        return {
-          hidden: { ...base.hidden, x: -40 },
-          visible: { ...base.visible, x: 0 },
-        };
-      case "none":
-      default:
-        return base;
+      case "right": return { opacity: 1, x: 0 };
+      default:      return { opacity: 1 };
     }
   };
 
   return (
     <motion.div
-      initial="hidden"
-      whileInView="visible"
+      initial={getHidden()}
+      whileInView={getVisible()}
+      transition={{ duration, delay, ease: "easeOut" }}
       viewport={{ once: true, amount: viewportAmount }}
-      variants={getVariants()}
       className={className}
       {...props}
     >

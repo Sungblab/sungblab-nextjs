@@ -1,11 +1,16 @@
-import styled from "styled-components";
-import { ThemeType } from "../features/ThemeContext";
+import React from "react";
 
-export const Tag = styled.span<{ theme: ThemeType }>`
-  background: ${({ theme }): string => theme?.colors?.secondary || "#A78BFA"};
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 500;
-`;
+interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
+  children: React.ReactNode;
+}
+
+export const Tag: React.FC<TagProps> = ({ children, className = "", ...props }) => {
+  return (
+    <span
+      className={`bg-terracotta-500 text-white px-3 py-1 rounded-full text-sm font-medium ${className}`}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+};

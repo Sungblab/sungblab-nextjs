@@ -4,7 +4,7 @@ import React, {
   useContext,
   useState,
 } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 
 type ToastType = "success" | "error" | "info";
 

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Layout } from "../components/layout/Layout";
 import { useTheme } from "../components/features/ThemeContext";
 import { useLanguage } from "../components/features/LanguageContext";
@@ -25,10 +25,10 @@ const Guestbook: NextPage = () => {
         <div className="absolute inset-0">
             <div
               className={`absolute inset-0 ${
-                theme === "dark" ? "bg-gray-900/90" : "bg-white/90"
+                theme === "dark" ? "bg-[#0f0f0f]/90" : "bg-white/90"
               }`}
             />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,84,56,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
         </div>
         
         <AnimatedSection className="max-w-4xl mx-auto relative z-10">
@@ -38,7 +38,7 @@ const Guestbook: NextPage = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
               className={`text-4xl md:text-5xl font-bold mb-4 ${
-                theme === "dark" ? "text-purple-300" : "text-purple-600"
+                theme === "dark" ? "text-terracotta-300" : "text-terracotta-600"
               }`}
             >
               {translate("guestbook.title")}
@@ -48,7 +48,7 @@ const Guestbook: NextPage = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.1, duration: 0.5 }}
               className={`text-lg md:text-xl ${
-                theme === "dark" ? "text-gray-400" : "text-gray-600"
+                theme === "dark" ? "text-[#888]" : "text-[#666]"
               }`}
             >
               {translate("guestbook.description")}
@@ -61,8 +61,8 @@ const Guestbook: NextPage = () => {
             transition={{ delay: 0.2, duration: 0.6 }}
             className={`p-6 md:p-8 rounded-2xl backdrop-blur-sm border shadow-xl ${
                theme === "dark"
-                ? "bg-gray-800/40 border-gray-700/50"
-                : "bg-white/80 border-gray-200/50"
+                ? "bg-[#1a1a1a]/40 border-[#2a2a2a]/50"
+                : "bg-white/80 border-warm-200/50"
             }`}
           >
             <Giscus

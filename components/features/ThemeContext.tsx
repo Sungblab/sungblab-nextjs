@@ -1,5 +1,4 @@
 import React, { useState, createContext, useContext } from "react";
-import { ThemeProvider as StyledThemeProvider } from "styled-components";
 
 // Theme Context Interface
 export interface ThemeContextType {
@@ -43,17 +42,17 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   const colors = {
     light: {
       background: "#FFFFFF",
-      primary: "#7C3AED",
-      secondary: "#A78BFA",
-      border: "#E2E8F0",
-      accent: "#4F46E5",
+      primary: "#A85438",
+      secondary: "#C46E50",
+      border: "#e8ddd8",
+      accent: "#8B4513",
     },
     dark: {
-      background: "#1A202C",
-      primary: "#9F7AEA",
-      secondary: "#6B46C1",
-      border: "#2D3748",
-      accent: "#818CF8",
+      background: "#0f0f0f",
+      primary: "#C46E50",
+      secondary: "#A85438",
+      border: "#2a2a2a",
+      accent: "#D4886A",
     },
   };
 
@@ -66,9 +65,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <ThemeContext.Provider value={contextValue}>
-      <StyledThemeProvider theme={{ colors: colors[theme] }}>
-        {children}
-      </StyledThemeProvider>
+      {children}
     </ThemeContext.Provider>
   );
 };

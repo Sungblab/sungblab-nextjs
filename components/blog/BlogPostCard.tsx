@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Post } from "../../types/post";
 import Image from "next/image";
 import { stripMarkdown } from "../../utils/textUtils";
@@ -55,7 +55,7 @@ const BlogPostCard = ({
             style={{
               opacity,
               background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${
-                theme === 'dark' ? 'rgba(168, 85, 247, 0.15)' : 'rgba(124, 58, 237, 0.1)'
+                theme === 'dark' ? 'rgba(196, 110, 80, 0.15)' : 'rgba(168, 84, 56, 0.1)'
               }, transparent 40%)`,
             }}
           />
@@ -89,8 +89,8 @@ const BlogPostCard = ({
                <h2
                 className={`text-xl font-bold leading-tight ${
                   theme === "dark"
-                    ? "text-gray-100 group-hover:text-purple-300"
-                    : "text-gray-900 group-hover:text-purple-600"
+                    ? "text-[#f5ece6] group-hover:text-terracotta-300"
+                    : "text-warm-900 group-hover:text-terracotta-600"
                 } transition-colors duration-300`}
               >
                 {post.frontmatter.title}
@@ -137,8 +137,8 @@ const BlogPostCard = ({
                 <span
                   className={`px-3 py-1 rounded-full font-semibold ${
                     theme === "dark"
-                      ? "bg-purple-900/30 text-purple-300 border border-purple-800/50"
-                      : "bg-purple-50 text-purple-700 border border-purple-100"
+                      ? "bg-terracotta-900/30 text-terracotta-300 border border-terracotta-800/50"
+                      : "bg-terracotta-50 text-terracotta-700 border border-terracotta-100"
                   }`}
                 >
                   {post.frontmatter.category}

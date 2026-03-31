@@ -1,6 +1,6 @@
 import { GetStaticProps, NextPage } from "next";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { Layout, useTheme, useLanguage } from "../../components/Components";
 import BlogPostCard from "../../components/blog/BlogPostCard";
 import BlogSearch from "../../components/blog/BlogSearch";
@@ -86,17 +86,17 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
 
       <div
         className={`min-h-screen ${
-          theme === "dark" ? "bg-gray-900" : "bg-gray-50"
+          theme === "dark" ? "bg-[#0f0f0f]" : "bg-warm-50"
         }`}
       >
         <div className="relative">
           <div className="absolute inset-0">
             <div
               className={`absolute inset-0 ${
-                theme === "dark" ? "bg-gray-900/90" : "bg-white/90"
+                theme === "dark" ? "bg-[#0f0f0f]/90" : "bg-white/90"
               }`}
             />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,84,56,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
           <div className="container mx-auto px-4 pt-40 pb-12 relative">
@@ -110,16 +110,16 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
               >
                 <h1
                   className={`text-4xl md:text-6xl font-bold mb-6 pb-2 bg-clip-text text-transparent bg-gradient-to-r ${
-                    theme === "dark" 
-                    ? "from-white via-purple-200 to-purple-400" 
-                    : "from-gray-900 via-purple-800 to-purple-600"
+                    theme === "dark"
+                    ? "from-white via-terracotta-200 to-terracotta-400"
+                    : "from-warm-900 via-terracotta-800 to-terracotta-600"
                   }`}
                 >
                   {translate("blog.title")}
                 </h1>
                 <p
                   className={`text-lg md:text-xl max-w-2xl mx-auto ${
-                    theme === "dark" ? "text-gray-400" : "text-gray-600"
+                    theme === "dark" ? "text-[#888]" : "text-[#666]"
                   }`}
                 >
                   {translate("blog.description")}
@@ -182,11 +182,11 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                           className={`px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
                             currentPage === number
                               ? theme === "dark"
-                                ? "bg-purple-700 text-white border-purple-700"
-                                : "bg-purple-600 text-white border-purple-600"
+                                ? "bg-terracotta-700 text-white border-terracotta-700"
+                                : "bg-terracotta-600 text-white border-terracotta-600"
                               : theme === "dark"
-                              ? "bg-gray-800/40 hover:bg-gray-800/60 border-gray-700/50 hover:border-purple-700/50 text-gray-300"
-                              : "bg-white/80 hover:bg-white border-gray-200/50 hover:border-purple-300/50 text-gray-600"
+                              ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta-700/50 text-[#ccc]"
+                              : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta-300/50 text-[#666]"
                           }`}
                         >
                           {number}
@@ -206,14 +206,14 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                 >
                   <p
                     className={`text-xl mb-2 ${
-                      theme === "dark" ? "text-gray-300" : "text-gray-600"
+                      theme === "dark" ? "text-[#ccc]" : "text-[#666]"
                     }`}
                   >
                     {translate("blog.noResults")}
                   </p>
                   <p
                     className={
-                      theme === "dark" ? "text-gray-400" : "text-gray-500"
+                      theme === "dark" ? "text-[#888]" : "text-[#888]"
                     }
                   >
                     {translate("blog.tryDifferent")}
