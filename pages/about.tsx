@@ -1,17 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import { Layout } from "../components/layout/Layout";
 import SEO from "../components/SEO";
 import { useTheme } from "../components/features/ThemeContext";
 import { useLanguage } from "../components/features/LanguageContext";
 import { gsap } from "../utils/gsap";
-
-const GiscusComponent = dynamic(
-  () => import("../components/features/Comments").then((mod) => mod.default || mod.Comments),
-  { ssr: false }
-);
 
 const timeline = [
   {
@@ -78,7 +72,7 @@ const About: NextPage = () => {
           <div data-about-anim className="flex items-center gap-6">
             <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-terracotta/30">
               <Image
-                src="/img/sb.jpg"
+                src="/images/sb.jpg"
                 alt="Sungbin Kim"
                 width={80}
                 height={80}
@@ -184,13 +178,6 @@ const About: NextPage = () => {
             </div>
           </div>
 
-          {/* Guestbook */}
-          <div data-about-anim className="mt-16">
-            <h2 className="font-heading text-xl font-bold mb-4">
-              {translate("about.guestbookTitle")}
-            </h2>
-            <GiscusComponent postSlug="guestbook" />
-          </div>
         </div>
       </div>
     </Layout>
