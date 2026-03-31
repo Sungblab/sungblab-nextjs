@@ -42,9 +42,9 @@ export const Footer: React.FC = () => {
             <Linkedin size={16} />
           </a>
           <span
-            className={`text-xs ${isDark ? "text-[#444]" : "text-[#ccc]"}`}
+            className={`text-xs ${isDark ? "text-[#555]" : "text-[#bbb]"}`}
           >
-            © {new Date().getFullYear()} sungblab
+            Made by Sungbin · © {new Date().getFullYear()} sungblab
           </span>
         </div>
       </div>
