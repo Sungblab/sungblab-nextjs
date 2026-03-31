@@ -9,7 +9,7 @@ import { Logo } from "../ui/Logo";
 
 export const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
-  const { language, setLanguage, translate } = useLanguage();
+  const { language, toggleLanguage, translate } = useLanguage();
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -78,7 +78,7 @@ export const Header: React.FC = () => {
 
           <div className="flex items-center gap-3">
             <button
-              onClick={() => setLanguage(language === "ko" ? "en" : "ko")}
+              onClick={toggleLanguage}
               className={`text-xs font-medium px-2.5 py-1 rounded-md transition-colors ${
                 isDark
                   ? "text-[#888] hover:text-[#f5ece6] hover:bg-[#2a2a2a]"

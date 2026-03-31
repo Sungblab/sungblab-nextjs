@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useTheme } from "../features/ThemeContext";
-import { gsap, ScrollTrigger } from "../../utils/gsap";
+import { gsap } from "../../utils/gsap";
 import { ExternalLink } from "lucide-react";
 
 export const UnivMindSection: React.FC = () => {

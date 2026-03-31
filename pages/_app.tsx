@@ -5,7 +5,7 @@ import { useLenis } from "../utils/lenis";
 import "../styles/globals.css";
 import "katex/dist/katex.min.css";
 
-function AppContent({ Component, pageProps }: AppProps): JSX.Element {
+function AppInner({ Component, pageProps }: { Component: AppProps["Component"]; pageProps: AppProps["pageProps"] }): JSX.Element {
   useLenis();
 
   return (
@@ -20,7 +20,7 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
     <ThemeProvider>
       <LanguageProvider>
         <ToastProvider>
-          <AppContent Component={Component} pageProps={pageProps} />
+          <AppInner Component={Component} pageProps={pageProps} />
         </ToastProvider>
       </LanguageProvider>
     </ThemeProvider>
