@@ -1,84 +1,89 @@
-import { motion } from "framer-motion";
-import { useTheme } from "../../components/features/ThemeContext";
-import { useLanguage } from "../../components/features/LanguageContext";
-import { AnimatedSection } from "../../components/ui/AnimatedSection";
-import { SocialButton } from "../../components/ui/SocialButton";
+import React, { useEffect, useRef } from "react";
+import { useTheme } from "../features/ThemeContext";
+import { useLanguage } from "../features/LanguageContext";
+import { gsap } from "../../utils/gsap";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 export const ContactSection: React.FC = () => {
   const { theme } = useTheme();
   const { translate } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
+  const isDark = theme === "dark";
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from("[data-contact-anim]", {
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="py-32 px-4 relative overflow-hidden">
-      <AnimatedSection>
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className={`text-5xl md:text-7xl font-bold mb-8 tracking-tight ${
-              theme === "dark" ? "text-white" : "text-gray-900"
+    <section ref={sectionRef} className="py-24 md:py-32">
+      <div className="max-w-2xl mx-auto px-6 text-center">
+        <h2
+          data-contact-anim
+          className="font-heading text-3xl md:text-4xl font-bold tracking-tight"
+        >
+          {translate("contact.title")}
+        </h2>
+        <p
+          data-contact-anim
+          className={`mt-4 text-base ${
+            isDark ? "text-[#888]" : "text-[#666]"
+          }`}
+        >
+          {translate("contact.description")}
+        </p>
+
+        <a
+          data-contact-anim
+          href="mailto:sungblab1119@gmail.com"
+          className="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-terracotta text-white rounded-lg font-medium text-sm hover:bg-terracotta-light transition-colors"
+        >
+          <Mail size={16} />
+          sungblab1119@gmail.com
+        </a>
+
+        <div data-contact-anim className="flex justify-center gap-4 mt-6">
+          <a
+            href="https://github.com/Sungblab"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`p-3 rounded-lg transition-colors ${
+              isDark
+                ? "text-[#888] hover:text-[#f5ece6] hover:bg-[#1a1a1a]"
+                : "text-[#666] hover:text-warm-800 hover:bg-warm-100"
             }`}
+            aria-label="GitHub"
           >
-            {translate("contact.title")}
-          </motion.h2>
-          
-          <motion.p
-             initial={{ opacity: 0, y: 20 }}
-             whileInView={{ opacity: 1, y: 0 }}
-             viewport={{ once: true }}
-             transition={{ delay: 0.1 }}
-             className={`text-xl md:text-2xl mb-12 font-light ${
-               theme === "dark" ? "text-gray-400" : "text-gray-600"
-             }`}
+            <Github size={22} />
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`p-3 rounded-lg transition-colors ${
+              isDark
+                ? "text-[#888] hover:text-[#f5ece6] hover:bg-[#1a1a1a]"
+                : "text-[#666] hover:text-warm-800 hover:bg-warm-100"
+            }`}
+            aria-label="LinkedIn"
           >
-            {translate("contact.description").split('\n').map((line: string, i: number): JSX.Element => (
-              <span key={i}>
-                {line}
-                {i === 0 && <br className="hidden md:block" />}
-              </span>
-            ))}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col items-center gap-8"
-          >
-            <a 
-              href="mailto:sungblab@gmail.com"
-              className={`text-3xl md:text-5xl font-bold underline decoration-4 decoration-purple-500 underline-offset-8 transition-colors hover:text-purple-500 break-all max-w-full px-4 ${
-                theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
-              }`}
-            >
-              sungblab@gmail.com
-            </a>
-
-            <div className="flex flex-wrap justify-center gap-4 mt-8 w-full">
-              <SocialButton
-                href="https://github.com/Sungblab"
-                icon="github"
-                label="GitHub"
-                className="px-6 py-3 text-lg"
-              />
-              <SocialButton
-                href="https://www.threads.com/@kimsungbin1119"
-                icon="threads"
-                label="Threads"
-                className="px-6 py-3 text-lg"
-              />
-              <SocialButton
-                href="https://www.linkedin.com/in/sungblab"
-                icon="linkedin"
-                label="LinkedIn"
-                className="px-6 py-3 text-lg"
-              />
-            </div>
-          </motion.div>
+            <Linkedin size={22} />
+          </a>
         </div>
-      </AnimatedSection>
+      </div>
     </section>
   );
 };
