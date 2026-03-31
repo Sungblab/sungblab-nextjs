@@ -13,7 +13,7 @@ export const translations = {
     },
     hero: {
       title: "AI와 함께 만듭니다",
-      description: "중3 때 ChatGPT를 만나고, 18살부터 Claude와 바이브코딩. 지금은 AI 서비스를 직접 만들고 운영합니다.",
+      description: "중3 때 ChatGPT를 만나고, 18살부터 Claude와 바이브코딩.\n지금은 AI 서비스를 직접 만들고 운영합니다.",
       blog: "블로그 읽기",
       greeting: "안녕하세요, 저는",
       role: "풀스택 개발자",
@@ -127,7 +127,7 @@ export const translations = {
     },
     hero: {
       title: "Building with AI",
-      description: "Met ChatGPT in middle school, started vibe-coding with Claude at 18. Now I build and run AI services.",
+      description: "Met ChatGPT in middle school,\nstarted vibe-coding with Claude at 18.\nNow I build and run AI services.",
       blog: "Read Blog",
       greeting: "Hello, I'm",
       role: "Full-Stack Developer",

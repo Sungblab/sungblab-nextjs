@@ -57,7 +57,12 @@ export const HeroSection: React.FC = () => {
             isDark ? "text-[#888]" : "text-[#666]"
           }`}
         >
-          {translate("hero.description")}
+          {translate("hero.description").split("\n").map((line, i, arr) => (
+            <React.Fragment key={i}>
+              {line}
+              {i < arr.length - 1 && <br />}
+            </React.Fragment>
+          ))}
         </p>
 
         <div data-hero-anim className="mt-10 flex items-center justify-center gap-4">
