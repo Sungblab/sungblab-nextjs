@@ -1,109 +1,66 @@
-import { NextPage, GetStaticProps } from "next";
-import Head from "next/head";
-import { motion } from "framer-motion";
+import { GetStaticProps, NextPage } from "next";
 import { Layout } from "../components/layout/Layout";
-import { useTheme } from "../components/features/ThemeContext";
-import { useLanguage } from "../components/features/LanguageContext";
-import { getAllPosts } from "../utils/mdxUtils";
-import { Post } from "../types/post";
-
-// Sections
 import { HeroSection } from "../components/sections/HeroSection";
+import { UnivMindSection } from "../components/sections/UnivMindSection";
+import { ProjectsSection } from "../components/sections/ProjectsSection";
 import { BlogPreviewSection } from "../components/sections/BlogPreviewSection";
-import { SkillsSection } from "../components/sections/SkillsSection";
-import { FeaturedProjectsSection } from "../components/sections/FeaturedProjectsSection";
 import { ContactSection } from "../components/sections/ContactSection";
-
-import { getGitHubRepos, GitHubRepo } from "../utils/github";
-import { Project } from "../data/projects";
+import SEO from "../components/SEO";
+import { getAllPosts } from "../utils/mdxUtils";
+import { getGitHubRepos } from "../utils/github";
+import { useLanguage } from "../components/features/LanguageContext";
 
 interface HomeProps {
-  posts: Post[];
-  projects: Project[];
+  posts: any[];
+  projects: any[];
 }
 
 const Home: NextPage<HomeProps> = ({ posts, projects }) => {
-  const { theme } = useTheme();
   const { translate } = useLanguage();
 
   return (
     <Layout>
-      <Head>
-        <title>{translate("home.title")}</title>
-        <meta
-          name="description"
-          content={translate("home.description")}
-        />
-        <meta
-          name="keywords"
-          content="web development, technology, blog, coding, portfolio, full-stack"
-        />
-        <meta property="og:title" content="Sungblab" />
-        <meta
-          property="og:description"
-          content={translate("home.metaDescription")}
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://sungblab.com/" />
-        {/* Verification meta tags preserved */}
-        <meta
-          name="google-site-verification"
-          content="PxfmFDZIIiYW7qK7pk6s17rsBKYeI43cV5s15D5D5Yo"
-        />
-        <meta
-          name="naver-site-verification"
-          content="60a035a882f7831c7dcca834bf7815344cf4ffa8"
-        />
-      </Head>
-
-      <motion.main
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className={`min-h-screen font-sans ${
-          theme === "dark" ? "bg-gray-900" : "bg-gray-50"
-        }`}
-      >
-        <HeroSection />
-        <BlogPreviewSection posts={posts} />
-        <SkillsSection />
-        <FeaturedProjectsSection projects={projects} />
-        <ContactSection />
-      </motion.main>
+      <SEO
+        title="Sungblab"
+        description={translate("home.metaDescription")}
+        keywords={["web development", "technology", "blog", "coding", "portfolio", "full-stack"]}
+      />
+      <HeroSection />
+      <UnivMindSection />
+      <ProjectsSection projects={projects} />
+      <BlogPreviewSection posts={posts} />
+      <ContactSection />
     </Layout>
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const posts = getAllPosts();
-  // Sort by date (descending)
-  const sortedPosts = posts.sort((a: Post, b: Post): number => {
-    return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
-  });
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  const posts = getAllPosts().sort(
+    (a, b) =>
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime()
+  );
 
-  // Fetch GitHub Repos
-  const repos = await getGitHubRepos("Sungblab");
-  
-  // Transform to Project format
-  const githubProjects: Project[] = repos
-    .filter((repo: GitHubRepo): boolean => !repo.fork)
-    .map((repo: GitHubRepo): Project => ({
-      id: repo.id,
-      title: repo.name,
-      description: repo.description || "", // Empty string if no description
-      link: repo.html_url,
-      // Use GitHub Open Graph image service for dynamic preview
-      image: `https://opengraph.githubassets.com/1/Sungblab/${repo.name}`,
-      technologies: [repo.language, ...(repo.topics || [])].filter(Boolean) as string[],
-      date: repo.updated_at,
-    }));
+  let projects: any[] = [];
+  try {
+    const repos = await getGitHubRepos("Sungblab", 100);
+    projects = repos
+      .filter((repo: any) => !repo.fork)
+      .map((repo: any, index: number) => ({
+        id: index,
+        title: repo.name,
+        description: repo.description || "",
+        link: repo.html_url,
+        image: `https://opengraph.githubassets.com/1/${repo.full_name || `Sungblab/${repo.name}`}`,
+        technologies: [repo.language, ...(repo.topics || [])].filter(Boolean),
+        date: repo.created_at?.split("T")[0] || "",
+      }));
+  } catch (error) {
+    console.error("GitHub API error:", error);
+  }
 
   return {
-    props: {
-      posts: sortedPosts,
-      projects: githubProjects,
-    },
-    // Revalidate every hour
+    props: { posts, projects },
     revalidate: 3600,
   };
 };
