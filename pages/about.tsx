@@ -66,8 +66,8 @@ const About: NextPage = () => {
   return (
     <Layout>
       <SEO title={`About | Sungblab`} description={translate("about.intro1")} />
-      <div ref={sectionRef} className="pt-24 pb-16">
-        <div className="max-w-3xl mx-auto px-6">
+      <div ref={sectionRef} className="pt-32 sm:pt-40 pb-16">
+        <div className="max-w-3xl mx-auto px-5 sm:px-6">
           {/* Profile */}
           <div data-about-anim className="flex items-center gap-6">
             <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-terracotta/30">
@@ -80,12 +80,12 @@ const About: NextPage = () => {
               />
             </div>
             <div>
-              <h1 className="font-heading text-2xl font-bold">
+              <h1 className="font-heading text-2xl sm:text-3xl font-bold">
                 {translate("about.name")}
               </h1>
               <p
                 className={`text-sm ${
-                  isDark ? "text-[#888]" : "text-[#666]"
+                  isDark ? "text-warm-500" : "text-warm-700"
                 }`}
               >
                 AI Builder & Vibe Coder
@@ -97,7 +97,7 @@ const About: NextPage = () => {
           <p
             data-about-anim
             className={`mt-8 text-base leading-relaxed ${
-              isDark ? "text-[#aaa]" : "text-[#555]"
+              isDark ? "text-warm-400" : "text-warm-600"
             }`}
           >
             {translate("about.intro1")}
@@ -105,7 +105,7 @@ const About: NextPage = () => {
 
           {/* Timeline */}
           <div data-about-anim className="mt-12">
-            <h2 className="font-heading text-xl font-bold mb-6">Journey</h2>
+            <h2 className="font-heading text-2xl md:text-3xl font-bold mb-6">Journey</h2>
             <div className="space-y-6">
               {timeline.map((item) => (
                 <div key={item.year} className="flex gap-4">
@@ -114,13 +114,13 @@ const About: NextPage = () => {
                   </span>
                   <div
                     className={`border-l-2 pl-4 pb-2 ${
-                      isDark ? "border-[#2a2a2a]" : "border-warm-200"
+                      isDark ? "border-warm-850" : "border-warm-200"
                     }`}
                   >
                     <h3 className="font-medium text-sm">{item.label}</h3>
                     <p
                       className={`text-sm mt-0.5 ${
-                        isDark ? "text-[#888]" : "text-[#666]"
+                        isDark ? "text-warm-500" : "text-warm-700"
                       }`}
                     >
                       {item.desc}
@@ -133,15 +133,15 @@ const About: NextPage = () => {
 
           {/* Skills */}
           <div data-about-anim className="mt-12">
-            <h2 className="font-heading text-xl font-bold mb-4">Skills</h2>
+            <h2 className="font-heading text-2xl md:text-3xl font-bold mb-4">Skills</h2>
             <div className="flex flex-wrap gap-2">
               {skills.map((skill) => (
                 <span
                   key={skill}
                   className={`text-sm px-3 py-1 rounded-lg ${
                     isDark
-                      ? "bg-[#1a1a1a] text-[#aaa] border border-[#2a2a2a]"
-                      : "bg-white text-[#555] border border-warm-200"
+                      ? "bg-warm-800 text-warm-400 border border-warm-850"
+                      : "bg-white text-warm-600 border border-warm-200"
                   }`}
                 >
                   {skill}
@@ -152,26 +152,35 @@ const About: NextPage = () => {
 
           {/* GitHub Stats */}
           <div data-about-anim className="mt-12">
-            <h2 className="font-heading text-xl font-bold mb-4">GitHub</h2>
+            <h2 className="font-heading text-2xl md:text-3xl font-bold mb-4">GitHub</h2>
             <div className="space-y-4">
               <img
                 src="https://ghchart.rshah.org/c4704b/Sungblab"
-                alt="GitHub contribution graph"
+                alt="GitHub contribution graph for Sungblab"
+                width={800}
+                height={128}
+                loading="lazy"
                 className="w-full rounded-lg"
               />
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <img
                   src={`https://github-profile-summary-cards.vercel.app/api/cards/stats?username=Sungblab&theme=${
                     isDark ? "github_dark" : "default"
                   }`}
-                  alt="GitHub stats"
+                  alt="GitHub stats for Sungblab"
+                  width={400}
+                  height={200}
+                  loading="lazy"
                   className="w-full rounded-lg"
                 />
                 <img
                   src={`https://streak-stats.demolab.com?user=Sungblab&theme=${
                     isDark ? "dark" : "default"
                   }&hide_border=true`}
-                  alt="GitHub streak"
+                  alt="GitHub streak stats for Sungblab"
+                  width={400}
+                  height={200}
+                  loading="lazy"
                   className="w-full rounded-lg"
                 />
               </div>

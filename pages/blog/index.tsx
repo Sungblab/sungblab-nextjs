@@ -16,8 +16,6 @@ interface BlogPageProps {
 
 const POSTS_PER_PAGE = 10;
 
-// Categories are now defined within the component for translation support
-
 
 const AnimatedSection: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -42,6 +40,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const { theme } = useTheme();
   const { translate } = useLanguage();
+  const isDark = theme === "dark";
 
   const categories = [
     { id: "all", label: translate("blog.categories.all") },
@@ -85,23 +84,23 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
       />
 
       <div
-        className={`min-h-screen ${
-          theme === "dark" ? "bg-[#0f0f0f]" : "bg-warm-50"
+        className={`min-h-screen min-h-[100svh] ${
+          isDark ? "bg-warm-950" : "bg-warm-50"
         }`}
       >
         <div className="relative">
           <div className="absolute inset-0">
             <div
               className={`absolute inset-0 ${
-                theme === "dark" ? "bg-[#0f0f0f]/90" : "bg-white/90"
+                isDark ? "bg-warm-950/90" : "bg-white/90"
               }`}
             />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,84,56,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
-          <div className="container mx-auto px-4 pt-40 pb-12 relative">
+          <div className="max-w-6xl mx-auto px-5 sm:px-6 pt-32 sm:pt-40 pb-12 relative">
             <AnimatedSection>
-              {/* 헤더 섹션 */}
+              {/* Header */}
               <motion.div
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -109,8 +108,8 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                 className="text-center mb-16"
               >
                 <h1
-                  className={`text-4xl md:text-6xl font-bold mb-6 pb-2 bg-clip-text text-transparent bg-gradient-to-r ${
-                    theme === "dark"
+                  className={`font-heading text-4xl md:text-6xl font-bold mb-6 pb-2 bg-clip-text text-transparent bg-gradient-to-r ${
+                    isDark
                     ? "from-white via-terracotta-pale to-terracotta-light"
                     : "from-warm-900 via-terracotta-dark to-terracotta"
                   }`}
@@ -119,14 +118,14 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                 </h1>
                 <p
                   className={`text-lg md:text-xl max-w-2xl mx-auto ${
-                    theme === "dark" ? "text-[#bbb]" : "text-[#444]"
+                    isDark ? "text-warm-400" : "text-warm-700"
                   }`}
                 >
                   {translate("blog.description")}
                 </p>
               </motion.div>
 
-              {/* 검색 및 필터 섹션 */}
+              {/* Search & Filter */}
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -148,7 +147,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                 />
               </motion.div>
 
-              {/* 블로그 포스트 그리드 */}
+              {/* Blog Post Grid */}
               <AnimatePresence mode="wait">
                 <motion.div
                   layout
@@ -165,7 +164,7 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                 </motion.div>
               </AnimatePresence>
 
-              {/* 페이지네이션 */}
+              {/* Pagination */}
               {totalPages > 1 && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -173,29 +172,31 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                   transition={{ duration: 0.5, delay: 0.3 }}
                   className="flex justify-center mt-12"
                 >
-                  <div className="flex gap-2">
+                  <nav aria-label="Pagination" className="flex gap-2">
                     {Array.from({ length: totalPages }, (_: unknown, i: number): number => i + 1).map(
                       (number: number): JSX.Element => (
                         <button
                           key={number}
                           onClick={(): void => handlePageChange(number)}
-                          className={`px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
+                          aria-label={`Page ${number}`}
+                          aria-current={currentPage === number ? "page" : undefined}
+                          className={`min-w-[44px] min-h-[44px] px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
                             currentPage === number
                               ? "bg-terracotta text-white border-terracotta"
-                              : theme === "dark"
-                              ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta/50 text-[#ccc]"
-                              : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta/50 text-[#666]"
+                              : isDark
+                              ? "bg-warm-800/40 hover:bg-warm-800/60 border-warm-850/50 hover:border-terracotta/50 text-warm-300"
+                              : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta/50 text-warm-700"
                           }`}
                         >
                           {number}
                         </button>
                       )
                     )}
-                  </div>
+                  </nav>
                 </motion.div>
               )}
 
-              {/* 검색 결과 없음 메시지 */}
+              {/* No results */}
               {filteredPosts.length === 0 && (
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -204,16 +205,12 @@ const BlogPage: NextPage<BlogPageProps> = ({ posts }) => {
                 >
                   <p
                     className={`text-xl mb-2 ${
-                      theme === "dark" ? "text-[#ccc]" : "text-[#666]"
+                      isDark ? "text-warm-300" : "text-warm-700"
                     }`}
                   >
                     {translate("blog.noResults")}
                   </p>
-                  <p
-                    className={
-                      theme === "dark" ? "text-[#888]" : "text-[#888]"
-                    }
-                  >
+                  <p className="text-warm-500">
                     {translate("blog.tryDifferent")}
                   </p>
                 </motion.div>

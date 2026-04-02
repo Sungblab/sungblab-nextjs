@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "motion/react";
@@ -24,6 +24,27 @@ export const Header: React.FC = () => {
     setMobileOpen(false);
   }, [router.pathname]);
 
+  // Body scroll lock when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+  // Escape key to close mobile menu
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileOpen) setMobileOpen(false);
+    },
+    [mobileOpen]
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
+
   const navItems = [
     { href: "/", label: translate("nav.home") },
     { href: "/projects", label: translate("nav.projects") },
@@ -42,12 +63,12 @@ export const Header: React.FC = () => {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
             ? isDark
-              ? "bg-warm-900/80 backdrop-blur-xl border-b border-[#2a2a2a]"
+              ? "bg-warm-900/80 backdrop-blur-xl border-b border-warm-850"
               : "bg-warm-50/80 backdrop-blur-xl border-b border-warm-200"
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between">
           <Link href="/" aria-label="Home">
             <Logo size="sm" />
           </Link>
@@ -61,8 +82,8 @@ export const Header: React.FC = () => {
                   isActive(item.href)
                     ? "text-terracotta"
                     : isDark
-                      ? "text-[#888] hover:text-[#f5ece6]"
-                      : "text-[#666] hover:text-warm-800"
+                      ? "text-warm-500 hover:text-warm-100"
+                      : "text-warm-700 hover:text-warm-800"
                 }`}
               >
                 {item.label}
@@ -76,13 +97,14 @@ export const Header: React.FC = () => {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <button
               onClick={toggleLanguage}
-              className={`text-xs font-medium px-2.5 py-1 rounded-md transition-colors ${
+              aria-label={language === "ko" ? "Switch to English" : "한국어로 전환"}
+              className={`text-xs font-medium min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md transition-colors ${
                 isDark
-                  ? "text-[#888] hover:text-[#f5ece6] hover:bg-[#2a2a2a]"
-                  : "text-[#666] hover:text-warm-800 hover:bg-warm-200"
+                  ? "text-warm-500 hover:text-warm-100 hover:bg-warm-850"
+                  : "text-warm-700 hover:text-warm-800 hover:bg-warm-200"
               }`}
             >
               {language === "ko" ? "EN" : "KR"}
@@ -90,10 +112,10 @@ export const Header: React.FC = () => {
 
             <button
               onClick={toggleTheme}
-              className={`p-2 rounded-md transition-colors ${
+              className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md transition-colors ${
                 isDark
-                  ? "text-[#888] hover:text-[#f5ece6] hover:bg-[#2a2a2a]"
-                  : "text-[#666] hover:text-warm-800 hover:bg-warm-200"
+                  ? "text-warm-500 hover:text-warm-100 hover:bg-warm-850"
+                  : "text-warm-700 hover:text-warm-800 hover:bg-warm-200"
               }`}
               aria-label="Toggle theme"
             >
@@ -102,8 +124,9 @@ export const Header: React.FC = () => {
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2"
+              className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -114,6 +137,9 @@ export const Header: React.FC = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -121,7 +147,7 @@ export const Header: React.FC = () => {
               isDark ? "bg-warm-900/95" : "bg-warm-50/95"
             } backdrop-blur-xl`}
           >
-            <nav className="flex flex-col items-center gap-8 pt-20">
+            <nav className="flex flex-col items-center gap-8 pt-20" aria-label="Mobile navigation">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
@@ -130,7 +156,7 @@ export const Header: React.FC = () => {
                     isActive(item.href)
                       ? "text-terracotta"
                       : isDark
-                        ? "text-[#f5ece6]"
+                        ? "text-warm-100"
                         : "text-warm-800"
                   }`}
                 >

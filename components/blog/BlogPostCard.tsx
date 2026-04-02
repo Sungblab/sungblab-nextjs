@@ -19,6 +19,7 @@ const BlogPostCard = ({
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+  const isDark = theme === "dark";
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (!divRef.current) return;
@@ -35,18 +36,19 @@ const BlogPostCard = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
+      whileTap={{ scale: 0.98 }}
       className="h-full group"
     >
-      <Link href={`/blog/${post.slug}`} className="block h-full"> 
+      <Link href={`/blog/${post.slug}`} className="block h-full">
         <div
           ref={divRef}
           onMouseMove={handleMouseMove}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           className={`relative h-full flex flex-col rounded-3xl border transition-all duration-300 overflow-hidden ${
-            theme === "dark"
-              ? "bg-gray-900 border-gray-800"
-              : "bg-white border-gray-100 shadow-lg hover:shadow-xl"
+            isDark
+              ? "bg-warm-900 border-warm-800"
+              : "bg-white border-warm-100 shadow-lg hover:shadow-xl"
           }`}
         >
           {/* Spotlight Effect */}
@@ -55,7 +57,7 @@ const BlogPostCard = ({
             style={{
               opacity,
               background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${
-                theme === 'dark' ? 'rgba(196, 110, 80, 0.15)' : 'rgba(168, 84, 56, 0.1)'
+                isDark ? 'rgba(196, 110, 80, 0.15)' : 'rgba(168, 84, 56, 0.1)'
               }, transparent 40%)`,
             }}
           />
@@ -63,9 +65,9 @@ const BlogPostCard = ({
           {/* Image Section */}
           <div className="relative p-4 z-20">
             {post.frontmatter.thumbnail ? (
-              <div className="w-full overflow-hidden rounded-2xl aspect-video bg-gray-100 dark:bg-gray-800 relative shadow-sm">
-                 <div 
-                   className="absolute inset-0 bg-center bg-cover blur-xl opacity-50 dark:opacity-30"
+              <div className={`w-full overflow-hidden rounded-2xl aspect-video relative shadow-sm ${isDark ? "bg-warm-800" : "bg-warm-100"}`}>
+                 <div
+                   className={`absolute inset-0 bg-center bg-cover blur-xl ${isDark ? "opacity-30" : "opacity-50"}`}
                    style={{ backgroundImage: `url(${post.frontmatter.thumbnail})` }}
                 />
                 <Image
@@ -77,7 +79,7 @@ const BlogPostCard = ({
                 />
               </div>
             ) : (
-              <div className={`w-full overflow-hidden rounded-2xl aspect-video ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} flex items-center justify-center`}>
+              <div className={`w-full overflow-hidden rounded-2xl aspect-video flex items-center justify-center ${isDark ? "bg-warm-800" : "bg-warm-100"}`}>
                 <span className="text-4xl">📝</span>
               </div>
             )}
@@ -88,55 +90,51 @@ const BlogPostCard = ({
             <div className="flex justify-between items-start gap-4 mb-3">
                <h2
                 className={`text-xl font-bold leading-tight ${
-                  theme === "dark"
-                    ? "text-[#f5ece6] group-hover:text-terracotta-light"
+                  isDark
+                    ? "text-warm-100 group-hover:text-terracotta-light"
                     : "text-warm-900 group-hover:text-terracotta"
                 } transition-colors duration-300`}
               >
                 {post.frontmatter.title}
               </h2>
             </div>
-            
+
             <p
               className={`text-sm line-clamp-2 md:line-clamp-3 leading-relaxed flex-1 mb-6 ${
-                theme === "dark" ? "text-gray-400" : "text-gray-600"
+                isDark ? "text-warm-400" : "text-warm-600"
               }`}
             >
               {stripMarkdown(post.excerpt)}
             </p>
 
-            <div className="pt-4 mt-auto border-t border-gray-100 dark:border-gray-800 flex flex-col gap-3">
+            <div className={`pt-4 mt-auto border-t flex flex-col gap-3 ${isDark ? "border-warm-800" : "border-warm-100"}`}>
               <div className="flex flex-wrap gap-2">
                 {post.frontmatter.tags?.slice(0, 3).map((tag: string): JSX.Element => (
                   <span
                     key={tag}
                     className={`text-xs px-2.5 py-1 rounded-full font-medium ${
-                      theme === "dark"
-                        ? "bg-gray-800 text-gray-400 border border-gray-700"
-                        : "bg-gray-100 text-gray-600 border border-gray-200"
+                      isDark
+                        ? "bg-warm-800 text-warm-400 border border-warm-700"
+                        : "bg-warm-100 text-warm-600 border border-warm-200"
                     }`}
                   >
                     {tag}
                   </span>
                 ))}
                 {(post.frontmatter.tags?.length || 0) > 3 && (
-                   <span className={`text-xs px-2 py-1 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>
+                   <span className={`text-xs px-2 py-1 ${isDark ? "text-warm-600" : "text-warm-400"}`}>
                      +{(post.frontmatter.tags?.length || 0) - 3}
                    </span>
                 )}
               </div>
 
               <div className="flex justify-between items-center text-xs font-mono">
-                <span
-                  className={`${
-                    theme === "dark" ? "text-gray-500" : "text-gray-400"
-                  }`}
-                >
+                <span className={isDark ? "text-warm-600" : "text-warm-400"}>
                   {post.frontmatter.date}
                 </span>
                 <span
                   className={`px-3 py-1 rounded-full font-semibold ${
-                    theme === "dark"
+                    isDark
                       ? "bg-terracotta-dark/30 text-terracotta-light border border-terracotta-dark/50"
                       : "bg-terracotta-bg text-terracotta border border-terracotta-bg"
                   }`}

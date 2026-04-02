@@ -49,8 +49,8 @@ export const UnivMindSection: React.FC = () => {
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6">
+        <div className="grid sm:grid-cols-2 gap-12 md:gap-16 items-center">
           <div data-um-left>
             <span className="text-terracotta text-sm font-medium tracking-wide uppercase">
               Featured Project
@@ -60,14 +60,14 @@ export const UnivMindSection: React.FC = () => {
             </h2>
             <p
               className={`mt-4 text-lg leading-relaxed ${
-                isDark ? "text-[#ccc]" : "text-[#444]"
+                isDark ? "text-warm-300" : "text-warm-700"
               }`}
             >
               {t.tagline}
             </p>
             <p
               className={`mt-2 text-sm leading-relaxed ${
-                isDark ? "text-[#888]" : "text-[#666]"
+                isDark ? "text-warm-500" : "text-warm-700"
               }`}
             >
               {t.description}
@@ -78,7 +78,7 @@ export const UnivMindSection: React.FC = () => {
                 <li
                   key={i}
                   className={`flex items-start gap-3 text-sm ${
-                    isDark ? "text-[#aaa]" : "text-[#555]"
+                    isDark ? "text-warm-400" : "text-warm-600"
                   }`}
                 >
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-terracotta flex-shrink-0" />
@@ -101,13 +101,13 @@ export const UnivMindSection: React.FC = () => {
           <div data-um-right>
             <div
               className={`rounded-xl overflow-hidden border shadow-lg ${
-                isDark ? "border-[#2a2a2a]" : "border-warm-200"
+                isDark ? "border-warm-850" : "border-warm-200"
               }`}
             >
               {/* Browser bar */}
               <div
                 className={`flex items-center gap-2 px-4 py-3 ${
-                  isDark ? "bg-[#1a1a1a]" : "bg-warm-100"
+                  isDark ? "bg-warm-800" : "bg-warm-100"
                 }`}
               >
                 <div className="flex gap-1.5">
@@ -117,7 +117,7 @@ export const UnivMindSection: React.FC = () => {
                 </div>
                 <div
                   className={`flex-1 text-center text-xs ${
-                    isDark ? "text-[#555]" : "text-[#999]"
+                    isDark ? "text-warm-600" : "text-warm-500"
                   }`}
                 >
                   univmind.net

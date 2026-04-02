@@ -24,8 +24,8 @@ const BlogSearch: React.FC<BlogSearchProps> = ({
         placeholder={translate("blog.searchPlaceholder") || "Search posts..."}
         className={`w-full p-4 pr-12 rounded-xl border ${
           theme === "dark"
-            ? "bg-[#1a1a1a]/50 text-white border-[#2a2a2a] placeholder-[#888] focus:border-terracotta/50"
-            : "bg-white/80 text-warm-800 border-warm-200 placeholder-[#888] focus:border-terracotta-light/50"
+            ? "bg-warm-800/50 text-white border-warm-850 placeholder-warm-500 focus:border-terracotta/50"
+            : "bg-white/80 text-warm-800 border-warm-200 placeholder-warm-500 focus:border-terracotta-light/50"
         } focus:outline-none focus:ring-2 ${
           theme === "dark"
             ? "focus:ring-terracotta/30"
@@ -35,6 +35,7 @@ const BlogSearch: React.FC<BlogSearchProps> = ({
         onChange={handleSearch}
       />
       <svg
+        aria-hidden="true"
         className={`absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
           theme === "dark" ? "text-terracotta-light" : "text-terracotta-bg0"
         }`}

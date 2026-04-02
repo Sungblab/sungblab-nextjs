@@ -30,7 +30,7 @@ export const ContactSection: React.FC = () => {
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32">
-      <div className="max-w-2xl mx-auto px-6 text-center">
+      <div className="max-w-2xl mx-auto px-5 sm:px-6 text-center">
         <h2
           data-contact-anim
           className="font-heading text-3xl md:text-4xl font-bold tracking-tight"
@@ -40,7 +40,7 @@ export const ContactSection: React.FC = () => {
         <p
           data-contact-anim
           className={`mt-4 text-base ${
-            isDark ? "text-[#888]" : "text-[#666]"
+            isDark ? "text-warm-500" : "text-warm-700"
           }`}
         >
           {translate("contact.description")}
@@ -62,8 +62,8 @@ export const ContactSection: React.FC = () => {
             rel="noopener noreferrer"
             className={`p-3 rounded-lg transition-colors ${
               isDark
-                ? "text-[#888] hover:text-[#f5ece6] hover:bg-[#1a1a1a]"
-                : "text-[#666] hover:text-warm-800 hover:bg-warm-100"
+                ? "text-warm-500 hover:text-warm-100 hover:bg-warm-800"
+                : "text-warm-700 hover:text-warm-800 hover:bg-warm-100"
             }`}
             aria-label="GitHub"
           >
@@ -75,8 +75,8 @@ export const ContactSection: React.FC = () => {
             rel="noopener noreferrer"
             className={`p-3 rounded-lg transition-colors ${
               isDark
-                ? "text-[#888] hover:text-[#f5ece6] hover:bg-[#1a1a1a]"
-                : "text-[#666] hover:text-warm-800 hover:bg-warm-100"
+                ? "text-warm-500 hover:text-warm-100 hover:bg-warm-800"
+                : "text-warm-700 hover:text-warm-800 hover:bg-warm-100"
             }`}
             aria-label="LinkedIn"
           >

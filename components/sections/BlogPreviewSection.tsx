@@ -53,7 +53,7 @@ export const BlogPreviewSection: React.FC<BlogPreviewSectionProps> = ({
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6">
         <div className="flex items-end justify-between mb-12">
           <div>
             <span className="text-terracotta text-sm font-medium tracking-wide uppercase">
@@ -67,29 +67,29 @@ export const BlogPreviewSection: React.FC<BlogPreviewSectionProps> = ({
             href="/blog"
             className={`hidden md:flex items-center gap-1 text-sm font-medium transition-colors ${
               isDark
-                ? "text-[#888] hover:text-terracotta"
-                : "text-[#666] hover:text-terracotta"
+                ? "text-warm-500 hover:text-terracotta"
+                : "text-warm-700 hover:text-terracotta"
             }`}
           >
-            전체 보기
-            <ArrowRight size={14} />
+            {translate("blog.viewAll")}
+            <ArrowRight size={14} aria-hidden="true" />
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           {displayPosts.map((post) => (
-            <motion.div key={post.slug} data-blog-card whileHover={{ y: -4 }}>
+            <motion.div key={post.slug} data-blog-card whileHover={{ y: -4 }} whileTap={{ scale: 0.98 }}>
               <Link
                 href={`/blog/${post.slug}`}
                 className={`block rounded-xl p-6 border transition-shadow hover:shadow-lg h-full ${
                   isDark
-                    ? "bg-[#1a1a1a] border-[#2a2a2a]"
+                    ? "bg-warm-800 border-warm-850"
                     : "bg-white border-warm-200"
                 }`}
               >
                 <span
                   className={`text-xs ${
-                    isDark ? "text-[#555]" : "text-[#999]"
+                    isDark ? "text-warm-600" : "text-warm-500"
                   }`}
                 >
                   {post.frontmatter.date}
@@ -99,7 +99,7 @@ export const BlogPreviewSection: React.FC<BlogPreviewSectionProps> = ({
                 </h3>
                 <p
                   className={`mt-2 text-sm line-clamp-3 ${
-                    isDark ? "text-[#888]" : "text-[#666]"
+                    isDark ? "text-warm-500" : "text-warm-700"
                   }`}
                 >
                   {post.frontmatter.description || stripMdx(post.excerpt)}
@@ -125,8 +125,8 @@ export const BlogPreviewSection: React.FC<BlogPreviewSectionProps> = ({
             href="/blog"
             className="inline-flex items-center gap-1 text-sm font-medium text-terracotta"
           >
-            전체 보기
-            <ArrowRight size={14} />
+            {translate("blog.viewAll")}
+            <ArrowRight size={14} aria-hidden="true" />
           </Link>
         </div>
       </div>

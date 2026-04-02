@@ -38,6 +38,7 @@ interface BlogPostProps {
     description?: string | null;
     thumbnail?: string | null;
   };
+  slug: string;
   mdxSource: MDXRemoteSerializeResult;
   toc: TocItem[];
   post: Post;
@@ -54,6 +55,7 @@ interface TocItem {
 
 const BlogPost: NextPage<BlogPostProps> = ({
   frontMatter,
+  slug,
   mdxSource,
   toc,
   relatedPosts,
@@ -66,6 +68,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollButtons, setShowScrollButtons] = useState(false);
   const [showToc, setShowToc] = useState(false);
+  const isDark = theme === "dark";
 
   const scrollToHeader = (id: string): void => {
     const element = document.getElementById(id);
@@ -119,7 +122,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
           <h1
             id={id}
             className={`text-3xl md:text-4xl font-bold mt-8 md:mt-12 mb-6 md:mb-8 tracking-tight ${
-              theme === "dark" ? "text-gray-100" : "text-gray-900"
+              isDark ? "text-warm-100" : "text-warm-900"
             }`}
             {...props}
           />
@@ -131,7 +134,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
           <h2
             id={id}
             className={`text-2xl md:text-3xl font-semibold mt-8 md:mt-10 mb-4 md:mb-6 tracking-tight ${
-              theme === "dark" ? "text-gray-200" : "text-gray-800"
+              isDark ? "text-warm-200" : "text-warm-800"
             }`}
             {...props}
           />
@@ -140,7 +143,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
       h3: (props: React.HTMLAttributes<HTMLHeadingElement>): JSX.Element => (
         <h3
           className={`text-xl md:text-2xl font-medium mt-6 md:mt-8 mb-3 md:mb-4 tracking-tight ${
-            theme === "dark" ? "text-gray-300" : "text-gray-700"
+            isDark ? "text-warm-300" : "text-warm-700"
           }`}
           {...props}
         />
@@ -148,7 +151,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
       p: (props: React.HTMLAttributes<HTMLParagraphElement>): JSX.Element => (
         <p
           className={`my-4 md:my-6 text-base md:text-lg leading-7 md:leading-8 ${
-            theme === "dark" ? "text-gray-300" : "text-gray-700"
+            isDark ? "text-warm-300" : "text-warm-700"
           }`}
           {...props}
         />
@@ -156,7 +159,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
       ul: (props: React.HTMLAttributes<HTMLUListElement>): JSX.Element => (
         <ul
           className={`list-disc ml-6 my-4 space-y-1 ${
-            theme === "dark" ? "text-gray-300" : "text-gray-700"
+            isDark ? "text-warm-300" : "text-warm-700"
           }`}
           {...props}
         />
@@ -164,7 +167,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
       ol: (props: React.HTMLAttributes<HTMLOListElement>): JSX.Element => (
         <ol
           className={`list-decimal ml-6 my-4 space-y-1 ${
-            theme === "dark" ? "text-gray-300" : "text-gray-700"
+            isDark ? "text-warm-300" : "text-warm-700"
           }`}
           {...props}
         />
@@ -177,7 +180,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
       ): JSX.Element => (
         <a
           className={`font-medium underline decoration-2 underline-offset-2 transition-colors duration-200 ${
-            theme === "dark"
+            isDark
               ? "text-blue-400 hover:text-blue-300"
               : "text-blue-600 hover:text-blue-800"
           }`}
@@ -187,9 +190,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
       code: (props: React.HTMLAttributes<HTMLElement>): JSX.Element => (
         <code
           className={`rounded-md px-2 py-1 font-mono text-sm ${
-            theme === "dark"
-              ? "bg-gray-800 text-pink-300"
-              : "bg-gray-100 text-pink-800"
+            isDark
+              ? "bg-warm-800 text-pink-300"
+              : "bg-warm-100 text-pink-800"
           }`}
           {...props}
         />
@@ -197,9 +200,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
       pre: (props: React.HTMLAttributes<HTMLPreElement>): JSX.Element => (
         <pre
           className={`rounded-lg p-6 my-8 overflow-x-auto text-sm leading-6 ${
-            theme === "dark"
-              ? "bg-gray-800 text-gray-200"
-              : "bg-gray-100 text-gray-800"
+            isDark
+              ? "bg-warm-800 text-warm-200"
+              : "bg-warm-100 text-warm-800"
           } shadow-lg max-w-full`}
           {...props}
         />
@@ -228,7 +231,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
       ): JSX.Element => (
         <blockquote
           className={`border-l-4 border-terracotta pl-4 italic my-6 ${
-            theme === "dark" ? "text-[#888]" : "text-[#666]"
+            isDark ? "text-warm-500" : "text-warm-700"
           }`}
           {...props}
         />
@@ -239,7 +242,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
         <div className="overflow-x-auto my-6">
           <table
             className={`min-w-full text-sm border-collapse ${
-              theme === "dark" ? "text-gray-300" : "text-gray-700"
+              isDark ? "text-warm-300" : "text-warm-700"
             }`}
             {...props}
           />
@@ -250,9 +253,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
       ): JSX.Element => (
         <th
           className={`px-4 py-2 text-left font-semibold border-b ${
-            theme === "dark"
-              ? "border-gray-700 text-gray-200"
-              : "border-gray-300 text-gray-800"
+            isDark
+              ? "border-warm-700 text-warm-200"
+              : "border-warm-300 text-warm-800"
           }`}
           {...props}
         />
@@ -262,18 +265,18 @@ const BlogPost: NextPage<BlogPostProps> = ({
       ): JSX.Element => (
         <td
           className={`px-4 py-2 border-b ${
-            theme === "dark" ? "border-gray-800" : "border-gray-200"
+            isDark ? "border-warm-800" : "border-warm-200"
           }`}
           {...props}
         />
       ),
     }),
-    [theme]
+    [theme, isDark]
   );
 
   const ogDescription =
     frontMatter.description || `${frontMatter.title} - Sungblab Blog`;
-  const postUrl = `https://sungblab.com/blog/${encodeURIComponent(frontMatter.title)}`;
+  const postUrl = `https://sungblab.com/blog/${encodeURIComponent(slug)}`;
 
   return (
     <Layout>
@@ -297,21 +300,21 @@ const BlogPost: NextPage<BlogPostProps> = ({
       </Head>
 
       <div
-        className={`min-h-screen ${
-          theme === "dark" ? "bg-[#0f0f0f]" : "bg-warm-50"
+        className={`min-h-screen min-h-[100svh] ${
+          isDark ? "bg-warm-950" : "bg-warm-50"
         }`}
       >
         <div className="relative">
           <div className="absolute inset-0">
             <div
               className={`absolute inset-0 ${
-                theme === "dark" ? "bg-[#0f0f0f]/90" : "bg-white/90"
+                isDark ? "bg-warm-950/90" : "bg-white/90"
               }`}
             />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,84,56,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
-          <div className="container mx-auto px-4 pt-40 pb-12 relative">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-12 relative">
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Main Content */}
               <div className="flex-1 lg:w-[calc(100%-20rem)]">
@@ -324,9 +327,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   <Link
                     href="/blog"
                     className={`inline-flex items-center mb-8 text-sm font-medium transition-all duration-300 group ${
-                      theme === "dark"
-                        ? "text-[#888] hover:text-terracotta-light"
-                        : "text-[#666] hover:text-terracotta"
+                      isDark
+                        ? "text-warm-500 hover:text-terracotta-light"
+                        : "text-warm-700 hover:text-terracotta"
                     }`}
                   >
                     <ArrowLeft className="mr-2 w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
@@ -336,7 +339,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   <div className="space-y-6">
                     <h1
                       className={`text-3xl lg:text-4xl font-bold leading-tight tracking-tight ${
-                        theme === "dark" ? "text-terracotta-light" : "text-terracotta"
+                        isDark ? "text-terracotta-light" : "text-terracotta"
                       }`}
                     >
                       {frontMatter.title}
@@ -344,14 +347,14 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     <div className="flex flex-wrap items-center gap-4">
                       <span
                         className={`text-sm ${
-                          theme === "dark" ? "text-[#888]" : "text-[#666]"
+                          isDark ? "text-warm-500" : "text-warm-700"
                         }`}
                       >
                         {frontMatter.date}
                       </span>
                       <span
                         className={`px-3 py-1 rounded-full text-sm font-medium ${
-                          theme === "dark"
+                          isDark
                             ? "bg-terracotta-dark/30 text-terracotta-light border border-terracotta/50"
                             : "bg-terracotta-bg/50 text-terracotta border border-terracotta-pale"
                         }`}
@@ -365,8 +368,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         whileTap={{ scale: 0.95 }}
                         onClick={copyPostUrl}
                         className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
-                          theme === "dark"
-                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta/50"
+                          isDark
+                            ? "bg-warm-800/60 text-warm-100 border-warm-850/50 hover:border-terracotta/50"
                             : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-light/50"
                         } hover:shadow-lg`}
                       >
@@ -377,8 +380,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         whileTap={{ scale: 0.95 }}
                         onClick={sharePost}
                         className={`inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
-                          theme === "dark"
-                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta/50"
+                          isDark
+                            ? "bg-warm-800/60 text-warm-100 border-warm-850/50 hover:border-terracotta/50"
                             : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-light/50"
                         } hover:shadow-lg`}
                       >
@@ -389,8 +392,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         whileTap={{ scale: 0.95 }}
                         onClick={(): void => setShowToc(!showToc)}
                         className={`lg:hidden inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-sm border transition-all duration-300 text-sm ${
-                          theme === "dark"
-                            ? "bg-[#1a1a1a]/60 text-[#f5ece6] border-[#2a2a2a]/50 hover:border-terracotta/50"
+                          isDark
+                            ? "bg-warm-800/60 text-warm-100 border-warm-850/50 hover:border-terracotta/50"
                             : "bg-white/80 text-warm-800 border-warm-200/50 hover:border-terracotta-light/50"
                         }`}
                       >
@@ -411,14 +414,14 @@ const BlogPost: NextPage<BlogPostProps> = ({
                     >
                       <div
                         className={`rounded-xl p-6 ${
-                          theme === "dark"
-                            ? "bg-[#1a1a1a]/40 border border-[#2a2a2a]/50"
+                          isDark
+                            ? "bg-warm-800/40 border border-warm-850/50"
                             : "bg-white/80 border border-warm-200/50"
                         } backdrop-blur-sm`}
                       >
                         <h3
                           className={`text-lg font-semibold mb-4 flex items-center ${
-                            theme === "dark"
+                            isDark
                               ? "text-terracotta-light"
                               : "text-terracotta"
                           }`}
@@ -438,14 +441,14 @@ const BlogPost: NextPage<BlogPostProps> = ({
                                 className={`block w-full text-left transition-colors duration-200 ${
                                   item.level === 1
                                     ? `text-base font-medium ${
-                                        theme === "dark"
-                                          ? "text-[#f5ece6] hover:text-terracotta-light"
+                                        isDark
+                                          ? "text-warm-100 hover:text-terracotta-light"
                                           : "text-warm-800 hover:text-terracotta"
                                       }`
                                     : `text-sm pl-4 ${
-                                        theme === "dark"
-                                          ? "text-[#888] hover:text-terracotta-light"
-                                          : "text-[#666] hover:text-terracotta"
+                                        isDark
+                                          ? "text-warm-500 hover:text-terracotta-light"
+                                          : "text-warm-700 hover:text-terracotta"
                                       }`
                                 }`}
                               >
@@ -464,16 +467,16 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className={`prose prose-lg max-w-none ${
-                    theme === "dark"
-                      ? "prose-invert prose-p:text-[#ccc] prose-headings:text-[#f5ece6] prose-strong:text-white"
-                      : "prose-p:text-[#444] prose-headings:text-warm-900 prose-strong:text-warm-900"
+                  className={`prose sm:prose-lg max-w-none ${
+                    isDark
+                      ? "prose-invert prose-p:text-warm-300 prose-headings:text-warm-100 prose-strong:text-white"
+                      : "prose-p:text-warm-700 prose-headings:text-warm-900 prose-strong:text-warm-900"
                   }`}
                 >
                   <div
-                    className={`rounded-2xl p-6 sm:p-10 backdrop-blur-md border shadow-xl ${
-                      theme === "dark"
-                        ? "bg-[#1a1a1a]/40 border-[#2a2a2a]/50"
+                    className={`rounded-2xl p-4 sm:p-8 lg:p-10 backdrop-blur-md border shadow-xl ${
+                      isDark
+                        ? "bg-warm-800/40 border-warm-850/50"
                         : "bg-white/60 border-warm-200/50"
                     }`}
                   >
@@ -488,14 +491,14 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <Link
                         href={`/blog/${prevPost.slug}`}
                         className={`group p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 shadow-lg hover:shadow-xl ${
-                          theme === "dark"
-                            ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta/50"
+                          isDark
+                            ? "bg-warm-800/40 hover:bg-warm-800/60 border-warm-850/50 hover:border-terracotta/50"
                             : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta-light/50"
                         }`}
                       >
                         <span
                           className={`text-xs font-semibold uppercase tracking-wider mb-2 flex items-center gap-1 ${
-                            theme === "dark"
+                            isDark
                               ? "text-terracotta-light"
                               : "text-terracotta"
                           }`}
@@ -505,8 +508,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         </span>
                         <h3
                           className={`font-medium line-clamp-2 transition-colors duration-300 ${
-                            theme === "dark"
-                              ? "text-[#f5ece6] group-hover:text-terracotta-light"
+                            isDark
+                              ? "text-warm-100 group-hover:text-terracotta-light"
                               : "text-warm-800 group-hover:text-terracotta"
                           }`}
                         >
@@ -519,20 +522,21 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       <Link
                         href={`/blog/${nextPost.slug}`}
                         className={`group p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 shadow-lg hover:shadow-xl ${
-                          theme === "dark"
-                            ? "bg-[#1a1a1a]/40 hover:bg-[#1a1a1a]/60 border-[#2a2a2a]/50 hover:border-terracotta/50"
+                          isDark
+                            ? "bg-warm-800/40 hover:bg-warm-800/60 border-warm-850/50 hover:border-terracotta/50"
                             : "bg-white/80 hover:bg-white border-warm-200/50 hover:border-terracotta-light/50"
                         } ${!prevPost ? "md:col-start-2" : ""}`}
                       >
                         <span
                           className={`text-xs font-semibold uppercase tracking-wider mb-2 flex items-center justify-end gap-1 ${
-                            theme === "dark"
+                            isDark
                               ? "text-terracotta-light"
                               : "text-terracotta"
                           }`}
                         >
                           {translate("blog.nextPost")}
                           <svg
+                            aria-hidden="true"
                             className="w-3 h-3"
                             fill="none"
                             stroke="currentColor"
@@ -548,8 +552,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                         </span>
                         <h3
                           className={`font-medium line-clamp-2 text-right transition-colors duration-300 ${
-                            theme === "dark"
-                              ? "text-[#f5ece6] group-hover:text-terracotta-light"
+                            isDark
+                              ? "text-warm-100 group-hover:text-terracotta-light"
                               : "text-warm-800 group-hover:text-terracotta"
                           }`}
                         >
@@ -564,8 +568,8 @@ const BlogPost: NextPage<BlogPostProps> = ({
                 <div className="mt-8">
                   <div
                     className={`rounded-xl p-0 sm:p-8 backdrop-blur-sm border ${
-                      theme === "dark"
-                        ? "bg-[#1a1a1a]/40 border-[#2a2a2a]/50"
+                      isDark
+                        ? "bg-warm-800/40 border-warm-850/50"
                         : "bg-white/80 border-warm-200/50"
                     } transition-all duration-300 shadow-lg`}
                   >
@@ -578,7 +582,7 @@ const BlogPost: NextPage<BlogPostProps> = ({
                       reactionsEnabled="1"
                       emitMetadata="0"
                       inputPosition="top"
-                      theme={theme === "dark" ? "dark" : "light"}
+                      theme={isDark ? "dark" : "light"}
                       lang={language === "ko" ? "ko" : "en"}
                     />
                   </div>
@@ -592,21 +596,21 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                   className={`sticky top-24 ${
-                    theme === "dark" ? "text-[#ccc]" : "text-[#444]"
+                    isDark ? "text-warm-300" : "text-warm-700"
                   }`}
                 >
                   {/* TOC */}
                   {toc.length > 0 && (
                     <div
                       className={`rounded-xl p-6 backdrop-blur-sm border ${
-                        theme === "dark"
-                          ? "bg-[#1a1a1a]/40 border-[#2a2a2a]/50"
+                        isDark
+                          ? "bg-warm-800/40 border-warm-850/50"
                           : "bg-white/80 border-warm-200/50"
                       } transition-all duration-300 shadow-lg mb-8`}
                     >
                       <h3
                         className={`text-lg font-semibold mb-4 flex items-center ${
-                          theme === "dark"
+                          isDark
                             ? "text-terracotta-light"
                             : "text-terracotta"
                         }`}
@@ -623,14 +627,14 @@ const BlogPost: NextPage<BlogPostProps> = ({
                               className={`block w-full text-left transition-colors duration-200 rounded px-2 py-1 ${
                                 item.level === 1
                                   ? `text-sm font-medium ${
-                                      theme === "dark"
-                                        ? "text-[#f5ece6] hover:text-terracotta-light hover:bg-[#2a2a2a]/30"
+                                      isDark
+                                        ? "text-warm-100 hover:text-terracotta-light hover:bg-warm-850/30"
                                         : "text-warm-800 hover:text-terracotta hover:bg-terracotta-bg"
                                     }`
                                   : `text-xs pl-4 ${
-                                      theme === "dark"
-                                        ? "text-[#888] hover:text-terracotta-light hover:bg-[#2a2a2a]/30"
-                                        : "text-[#888] hover:text-terracotta hover:bg-terracotta-bg"
+                                      isDark
+                                        ? "text-warm-500 hover:text-terracotta-light hover:bg-warm-850/30"
+                                        : "text-warm-500 hover:text-terracotta hover:bg-terracotta-bg"
                                     }`
                               }`}
                             >
@@ -646,14 +650,14 @@ const BlogPost: NextPage<BlogPostProps> = ({
                   {relatedPosts.length > 0 && (
                     <div
                       className={`rounded-xl p-6 backdrop-blur-sm border ${
-                        theme === "dark"
-                          ? "bg-[#1a1a1a]/40 border-[#2a2a2a]/50"
+                        isDark
+                          ? "bg-warm-800/40 border-warm-850/50"
                           : "bg-white/80 border-warm-200/50"
                       } transition-all duration-300 shadow-lg`}
                     >
                       <h3
                         className={`text-lg font-semibold mb-4 flex items-center ${
-                          theme === "dark"
+                          isDark
                             ? "text-terracotta-light"
                             : "text-terracotta"
                         }`}
@@ -668,27 +672,21 @@ const BlogPost: NextPage<BlogPostProps> = ({
                               key={post.slug}
                               href={`/blog/${post.slug}`}
                               className={`block group p-3 rounded-lg transition-all duration-200 ${
-                                theme === "dark"
-                                  ? "hover:bg-[#2a2a2a]/50"
+                                isDark
+                                  ? "hover:bg-warm-850/50"
                                   : "hover:bg-warm-50"
                               }`}
                             >
                               <h4
                                 className={`font-medium text-sm transition-colors duration-200 ${
-                                  theme === "dark"
-                                    ? "text-[#ccc] group-hover:text-terracotta-light"
-                                    : "text-[#444] group-hover:text-terracotta"
+                                  isDark
+                                    ? "text-warm-300 group-hover:text-terracotta-light"
+                                    : "text-warm-700 group-hover:text-terracotta"
                                 }`}
                               >
                                 {post.frontmatter.title}
                               </h4>
-                              <p
-                                className={`text-xs mt-1 ${
-                                  theme === "dark"
-                                    ? "text-[#888]"
-                                    : "text-[#888]"
-                                }`}
-                              >
+                              <p className="text-xs mt-1 text-warm-500">
                                 {post.frontmatter.date}
                               </p>
                             </Link>
@@ -707,10 +705,10 @@ const BlogPost: NextPage<BlogPostProps> = ({
         <motion.div
           style={{ scaleX: scrollProgress / 100 }}
           className={`fixed top-0 left-0 right-0 h-[3px] ${
-            theme === "dark"
+            isDark
               ? "bg-gradient-to-r from-terracotta to-terracotta-light"
-              : "bg-gradient-to-r from-terracotta-bg0 to-terracotta-light"
-          } transform origin-left z-50`}
+              : "bg-gradient-to-r from-terracotta-bg to-terracotta-light"
+          } transform origin-left z-[49]`}
         />
 
         {/* Scroll Buttons */}
@@ -720,16 +718,16 @@ const BlogPost: NextPage<BlogPostProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="fixed bottom-8 right-8 flex flex-col space-y-3"
+              className="fixed bottom-[max(2rem,env(safe-area-inset-bottom))] right-4 sm:right-8 flex flex-col space-y-3"
             >
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={scrollToTop}
                 aria-label="맨 위로"
-                className={`p-3 rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
-                  theme === "dark"
-                    ? "bg-[#1a1a1a]/80 text-[#f5ece6] border-[#2a2a2a] hover:border-terracotta"
+                className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
+                  isDark
+                    ? "bg-warm-800/80 text-warm-100 border-warm-850 hover:border-terracotta"
                     : "bg-white/80 text-warm-800 border-warm-200 hover:border-terracotta-light"
                 }`}
               >
@@ -740,9 +738,9 @@ const BlogPost: NextPage<BlogPostProps> = ({
                 whileTap={{ scale: 0.95 }}
                 onClick={scrollToBottom}
                 aria-label="맨 아래로"
-                className={`p-3 rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
-                  theme === "dark"
-                    ? "bg-[#1a1a1a]/80 text-[#f5ece6] border-[#2a2a2a] hover:border-terracotta"
+                className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300 ${
+                  isDark
+                    ? "bg-warm-800/80 text-warm-100 border-warm-850 hover:border-terracotta"
                     : "bg-white/80 text-warm-800 border-warm-200 hover:border-terracotta-light"
                 }`}
               >
@@ -807,6 +805,7 @@ export const getStaticProps: GetStaticProps<BlogPostProps> = async ({
         description: post.frontmatter.description || null,
         thumbnail: post.frontmatter.thumbnail || null,
       },
+      slug: post.slug,
       mdxSource,
       toc,
       post,

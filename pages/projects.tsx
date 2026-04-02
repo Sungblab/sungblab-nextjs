@@ -36,6 +36,7 @@ const ProjectCard: React.FC<Project> = ({
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+  const isDark = theme === "dark";
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (!divRef.current) return;
@@ -57,9 +58,10 @@ const ProjectCard: React.FC<Project> = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.3 }}
+      whileTap={{ scale: 0.98 }}
       className={`group relative flex flex-col h-full rounded-3xl border transition-all duration-300 overflow-hidden ${
-        theme === "dark"
-          ? "bg-[#0f0f0f] border-[#1a1a1a]"
+        isDark
+          ? "bg-warm-950 border-warm-800"
           : "bg-white border-warm-100 shadow-xl"
       }`}
     >
@@ -69,16 +71,16 @@ const ProjectCard: React.FC<Project> = ({
         style={{
           opacity,
           background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${
-            theme === 'dark' ? 'rgba(196, 110, 80, 0.15)' : 'rgba(168, 84, 56, 0.1)'
+            isDark ? 'rgba(196, 110, 80, 0.15)' : 'rgba(168, 84, 56, 0.1)'
           }, transparent 40%)`,
         }}
       />
 
       {/* Image Section */}
-      <div className="relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-gray-800/50 p-4">
+      <div className={`relative h-48 w-full overflow-hidden p-4 ${isDark ? "bg-warm-800/50" : "bg-warm-100"}`}>
         {/* Blurred backdrop for image */}
-        <div 
-           className="absolute inset-0 bg-center bg-cover blur-xl opacity-50 dark:opacity-30"
+        <div
+           className={`absolute inset-0 bg-center bg-cover blur-xl ${isDark ? "opacity-30" : "opacity-50"}`}
            style={{ backgroundImage: `url(${typeof image === 'string' ? image : image.src})` }}
         />
         <Image
@@ -94,19 +96,19 @@ const ProjectCard: React.FC<Project> = ({
       <div className="relative flex-1 p-6 flex flex-col z-20">
         <div className="flex justify-between items-start mb-4">
            <h2 className={`text-2xl font-bold tracking-tight truncate max-w-[70%] ${
-             theme === "dark" ? "text-white" : "text-warm-900"
+             isDark ? "text-white" : "text-warm-900"
            }`}>
              {title}
            </h2>
            <span className={`text-xs font-mono px-2 py-1 rounded-md ${
-             theme === "dark" ? "bg-[#1a1a1a] text-[#888]" : "bg-warm-100 text-[#666]"
+             isDark ? "bg-warm-800 text-warm-500" : "bg-warm-100 text-warm-700"
            }`}>
              {date}
            </span>
         </div>
-        
+
         <p className={`flex-1 text-sm leading-relaxed mb-6 line-clamp-3 ${
-          theme === "dark" ? "text-[#888]" : "text-[#666]"
+          isDark ? "text-warm-500" : "text-warm-700"
         }`}>
           {language === 'en' && description_en ? description_en : description}
         </p>
@@ -118,8 +120,8 @@ const ProjectCard: React.FC<Project> = ({
               <span
                 key={tech}
                 className={`px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide ${
-                  theme === "dark"
-                    ? "bg-[#1a1a1a] text-terracotta-light border border-[#2a2a2a]"
+                  isDark
+                    ? "bg-warm-800 text-terracotta-light border border-warm-850"
                     : "bg-terracotta-bg text-terracotta border border-terracotta-bg"
                 }`}
               >
@@ -127,9 +129,7 @@ const ProjectCard: React.FC<Project> = ({
               </span>
             ))}
             {technologies.length > 4 && (
-               <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
-                 theme === "dark" ? "text-[#888]" : "text-[#888]"
-               }`}>
+               <span className="px-2.5 py-1 rounded-full text-xs font-semibold text-warm-500">
                  +{technologies.length - 4}
                </span>
             )}
@@ -141,9 +141,9 @@ const ProjectCard: React.FC<Project> = ({
             target="_blank"
             rel="noopener noreferrer"
             className={`block w-full text-center py-3 rounded-xl font-bold transition-all duration-300 ${
-              theme === "dark"
-                ? "bg-white text-black hover:bg-gray-200"
-                : "bg-black text-white hover:bg-gray-800"
+              isDark
+                ? "bg-white text-black hover:bg-warm-200"
+                : "bg-warm-800 text-white hover:bg-warm-900"
             }`}
           >
             {translate("projects.visit")} →
@@ -159,6 +159,7 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const { theme } = useTheme();
   const { translate } = useLanguage();
+  const isDark = theme === "dark";
 
   useEffect((): void => {
     const filtered = projects.filter(
@@ -182,21 +183,21 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
         />
       </Head>
       <div
-        className={`min-h-screen ${
-          theme === "dark" ? "bg-[#0f0f0f]" : "bg-warm-50"
+        className={`min-h-screen min-h-[100svh] ${
+          isDark ? "bg-warm-950" : "bg-warm-50"
         }`}
       >
         <div className="relative">
           <div className="absolute inset-0">
             <div
               className={`absolute inset-0 ${
-                theme === "dark" ? "bg-[#0f0f0f]/90" : "bg-white/90"
+                isDark ? "bg-warm-950/90" : "bg-white/90"
               }`}
             />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,84,56,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
           </div>
 
-          <div className="container mx-auto px-4 pt-40 pb-12 relative">
+          <div className="max-w-6xl mx-auto px-5 sm:px-6 pt-32 sm:pt-40 pb-12 relative">
             <AnimatedSection>
               <motion.div
                 initial={{ y: -20, opacity: 0 }}
@@ -205,8 +206,8 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                 className="text-center mb-16"
               >
                 <h1
-                  className={`text-4xl md:text-6xl font-bold mb-6 pb-2 bg-clip-text text-transparent bg-gradient-to-r ${
-                    theme === "dark"
+                  className={`font-heading text-4xl md:text-6xl font-bold mb-6 pb-2 bg-clip-text text-transparent bg-gradient-to-r ${
+                    isDark
                     ? "from-white via-terracotta-pale to-terracotta-light"
                     : "from-warm-900 via-terracotta-dark to-terracotta"
                   }`}
@@ -215,7 +216,7 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                 </h1>
                 <p
                   className={`text-lg md:text-xl max-w-2xl mx-auto ${
-                    theme === "dark" ? "text-[#bbb]" : "text-[#444]"
+                    isDark ? "text-warm-400" : "text-warm-700"
                   }`}
                 >
                   {translate("projects.description")}
@@ -229,25 +230,26 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                 className="max-w-2xl mx-auto mb-16"
               >
                 <div className={`relative group p-1 rounded-2xl transition-all duration-300 ${
-                  theme === "dark"
-                  ? "bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] focus-within:from-terracotta-dark/50 focus-within:to-[#0f0f0f]"
+                  isDark
+                  ? "bg-gradient-to-br from-warm-800 to-warm-950 focus-within:from-terracotta-dark/50 focus-within:to-warm-950"
                   : "bg-gradient-to-br from-white to-warm-50 shadow-xl focus-within:shadow-2xl focus-within:shadow-terracotta-pale"
                 }`}>
                   <input
                     type="text"
                     placeholder={translate("projects.searchPlaceholder")}
                     className={`w-full p-5 pl-6 pr-14 text-lg rounded-xl border-2 transition-all duration-300 ${
-                      theme === "dark"
-                        ? "bg-[#0f0f0f] text-white border-transparent focus:border-terracotta/50 placeholder-[#888]"
-                        : "bg-white text-warm-900 border-transparent focus:border-terracotta-pale placeholder-[#888]"
+                      isDark
+                        ? "bg-warm-950 text-white border-transparent focus:border-terracotta/50 placeholder-warm-500"
+                        : "bg-white text-warm-900 border-transparent focus:border-terracotta-pale placeholder-warm-500"
                     } focus:outline-none`}
                     value={filter}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setFilter(e.target.value)}
                   />
                   <div className={`absolute right-5 top-1/2 transform -translate-y-1/2 p-2 rounded-lg transition-colors ${
-                      theme === "dark" ? "bg-[#1a1a1a]/50 text-[#888]" : "bg-warm-100 text-[#888]"
+                      isDark ? "bg-warm-800/50 text-warm-500" : "bg-warm-100 text-warm-500"
                   }`}>
                     <svg
+                      aria-hidden="true"
                       className="w-5 h-5"
                       fill="none"
                       stroke="currentColor"
@@ -267,7 +269,7 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
               <AnimatePresence>
                 <motion.div
                   layout
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
                   {filteredProjects.map((project: Project): JSX.Element => (
                     <ProjectCard key={project.id} {...project} />
@@ -284,22 +286,18 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
                 >
                   <p
                     className={`text-xl ${
-                      theme === "dark" ? "text-[#ccc]" : "text-[#666]"
+                      isDark ? "text-warm-300" : "text-warm-700"
                     }`}
                   >
                     {translate("projects.noResults")}
                   </p>
-                  <p
-                    className={`mt-2 ${
-                      theme === "dark" ? "text-[#888]" : "text-[#888]"
-                    }`}
-                  >
+                  <p className="mt-2 text-warm-500">
                     {translate("projects.tryDifferent")}
                   </p>
                   <button
                     onClick={(): void => setFilter("")}
                     className={`mt-6 px-6 py-2 rounded-full border-2 ${
-                      theme === "dark"
+                      isDark
                         ? "border-terracotta text-terracotta-light hover:bg-terracotta-dark/20"
                         : "border-terracotta text-terracotta hover:bg-terracotta-bg"
                     } transition-colors duration-300`}
@@ -319,7 +317,7 @@ const Projects: NextPage<{ projects: Project[] }> = ({ projects }) => {
 export const getStaticProps: GetStaticProps = async () => {
   // Fetch GitHub Repos
   const repos = await getGitHubRepos("Sungblab", 100);
-  
+
   // Transform to Project format
   const githubProjects: Project[] = repos
     .filter((repo: GitHubRepo): boolean => !repo.fork)
@@ -336,7 +334,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-        projects: githubProjects, 
+        projects: githubProjects,
     },
     revalidate: 3600,
   };

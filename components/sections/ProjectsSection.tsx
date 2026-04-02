@@ -52,7 +52,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6">
         <div className="flex items-end justify-between mb-12">
           <div>
             <span className="text-terracotta text-sm font-medium tracking-wide uppercase">
@@ -66,16 +66,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             href="/projects"
             className={`hidden md:flex items-center gap-1 text-sm font-medium transition-colors ${
               isDark
-                ? "text-[#888] hover:text-terracotta"
-                : "text-[#666] hover:text-terracotta"
+                ? "text-warm-500 hover:text-terracotta"
+                : "text-warm-700 hover:text-terracotta"
             }`}
           >
-            전체 보기
-            <ArrowRight size={14} />
+            {translate("projects.viewAll")}
+            <ArrowRight size={14} aria-hidden="true" />
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {displayProjects.map((project) => (
             <motion.a
               key={project.id}
@@ -84,9 +84,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               rel="noopener noreferrer"
               data-project-card
               whileHover={{ y: -4 }}
+              whileTap={{ scale: 0.98 }}
               className={`block rounded-xl overflow-hidden border transition-shadow hover:shadow-lg ${
                 isDark
-                  ? "bg-[#1a1a1a] border-[#2a2a2a]"
+                  ? "bg-warm-800 border-warm-850"
                   : "bg-white border-warm-200"
               }`}
             >
@@ -112,7 +113,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 </h3>
                 <p
                   className={`mt-1.5 text-sm line-clamp-2 ${
-                    isDark ? "text-[#888]" : "text-[#666]"
+                    isDark ? "text-warm-500" : "text-warm-700"
                   }`}
                 >
                   {language === "en" && project.description_en
@@ -143,8 +144,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             href="/projects"
             className="inline-flex items-center gap-1 text-sm font-medium text-terracotta"
           >
-            전체 보기
-            <ArrowRight size={14} />
+            {translate("projects.viewAll")}
+            <ArrowRight size={14} aria-hidden="true" />
           </Link>
         </div>
       </div>
