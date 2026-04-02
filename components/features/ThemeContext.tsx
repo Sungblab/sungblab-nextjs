@@ -1,6 +1,5 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 
-// Theme Context Interface
 export interface ThemeContextType {
   theme: "light" | "dark";
   toggleTheme: () => void;
@@ -25,43 +24,72 @@ export interface ThemeType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+const colorMap = {
+  light: {
+    background: "#FFFFFF",
+    primary: "#A85438",
+    secondary: "#C46E50",
+    border: "#e8ddd8",
+    accent: "#8B4513",
+  },
+  dark: {
+    background: "#0f0f0f",
+    primary: "#C46E50",
+    secondary: "#A85438",
+    border: "#2a2a2a",
+    accent: "#D4886A",
+  },
+};
+
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("theme") as
-        | "light"
-        | "dark"
-        | null;
-      return savedTheme || "light";
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [mounted, setMounted] = useState(false);
+
+  // Read stored theme on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
     }
-    return "light";
-  });
+    setMounted(true);
+  }, []);
 
-  const colors = {
-    light: {
-      background: "#FFFFFF",
-      primary: "#A85438",
-      secondary: "#C46E50",
-      border: "#e8ddd8",
-      accent: "#8B4513",
-    },
-    dark: {
-      background: "#0f0f0f",
-      primary: "#C46E50",
-      secondary: "#A85438",
-      border: "#2a2a2a",
-      accent: "#D4886A",
-    },
-  };
+  // Persist theme changes and sync HTML class
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem("theme", theme);
+      const root = document.documentElement;
+      if (theme === "dark") {
+        root.classList.add("dark");
+        root.style.backgroundColor = "#0f0f0f";
+        root.style.colorScheme = "dark";
+      } else {
+        root.classList.remove("dark");
+        root.style.backgroundColor = "#faf7f5";
+        root.style.colorScheme = "light";
+      }
+    }
+  }, [theme, mounted]);
 
-  const contextValue = {
+  const toggleTheme = (): void =>
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+
+  const contextValue: ThemeContextType = {
     theme,
-    toggleTheme: (): void =>
-      setTheme((prev: "light" | "dark"): "light" | "dark" => (prev === "light" ? "dark" : "light")),
-    colors: colors[theme],
+    toggleTheme,
+    colors: colorMap[theme],
   };
+
+  // Prevent flash: don't render children until we know the real theme
+  if (!mounted) {
+    return (
+      <ThemeContext.Provider value={contextValue}>
+        <div style={{ visibility: "hidden" }}>{children}</div>
+      </ThemeContext.Provider>
+    );
+  }
 
   return (
     <ThemeContext.Provider value={contextValue}>

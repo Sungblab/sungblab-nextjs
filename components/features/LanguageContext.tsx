@@ -14,20 +14,27 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [language, setLanguage] = useState<Language>("ko");
+  const [mounted, setMounted] = useState(false);
 
+  // Read stored language on mount — single pass, no extra re-render after ThemeProvider
   useEffect((): void => {
     const storedLanguage = localStorage.getItem("language") as Language | null;
     if (storedLanguage) {
       setLanguage(storedLanguage);
     } else {
       const browserLang = navigator.language || (navigator as any).userLanguage || "";
-      setLanguage(browserLang.startsWith("ko") ? "ko" : "en");
+      const detected = browserLang.startsWith("ko") ? "ko" : "en";
+      setLanguage(detected);
+      localStorage.setItem("language", detected);
     }
+    setMounted(true);
   }, []);
 
   useEffect((): void => {
-    document.documentElement.lang = language;
-  }, [language]);
+    if (mounted) {
+      document.documentElement.lang = language;
+    }
+  }, [language, mounted]);
 
   const toggleLanguage = (): void => {
     setLanguage((prev: Language): Language => {

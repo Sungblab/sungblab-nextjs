@@ -1,5 +1,22 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
+// Inline script to set theme + background color before first paint — prevents FOUC
+const themeScript = `
+(function(){
+  try {
+    var t = localStorage.getItem('theme');
+    if (t === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.style.backgroundColor = '#0f0f0f';
+      document.documentElement.style.colorScheme = 'dark';
+    } else {
+      document.documentElement.style.backgroundColor = '#faf7f5';
+      document.documentElement.style.colorScheme = 'light';
+    }
+  } catch(e) {}
+})()
+`;
+
 export default function Document(): JSX.Element {
   return (
     <Html lang="ko">
@@ -24,6 +41,7 @@ export default function Document(): JSX.Element {
         />
       </Head>
       <body>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Main />
         <NextScript />
       </body>
