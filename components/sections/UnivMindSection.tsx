@@ -19,6 +19,7 @@ export const UnivMindSection: React.FC = () => {
         opacity: 0,
         duration: 0.8,
         ease: "power3.out",
+        immediateRender: false,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 80%",
@@ -30,6 +31,7 @@ export const UnivMindSection: React.FC = () => {
         opacity: 0,
         duration: 0.8,
         ease: "power3.out",
+        immediateRender: false,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 80%",
