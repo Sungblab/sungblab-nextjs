@@ -82,18 +82,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     colors: colorMap[theme],
   };
 
-  // Prevent flash: don't render children until we know the real theme
-  if (!mounted) {
-    return (
-      <ThemeContext.Provider value={contextValue}>
-        <div style={{ visibility: "hidden" }}>{children}</div>
-      </ThemeContext.Provider>
-    );
-  }
-
   return (
     <ThemeContext.Provider value={contextValue}>
-      {children}
+      <div style={mounted ? undefined : { visibility: "hidden" }}>
+        {children}
+      </div>
     </ThemeContext.Provider>
   );
 };
