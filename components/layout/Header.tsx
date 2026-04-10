@@ -13,6 +13,9 @@ export const Header: React.FC = () => {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -119,7 +122,8 @@ export const Header: React.FC = () => {
               }`}
               aria-label="Toggle theme"
             >
-              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+              {/* Render after mount only — avoids SVG path hydration mismatch */}
+              {mounted ? (isDark ? <Sun size={18} /> : <Moon size={18} />) : <Moon size={18} />}
             </button>
 
             <button

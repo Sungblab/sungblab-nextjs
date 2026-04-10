@@ -21,65 +21,68 @@ const Guestbook: NextPage = () => {
         />
       </Head>
 
-      <section className="py-20 px-4 min-h-screen relative">
-        <div className="absolute inset-0">
-            <div
-              className={`absolute inset-0 ${
-                theme === "dark" ? "bg-[#0f0f0f]/90" : "bg-white/90"
-              }`}
-            />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,84,56,0.03)_1px,transparent_1px)] bg-[length:24px_24px]" />
-        </div>
-        
-        <AnimatedSection className="max-w-4xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <motion.h1 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className={`text-4xl md:text-5xl font-bold mb-4 ${
-                theme === "dark" ? "text-terracotta-light" : "text-terracotta"
+      <section className="pt-32 sm:pt-40 pb-24 px-5 sm:px-6 min-h-screen relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(196,112,75,0.05)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(196,112,75,0.04)_0%,transparent_50%)] pointer-events-none" />
+
+        <div className="max-w-3xl mx-auto relative">
+          {/* Header */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
+          >
+            <span className={`inline-block text-xs font-bold uppercase tracking-widest mb-4 ${
+              theme === "dark" ? "text-terracotta-light/70" : "text-terracotta/70"
+            }`}>
+              Guestbook
+            </span>
+            <h1
+              className={`font-heading text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r ${
+                theme === "dark"
+                  ? "from-warm-100 to-terracotta-light"
+                  : "from-warm-900 to-terracotta"
               }`}
             >
               {translate("guestbook.title")}
-            </motion.h1>
-            <motion.p
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-              className={`text-lg md:text-xl ${
-                theme === "dark" ? "text-[#888]" : "text-[#666]"
-              }`}
-            >
+            </h1>
+            <p className={`text-base md:text-lg max-w-md mx-auto leading-relaxed ${
+              theme === "dark" ? "text-warm-500" : "text-warm-600"
+            }`}>
               {translate("guestbook.description")}
-            </motion.p>
-          </div>
+            </p>
+          </motion.div>
 
+          {/* Giscus card */}
           <motion.div
-            initial={{ y: 40, opacity: 0 }}
+            initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className={`p-6 md:p-8 rounded-2xl backdrop-blur-sm border shadow-xl ${
-               theme === "dark"
-                ? "bg-[#1a1a1a]/40 border-[#2a2a2a]/50"
-                : "bg-white/80 border-warm-200/50"
+            transition={{ delay: 0.15, duration: 0.5 }}
+            className={`rounded-2xl border overflow-hidden ${
+              theme === "dark"
+                ? "bg-warm-800/40 border-warm-850"
+                : "bg-white border-warm-200 shadow-sm"
             }`}
           >
-            <Giscus
-              repo="Sungblab/sungblab-nextjs"
-              repoId="R_kgDOMs0-6A"
-              category="Announcements" 
-              categoryId="DIC_kwDOMs0-6M4CiQTH"
-              mapping="pathname"
-              reactionsEnabled="1"
-              emitMetadata="0"
-              inputPosition="top"
-              theme={theme === "dark" ? "dark" : "light"}
-              lang={language === "ko" ? "ko" : "en"}
-              loading="lazy"
-            />
+            <div className="h-1 w-full bg-gradient-to-r from-terracotta to-terracotta-light" />
+            <div className="p-6 md:p-8">
+              <Giscus
+                repo="Sungblab/sungblab-nextjs"
+                repoId="R_kgDOMs0-6A"
+                category="Announcements"
+                categoryId="DIC_kwDOMs0-6M4CiQTH"
+                mapping="pathname"
+                reactionsEnabled="1"
+                emitMetadata="0"
+                inputPosition="top"
+                theme={theme === "dark" ? "dark" : "light"}
+                lang={language === "ko" ? "ko" : "en"}
+                loading="lazy"
+              />
+            </div>
           </motion.div>
-        </AnimatedSection>
+        </div>
       </section>
     </Layout>
   );

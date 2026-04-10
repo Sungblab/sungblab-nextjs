@@ -1,0 +1,139 @@
+- generic [ref=e1]:
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e114]:
+        - link "Home" [ref=e115] [cursor=pointer]:
+          - /url: /
+          - img "Sungblab" [ref=e116]:
+            - generic [ref=e118]: S
+            - generic [ref=e119]: sungblab
+        - navigation [ref=e120]:
+          - link "Home" [ref=e121] [cursor=pointer]:
+            - /url: /
+          - link "Projects" [ref=e122] [cursor=pointer]:
+            - /url: /projects
+          - link "Blog" [ref=e123] [cursor=pointer]:
+            - /url: /blog
+          - link "About" [ref=e124] [cursor=pointer]:
+            - /url: /about
+            - text: About
+        - generic [ref=e126]:
+          - button "한국어로 전환" [ref=e127] [cursor=pointer]: KR
+          - button "Toggle theme" [active] [ref=e128] [cursor=pointer]:
+            - img [ref=e161]
+      - main [ref=e6]:
+        - generic [ref=e8]:
+          - generic [ref=e9]:
+            - generic [ref=e10]:
+              - img "Sungbin Kim" [ref=e13]
+              - generic [ref=e14]:
+                - heading "Sungbin Kim" [level=1] [ref=e15]
+                - paragraph [ref=e16]: AI Builder & Vibe Coder
+                - paragraph [ref=e17]: I'm a full-stack developer with a deep passion for AI. Grounded in experience across both frontend and backend, I'm focused on building practical services where AI meets real user needs.
+                - generic [ref=e18]:
+                  - link "GitHub" [ref=e19] [cursor=pointer]:
+                    - /url: https://github.com/Sungblab
+                  - link "Contact" [ref=e20] [cursor=pointer]:
+                    - /url: mailto:sungblab@gmail.com
+            - generic [ref=e21]:
+              - generic [ref=e22]:
+                - generic [ref=e23]: 18+
+                - generic [ref=e24]: Projects
+              - generic [ref=e25]:
+                - generic [ref=e26]: 3+
+                - generic [ref=e27]: Years
+              - generic [ref=e28]:
+                - generic [ref=e29]: "2026"
+                - generic [ref=e30]: Current
+          - generic [ref=e31]:
+            - heading "Journey" [level=2] [ref=e32]
+            - generic [ref=e34]:
+              - generic [ref=e35]:
+                - generic [ref=e37]: 🤖
+                - generic [ref=e38]:
+                  - generic [ref=e39]:
+                    - generic [ref=e40]: "2022"
+                    - heading "ChatGPT 첫 만남" [level=3] [ref=e41]
+                  - paragraph [ref=e42]: 중3, AI의 가능성을 처음 느끼다
+              - generic [ref=e43]:
+                - generic [ref=e45]: ⚡
+                - generic [ref=e46]:
+                  - generic [ref=e47]:
+                    - generic [ref=e48]: "2023"
+                    - heading "바이브코딩 시작" [level=3] [ref=e49]
+                  - paragraph [ref=e50]: Claude & Cursor로 본격 개발
+              - generic [ref=e51]:
+                - generic [ref=e53]: 🚀
+                - generic [ref=e54]:
+                  - generic [ref=e55]:
+                    - generic [ref=e56]: "2024"
+                    - heading "sungblab AI 런칭" [level=3] [ref=e57]
+                  - paragraph [ref=e58]: 교육용 멀티 AI 챗봇 서비스
+              - generic [ref=e59]:
+                - generic [ref=e61]: 🎓
+                - generic [ref=e62]:
+                  - generic [ref=e63]:
+                    - generic [ref=e64]: "2025"
+                    - heading "UnivMind 운영" [level=3] [ref=e65]
+                  - paragraph [ref=e66]: 대학생 AI 학습 플랫폼
+          - generic [ref=e67]:
+            - heading "Skills" [level=2] [ref=e68]
+            - generic [ref=e69]:
+              - generic [ref=e70]:
+                - text: Frontend
+                - generic [ref=e71]:
+                  - generic [ref=e72]: React
+                  - generic [ref=e73]: Next.js
+                  - generic [ref=e74]: TypeScript
+                  - generic [ref=e75]: Tailwind CSS
+              - generic [ref=e76]:
+                - text: Backend
+                - generic [ref=e77]:
+                  - generic [ref=e78]: Node.js
+                  - generic [ref=e79]: Python
+                  - generic [ref=e80]: MongoDB
+                  - generic [ref=e81]: PostgreSQL
+              - generic [ref=e82]:
+                - text: AI / ML
+                - generic [ref=e83]:
+                  - generic [ref=e84]: LLM/NLP
+                  - generic [ref=e85]: Claude API
+                  - generic [ref=e86]: OpenAI API
+                  - generic [ref=e87]: Prompt Engineering
+          - generic [ref=e88]:
+            - heading "GitHub" [level=2] [ref=e89]
+            - generic [ref=e90]:
+              - img "GitHub contribution graph for Sungblab" [ref=e91]
+              - generic [ref=e92]:
+                - img "GitHub stats for Sungblab" [ref=e93]
+                - img "GitHub streak stats for Sungblab" [ref=e94]
+      - generic [ref=e96]:
+        - generic [ref=e133]:
+          - generic [ref=e134]:
+            - img "Sungblab" [ref=e135]:
+              - generic [ref=e137]: S
+              - generic [ref=e138]: sungblab
+            - paragraph [ref=e139]: Building the future with AI, one project at a time.
+          - navigation [ref=e140]:
+            - link "Home" [ref=e141] [cursor=pointer]:
+              - /url: /
+            - link "Projects" [ref=e142] [cursor=pointer]:
+              - /url: /projects
+            - link "Blog" [ref=e143] [cursor=pointer]:
+              - /url: /blog
+            - link "About" [ref=e144] [cursor=pointer]:
+              - /url: /about
+          - generic [ref=e145]:
+            - link "GitHub" [ref=e146] [cursor=pointer]:
+              - /url: https://github.com/Sungblab
+              - img [ref=e147]
+            - link "LinkedIn" [ref=e150] [cursor=pointer]:
+              - /url: https://linkedin.com
+              - img [ref=e151]
+            - link "Email" [ref=e155] [cursor=pointer]:
+              - /url: mailto:sungblab@gmail.com
+              - img [ref=e156]
+        - generic [ref=e101]:
+          - generic [ref=e159]: © 2026 Sungblab. All rights reserved.
+          - generic [ref=e160]: Made with ❤️ & AI
+  - alert [ref=e112]

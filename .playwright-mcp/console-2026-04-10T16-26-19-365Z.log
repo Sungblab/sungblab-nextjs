@@ -1,0 +1,126 @@
+[      19ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
+[     369ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[     410ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[     441ms] [ERROR] Warning: Expected server HTML to contain a matching <%s> in <%s>.%s svg div 
+    at svg
+    at Logo (webpack-internal:///./components/ui/Logo.tsx:15:11)
+    at div
+    at footer
+    at Footer (webpack-internal:///./components/layout/Footer.tsx:20:87)
+    at div
+    at Layout (webpack-internal:///./components/layout/Layout.tsx:18:11)
+    at About (webpack-internal:///./pages/about.tsx:81:98)
+    at main
+    at AppInner (webpack-internal:///./pages/_app.tsx:18:11)
+    at ToastProvider (webpack-internal:///./components/ui/Toast.tsx:18:11)
+    at LanguageProvider (webpack-internal:///./components/features/LanguageContext.tsx:16:11)
+    at div
+    at ThemeProvider (webpack-internal:///./components/features/ThemeContext.tsx:30:11)
+    at App (webpack-internal:///./pages/_app.tsx:42:11)
+    at PathnameContextProviderAdapter (webpack-internal:///./node_modules/next/dist/shared/lib/router/adapters.js:81:11)
+    at ErrorBoundary (webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/ErrorBoundary.js:41:9)
+    at ReactDevOverlay (webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/ReactDevOverlay.js:33:11)
+    at Container (webpack-internal:///./node_modules/next/dist/client/index.js:81:1)
+    at AppContainer (webpack-internal:///./node_modules/next/dist/client/index.js:189:11)
+    at Root (webpack-internal:///./node_modules/next/dist/client/index.js:413:11) @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/internal/helpers/hydration-error-info.js:62
+[     442ms] Error: Hydration failed because the initial UI does not match what was rendered on the server.
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+    at throwOnHydrationMismatch (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12507:9)
+    at tryToClaimNextHydratableInstance (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12535:7)
+    at updateHostComponent (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:19926:5)
+    at beginWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:21652:14)
+    at HTMLUnknownElement.callCallback (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at Object.invokeGuardedCallbackDev (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:27485:7)
+    at performUnitOfWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26591:12)
+    at workLoopSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26500:5)
+    at renderRootSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26468:7)
+    at performConcurrentWorkOnRoot (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:25772:74)
+    at workLoop (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:266:34)
+    at flushWork (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:239:14)
+    at MessagePort.performWorkUntilDeadline (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:533:21)
+[     442ms] [ERROR] Warning: An error occurred during hydration. The server HTML was replaced with client content in <%s>. div 
+See more info here: https://nextjs.org/docs/messages/react-hydration-error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/internal/helpers/hydration-error-info.js:62
+[     452ms] Error: Hydration failed because the initial UI does not match what was rendered on the server.
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+    at throwOnHydrationMismatch (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12507:9)
+    at tryToClaimNextHydratableInstance (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12535:7)
+    at updateHostComponent (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:19926:5)
+    at beginWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:21652:14)
+    at beginWork$1 (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:27460:14)
+    at performUnitOfWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26591:12)
+    at workLoopSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26500:5)
+    at renderRootSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26468:7)
+    at performConcurrentWorkOnRoot (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:25772:74)
+    at workLoop (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:266:34)
+    at flushWork (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:239:14)
+    at MessagePort.performWorkUntilDeadline (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:533:21)
+[     452ms] Error: Hydration failed because the initial UI does not match what was rendered on the server.
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+    at throwOnHydrationMismatch (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12507:9)
+    at tryToClaimNextHydratableInstance (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12535:7)
+    at updateHostComponent (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:19926:5)
+    at beginWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:21652:14)
+    at beginWork$1 (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:27460:14)
+    at performUnitOfWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26591:12)
+    at workLoopSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26500:5)
+    at renderRootSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26468:7)
+    at performConcurrentWorkOnRoot (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:25772:74)
+    at workLoop (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:266:34)
+    at flushWork (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:239:14)
+    at MessagePort.performWorkUntilDeadline (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:533:21)
+[     452ms] Error: Hydration failed because the initial UI does not match what was rendered on the server.
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+    at throwOnHydrationMismatch (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12507:9)
+    at tryToClaimNextHydratableInstance (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12535:7)
+    at updateHostComponent (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:19926:5)
+    at beginWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:21652:14)
+    at beginWork$1 (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:27460:14)
+    at performUnitOfWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26591:12)
+    at workLoopSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26500:5)
+    at renderRootSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26468:7)
+    at performConcurrentWorkOnRoot (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:25772:74)
+    at workLoop (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:266:34)
+    at flushWork (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:239:14)
+    at MessagePort.performWorkUntilDeadline (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:533:21)
+[     453ms] Error: Hydration failed because the initial UI does not match what was rendered on the server.
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+    at throwOnHydrationMismatch (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12507:9)
+    at tryToClaimNextHydratableInstance (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12535:7)
+    at updateHostComponent (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:19926:5)
+    at beginWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:21652:14)
+    at beginWork$1 (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:27460:14)
+    at performUnitOfWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26591:12)
+    at workLoopSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26500:5)
+    at renderRootSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26468:7)
+    at performConcurrentWorkOnRoot (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:25772:74)
+    at workLoop (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:266:34)
+    at flushWork (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:239:14)
+    at MessagePort.performWorkUntilDeadline (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:533:21)
+[     453ms] Error: Hydration failed because the initial UI does not match what was rendered on the server.
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+    at throwOnHydrationMismatch (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12507:9)
+    at popHydrationState (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:12678:9)
+    at completeWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:22210:30)
+    at completeUnitOfWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26630:16)
+    at performUnitOfWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26602:5)
+    at workLoopSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26500:5)
+    at renderRootSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26468:7)
+    at performConcurrentWorkOnRoot (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:25772:74)
+    at workLoop (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:266:34)
+    at flushWork (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:239:14)
+    at MessagePort.performWorkUntilDeadline (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:533:21)
+[     453ms] Error: There was an error while hydrating. Because the error happened outside of a Suspense boundary, the entire root will switch to client rendering.
+    at updateHostRoot (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:19873:57)
+    at beginWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:21649:14)
+    at beginWork$1 (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:27460:14)
+    at performUnitOfWork (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26591:12)
+    at workLoopSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26500:5)
+    at renderRootSync (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:26468:7)
+    at recoverFromConcurrentError (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:25884:20)
+    at performConcurrentWorkOnRoot (webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:25784:22)
+    at workLoop (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:266:34)
+    at flushWork (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:239:14)
+    at MessagePort.performWorkUntilDeadline (webpack-internal:///./node_modules/scheduler/cjs/scheduler.development.js:533:21)
+[     550ms] [WARNING] Image with src "/images/sb.jpg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio. @ webpack-internal:///./node_modules/next/dist/shared/lib/utils/warn-once.js:15

@@ -40,7 +40,7 @@ export default function Document(): JSX.Element {
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
         />
       </Head>
-      <body>
+      <body suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Main />
         <NextScript />

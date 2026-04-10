@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTheme } from "../features/ThemeContext";
 
 interface LogoProps {
@@ -8,6 +8,8 @@ interface LogoProps {
 
 export const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const dims = {
     sm: { icon: 28, fontSize: 20, gap: 8, height: 28 },
@@ -17,7 +19,7 @@ export const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
 
   const { icon, fontSize, gap, height } = dims[size];
   const rx = Math.round(icon * 0.25);
-  const textColor = theme === "dark" ? "#f5ece6" : "#1a1a1a";
+  const textColor = mounted && theme === "dark" ? "#f5ece6" : "#1a1a1a";
   const totalWidth = icon + gap + fontSize * 5;
 
   return (

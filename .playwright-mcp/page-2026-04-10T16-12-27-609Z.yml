@@ -1,0 +1,87 @@
+- generic [active] [ref=e1]:
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e7]:
+        - link "Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "Sungblab" [ref=e9]:
+            - generic [ref=e11]: S
+            - generic [ref=e12]: sungblab
+        - navigation [ref=e13]:
+          - link "Home" [ref=e14] [cursor=pointer]:
+            - /url: /
+          - link "Projects" [ref=e15] [cursor=pointer]:
+            - /url: /projects
+          - link "Blog" [ref=e16] [cursor=pointer]:
+            - /url: /blog
+          - link "About" [ref=e17] [cursor=pointer]:
+            - /url: /about
+            - text: About
+        - generic [ref=e19]:
+          - button "한국어로 전환" [ref=e20] [cursor=pointer]: KR
+          - button "Toggle theme" [ref=e21] [cursor=pointer]:
+            - img [ref=e22]
+      - main [ref=e24]:
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - img "Sungbin Kim" [ref=e29]
+            - generic [ref=e30]:
+              - heading "Sungbin Kim" [level=1] [ref=e31]
+              - paragraph [ref=e32]: AI Builder & Vibe Coder
+          - paragraph [ref=e33]: I'm a full-stack developer with a deep passion for AI. Grounded in experience across both frontend and backend, I'm focused on building practical services where AI meets real user needs.
+          - generic [ref=e34]:
+            - heading "Journey" [level=2] [ref=e35]
+            - generic [ref=e36]:
+              - generic [ref=e37]:
+                - generic [ref=e38]: "2022"
+                - generic [ref=e39]:
+                  - heading "ChatGPT 첫 만남" [level=3] [ref=e40]
+                  - paragraph [ref=e41]: 중3, AI의 가능성을 처음 느끼다
+              - generic [ref=e42]:
+                - generic [ref=e43]: "2023"
+                - generic [ref=e44]:
+                  - heading "바이브코딩 시작" [level=3] [ref=e45]
+                  - paragraph [ref=e46]: Claude & Cursor로 본격 개발
+              - generic [ref=e47]:
+                - generic [ref=e48]: "2024"
+                - generic [ref=e49]:
+                  - heading "sungblab AI 런칭" [level=3] [ref=e50]
+                  - paragraph [ref=e51]: 교육용 멀티 AI 챗봇 서비스
+              - generic [ref=e52]:
+                - generic [ref=e53]: "2025"
+                - generic [ref=e54]:
+                  - heading "UnivMind 운영" [level=3] [ref=e55]
+                  - paragraph [ref=e56]: 대학생 AI 학습 플랫폼
+          - generic [ref=e57]:
+            - heading "Skills" [level=2] [ref=e58]
+            - generic [ref=e59]:
+              - generic [ref=e60]: React
+              - generic [ref=e61]: Next.js
+              - generic [ref=e62]: TypeScript
+              - generic [ref=e63]: Node.js
+              - generic [ref=e64]: Python
+              - generic [ref=e65]: Tailwind CSS
+              - generic [ref=e66]: MongoDB
+              - generic [ref=e67]: PostgreSQL
+              - generic [ref=e68]: LLM/NLP
+              - generic [ref=e69]: Claude API
+          - generic [ref=e70]:
+            - heading "GitHub" [level=2] [ref=e71]
+            - generic [ref=e72]:
+              - img "GitHub contribution graph for Sungblab" [ref=e73]
+              - generic [ref=e74]:
+                - img "GitHub stats for Sungblab" [ref=e75]
+                - img "GitHub streak stats for Sungblab" [ref=e76]
+      - generic [ref=e78]:
+        - img "Sungblab" [ref=e79]:
+          - generic [ref=e81]: S
+          - generic [ref=e82]: sungblab
+        - generic [ref=e83]:
+          - link "GitHub" [ref=e84] [cursor=pointer]:
+            - /url: https://github.com/Sungblab
+            - img [ref=e85]
+          - link "LinkedIn" [ref=e88] [cursor=pointer]:
+            - /url: https://linkedin.com
+            - img [ref=e89]
+          - generic [ref=e93]: Made by Sungbin · © 2026 sungblab
+  - alert [ref=e94]

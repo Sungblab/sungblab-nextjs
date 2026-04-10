@@ -1,0 +1,154 @@
+- generic [active] [ref=e1]:
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e7]:
+        - link "Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "Sungblab" [ref=e9]:
+            - generic [ref=e11]: S
+            - generic [ref=e12]: sungblab
+        - navigation [ref=e13]:
+          - link "Home" [ref=e14] [cursor=pointer]:
+            - /url: /
+          - link "Projects" [ref=e15] [cursor=pointer]:
+            - /url: /projects
+          - link "Blog" [ref=e16] [cursor=pointer]:
+            - /url: /blog
+            - text: Blog
+          - link "About" [ref=e18] [cursor=pointer]:
+            - /url: /about
+        - generic [ref=e19]:
+          - button "한국어로 전환" [ref=e20] [cursor=pointer]: KR
+          - button "Toggle theme" [ref=e21] [cursor=pointer]:
+            - img [ref=e22]
+      - main [ref=e24]:
+        - generic [ref=e31]:
+          - generic [ref=e32]:
+            - heading "Blog" [level=1] [ref=e33]
+            - paragraph [ref=e34]: Notes on what I've learned, technical challenges, and insights from building things.
+          - generic [ref=e35]:
+            - generic [ref=e37]:
+              - textbox "Search posts..." [ref=e38]
+              - img [ref=e39]
+            - generic [ref=e41]:
+              - button "All" [ref=e42] [cursor=pointer]
+              - button "Dev" [ref=e43] [cursor=pointer]
+              - button "AI" [ref=e44] [cursor=pointer]
+              - button "Others" [ref=e45] [cursor=pointer]
+          - generic [ref=e46]:
+            - link "📝 UnivMind 개발기 — 대학생을 위한 AI 학습 플랫폼을 만들기까지 UnivMind 개발기 안녕하세요, Sungblab입니다! 이번 글에서는 제가 만들고 있는 UnivMind라는 서비스의 개발 이야기를 해보려고 합니다. 대학생을 위한 AI 기반 학습·지식 관리 플랫폼인데, 지금까지 만든 것 중 가장 큰 프로젝트이기도 하고... 2026-03-27 develop" [ref=e48] [cursor=pointer]:
+              - /url: /blog/univmind-%EA%B0%9C%EB%B0%9C%EA%B8%B0
+              - generic [ref=e49]:
+                - generic [ref=e52]: 📝
+                - generic [ref=e53]:
+                  - heading "UnivMind 개발기 — 대학생을 위한 AI 학습 플랫폼을 만들기까지" [level=2] [ref=e55]
+                  - paragraph [ref=e56]: UnivMind 개발기 안녕하세요, Sungblab입니다! 이번 글에서는 제가 만들고 있는 UnivMind라는 서비스의 개발 이야기를 해보려고 합니다. 대학생을 위한 AI 기반 학습·지식 관리 플랫폼인데, 지금까지 만든 것 중 가장 큰 프로젝트이기도 하고...
+                  - generic [ref=e58]:
+                    - generic [ref=e59]: 2026-03-27
+                    - generic [ref=e60]: develop
+            - link "클로드 api를 활용한 진로상담 챗봇 만들기 클로드 api를 활용한 진로상담 챗봇 만들기 Claude API를 활용한 진로상담 챗봇 만들기 안녕하세요! 이번 포스트에서는 Claude API를 활용하여 진로상담 챗봇을 만드는 과정을 아주 상세하게 설명해드리려고 합니다. 취업과 진로에 대한 고민이 많은 학생들을 위해, AI 기술을 활용한 상담 서비스를 ... 2025-01-08 develop" [ref=e62] [cursor=pointer]:
+              - /url: /blog/ai%EC%B1%97%EB%B4%87
+              - generic [ref=e63]:
+                - img "클로드 api를 활용한 진로상담 챗봇 만들기" [ref=e67]
+                - generic [ref=e68]:
+                  - heading "클로드 api를 활용한 진로상담 챗봇 만들기" [level=2] [ref=e70]
+                  - paragraph [ref=e71]: Claude API를 활용한 진로상담 챗봇 만들기 안녕하세요! 이번 포스트에서는 Claude API를 활용하여 진로상담 챗봇을 만드는 과정을 아주 상세하게 설명해드리려고 합니다. 취업과 진로에 대한 고민이 많은 학생들을 위해, AI 기술을 활용한 상담 서비스를 ...
+                  - generic [ref=e73]:
+                    - generic [ref=e74]: 2025-01-08
+                    - generic [ref=e75]: develop
+            - link "📝 파이썬 face recognition 라이브러리를 활용한 얼굴인식 출결 시스템 제작 파이썬 얼굴인식 출결 시스템 제작 과정 1. 프로젝트 소개 이 프로젝트는 파이썬의 facerecognition 라이브러리와 PyQt5를 활용하여 만든 얼굴인식 기반 출결 시스템입니다. 실시간으로 얼굴을 인식하고 등록된 사용자의 출석을 자동으로 기록하... 2025-01-08 develop" [ref=e77] [cursor=pointer]:
+              - /url: /blog/%EC%96%BC%EA%B5%B4%EC%9D%B8%EC%8B%9D%EC%B6%9C%EA%B2%B0%EC%8B%9C%EC%8A%A4%ED%85%9C
+              - generic [ref=e78]:
+                - generic [ref=e81]: 📝
+                - generic [ref=e82]:
+                  - heading "파이썬 face recognition 라이브러리를 활용한 얼굴인식 출결 시스템 제작" [level=2] [ref=e84]
+                  - paragraph [ref=e85]: 파이썬 얼굴인식 출결 시스템 제작 과정 1. 프로젝트 소개 이 프로젝트는 파이썬의 facerecognition 라이브러리와 PyQt5를 활용하여 만든 얼굴인식 기반 출결 시스템입니다. 실시간으로 얼굴을 인식하고 등록된 사용자의 출석을 자동으로 기록하...
+                  - generic [ref=e87]:
+                    - generic [ref=e88]: 2025-01-08
+                    - generic [ref=e89]: develop
+            - 'link "AI 번역기의 문법적 정확성이 영어 교육에 주는 시사점 AI 번역기의 문법적 정확성이 영어 교육에 주는 시사점 AI 번역기의 문법적 정확성과 문맥 이해: 트랜스포머 모델의 심층 분석 들어가며: AI 시대의 언어 번역 여러분은 혹시 영어 공부를 하면서 \"이 문장이 정확한 표현일까?\" 하고 고민해보신 적이 있으신가요? 오늘날 AI 기술의 발전으로 이러한 고민을 훨씬 ... 2025-01-08 AI" [ref=e91] [cursor=pointer]':
+              - /url: /blog/%EC%98%81%EC%96%B4%EB%AC%B8%EB%B2%95
+              - generic [ref=e92]:
+                - img "AI 번역기의 문법적 정확성이 영어 교육에 주는 시사점" [ref=e96]
+                - generic [ref=e97]:
+                  - heading "AI 번역기의 문법적 정확성이 영어 교육에 주는 시사점" [level=2] [ref=e99]
+                  - paragraph [ref=e100]: "AI 번역기의 문법적 정확성과 문맥 이해: 트랜스포머 모델의 심층 분석 들어가며: AI 시대의 언어 번역 여러분은 혹시 영어 공부를 하면서 \"이 문장이 정확한 표현일까?\" 하고 고민해보신 적이 있으신가요? 오늘날 AI 기술의 발전으로 이러한 고민을 훨씬 ..."
+                  - generic [ref=e102]:
+                    - generic [ref=e103]: 2025-01-08
+                    - generic [ref=e104]: AI
+            - link "📝 리드 해스팅스와 샘 알트먼이 들려주는 혁신과 창업의 본질 실리콘밸리를 대표하는 두 리더, 넷플릭스의 리드 해스팅스와 Y Combinator의 샘 알트먼이 전하는 혁신과 창업에 대한 통찰은 깊은 울림을 줍니다. 이들의 경험은 단순한 성공 스토리를 넘어 현대 기업과 스타트업이 나아가야 할 방향을 명확하게 제시하고 있습니다. ... 2025-01-07 others" [ref=e106] [cursor=pointer]:
+              - /url: /blog/%EB%A6%AC%EB%93%9C%20%ED%95%B4%EC%8A%A4%ED%8C%85%EC%8A%A4%EC%99%80%20%EC%83%98%20%EC%95%8C%ED%8A%B8%EB%A8%BC%EC%9D%B4%20%EB%93%A4%EB%A0%A4%EC%A3%BC%EB%8A%94%20%ED%98%81%EC%8B%A0%EA%B3%BC%20%EC%B0%BD%EC%97%85%EC%9D%98%20%EB%B3%B8%EC%A7%88
+              - generic [ref=e107]:
+                - generic [ref=e110]: 📝
+                - generic [ref=e111]:
+                  - heading "리드 해스팅스와 샘 알트먼이 들려주는 혁신과 창업의 본질" [level=2] [ref=e113]
+                  - paragraph [ref=e114]: 실리콘밸리를 대표하는 두 리더, 넷플릭스의 리드 해스팅스와 Y Combinator의 샘 알트먼이 전하는 혁신과 창업에 대한 통찰은 깊은 울림을 줍니다. 이들의 경험은 단순한 성공 스토리를 넘어 현대 기업과 스타트업이 나아가야 할 방향을 명확하게 제시하고 있습니다. ...
+                  - generic [ref=e116]:
+                    - generic [ref=e117]: 2025-01-07
+                    - generic [ref=e118]: others
+            - 'link "📝 일론 머스크와 샘 알트먼의 두 천재의 대화 새로운 도전 분야: 전기 항공기와 AI 전기 항공기 분야는 머스크가 주목하는 가장 유망한 새로운 사업 영역입니다. 그의 분석에 따르면 로켓을 제외한 모든 운송수단은 점진적으로 전기화될 것이며, 항공 산업에서도 이러한 변화는 필연적입니다. 현재의 기술 수준으로도... 2025-01-07 others" [ref=e120] [cursor=pointer]':
+              - /url: /blog/%EC%9D%BC%EB%A1%A0%EB%A8%B8%EC%8A%A4%ED%81%AC%20%EC%83%98%EC%95%8C%ED%8A%B8%EB%A8%BC%20%EB%91%90%20%EC%B2%9C%EC%9E%AC%EC%9D%98%20%EB%8C%80%ED%99%94
+              - generic [ref=e121]:
+                - generic [ref=e124]: 📝
+                - generic [ref=e125]:
+                  - heading "일론 머스크와 샘 알트먼의 두 천재의 대화" [level=2] [ref=e127]
+                  - paragraph [ref=e128]: "새로운 도전 분야: 전기 항공기와 AI 전기 항공기 분야는 머스크가 주목하는 가장 유망한 새로운 사업 영역입니다. 그의 분석에 따르면 로켓을 제외한 모든 운송수단은 점진적으로 전기화될 것이며, 항공 산업에서도 이러한 변화는 필연적입니다. 현재의 기술 수준으로도..."
+                  - generic [ref=e130]:
+                    - generic [ref=e131]: 2025-01-07
+                    - generic [ref=e132]: others
+            - 'link "📝 특이점이 온다 특이점이 온다: 기술 발전의 미래와 인류의 도전 여러분은 스마트폰이 처음 등장했을 때를 기억하시나요? 불과 15년 전만 해도 지금과 같은 AI 기술이나 스마트폰의 발전을 상상하기 어려웠습니다. 하지만 지금 우리는 ChatGPT와 대화하고, 얼굴 인식으로 결제하며... 2025-01-07 AI" [ref=e134] [cursor=pointer]':
+              - /url: /blog/%ED%8A%B9%EC%9D%B4%EC%A0%90
+              - generic [ref=e135]:
+                - generic [ref=e138]: 📝
+                - generic [ref=e139]:
+                  - heading "특이점이 온다" [level=2] [ref=e141]
+                  - paragraph [ref=e142]: "특이점이 온다: 기술 발전의 미래와 인류의 도전 여러분은 스마트폰이 처음 등장했을 때를 기억하시나요? 불과 15년 전만 해도 지금과 같은 AI 기술이나 스마트폰의 발전을 상상하기 어려웠습니다. 하지만 지금 우리는 ChatGPT와 대화하고, 얼굴 인식으로 결제하며..."
+                  - generic [ref=e144]:
+                    - generic [ref=e145]: 2025-01-07
+                    - generic [ref=e146]: AI
+            - link "📝 LLM의 진화, 그리고 한계 LLM의 카운팅 문제와 근본적 한계 현대의 Large Language Models (LLMs)은 놀라운 자연어 처리 능력을 보여주고 있지만, 기본적인 카운팅 작업에서 의외의 한계를 드러내고 있습니다. 이는 단순한 기술적 결함이 아닌, 모델 아키텍처의 근본적인 특... 2025-01-06 AI" [ref=e148] [cursor=pointer]:
+              - /url: /blog/cot
+              - generic [ref=e149]:
+                - generic [ref=e152]: 📝
+                - generic [ref=e153]:
+                  - heading "LLM의 진화, 그리고 한계" [level=2] [ref=e155]
+                  - paragraph [ref=e156]: LLM의 카운팅 문제와 근본적 한계 현대의 Large Language Models (LLMs)은 놀라운 자연어 처리 능력을 보여주고 있지만, 기본적인 카운팅 작업에서 의외의 한계를 드러내고 있습니다. 이는 단순한 기술적 결함이 아닌, 모델 아키텍처의 근본적인 특...
+                  - generic [ref=e158]:
+                    - generic [ref=e159]: 2025-01-06
+                    - generic [ref=e160]: AI
+            - link "학교 디지털 출결 제작기 학교 디지털 출결 제작기 학교 디지털 출결 제작기 안녕하세요, Sungblab입니다! 제 고등학교 학생들을 위한 QR코드 디지털 출결 시스템 개발 이야기를 공유하려고 합니다. 기존 수기 출결의 문제점을 인식하고 이를 개선하고자 프로젝트를 시작하게 되었습니다. 1. 기획 풀스택... 2025-01-06 develop" [ref=e162] [cursor=pointer]:
+              - /url: /blog/%EB%94%94%EC%A7%80%ED%84%B8%EC%B6%9C%EA%B2%B0%EC%A0%9C%EC%9E%91%EA%B8%B0
+              - generic [ref=e163]:
+                - img "학교 디지털 출결 제작기" [ref=e167]
+                - generic [ref=e168]:
+                  - heading "학교 디지털 출결 제작기" [level=2] [ref=e170]
+                  - paragraph [ref=e171]: 학교 디지털 출결 제작기 안녕하세요, Sungblab입니다! 제 고등학교 학생들을 위한 QR코드 디지털 출결 시스템 개발 이야기를 공유하려고 합니다. 기존 수기 출결의 문제점을 인식하고 이를 개선하고자 프로젝트를 시작하게 되었습니다. 1. 기획 풀스택...
+                  - generic [ref=e173]:
+                    - generic [ref=e174]: 2025-01-06
+                    - generic [ref=e175]: develop
+            - link "학교 커뮤니티 웹사이트 제작기 학교 커뮤니티 웹사이트 제작기 학교 커뮤니티 웹사이트를 만들게 된 계기 안녕하세요, Sungblab입니다! 완도고등학교 학생들을 위한 커뮤니티 사이트 '완대전' 개발 이야기를 공유하려고 합니다. 기존의 여러 커뮤니티 사이트들이 있었지만, 우리 학교만의 특화된 기능들이 필요하다고 생각했습니다.... 2025-01-06 develop" [ref=e177] [cursor=pointer]:
+              - /url: /blog/%EC%99%84%EB%8C%80%EC%A0%84%EC%A0%9C%EC%9E%91%EA%B8%B0
+              - generic [ref=e178]:
+                - img "학교 커뮤니티 웹사이트 제작기" [ref=e182]
+                - generic [ref=e183]:
+                  - heading "학교 커뮤니티 웹사이트 제작기" [level=2] [ref=e185]
+                  - paragraph [ref=e186]: 학교 커뮤니티 웹사이트를 만들게 된 계기 안녕하세요, Sungblab입니다! 완도고등학교 학생들을 위한 커뮤니티 사이트 '완대전' 개발 이야기를 공유하려고 합니다. 기존의 여러 커뮤니티 사이트들이 있었지만, 우리 학교만의 특화된 기능들이 필요하다고 생각했습니다....
+                  - generic [ref=e188]:
+                    - generic [ref=e189]: 2025-01-06
+                    - generic [ref=e190]: develop
+          - navigation "Pagination" [ref=e192]:
+            - button "Page 1" [ref=e193] [cursor=pointer]: "1"
+            - button "Page 2" [ref=e194] [cursor=pointer]: "2"
+      - generic [ref=e196]:
+        - img "Sungblab" [ref=e197]:
+          - generic [ref=e199]: S
+          - generic [ref=e200]: sungblab
+        - generic [ref=e201]:
+          - link "GitHub" [ref=e202] [cursor=pointer]:
+            - /url: https://github.com/Sungblab
+            - img [ref=e203]
+          - link "LinkedIn" [ref=e206] [cursor=pointer]:
+            - /url: https://linkedin.com
+            - img [ref=e207]
+          - generic [ref=e211]: Made by Sungbin · © 2026 sungblab
+  - alert [ref=e212]

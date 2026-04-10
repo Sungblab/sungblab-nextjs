@@ -13,28 +13,19 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  // Always start with "ko" to match SSR. Read localStorage only in useEffect
+  // so server and client initial renders are identical and hydration succeeds.
   const [language, setLanguage] = useState<Language>("ko");
-  const [mounted, setMounted] = useState(false);
 
-  // Read stored language on mount — single pass, no extra re-render after ThemeProvider
   useEffect((): void => {
-    const storedLanguage = localStorage.getItem("language") as Language | null;
-    if (storedLanguage) {
-      setLanguage(storedLanguage);
-    } else {
-      const browserLang = navigator.language || (navigator as any).userLanguage || "";
-      const detected = browserLang.startsWith("ko") ? "ko" : "en";
-      setLanguage(detected);
-      localStorage.setItem("language", detected);
-    }
-    setMounted(true);
+    const saved = localStorage.getItem("language") as Language | null;
+    if (saved && saved !== language) setLanguage(saved);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect((): void => {
-    if (mounted) {
-      document.documentElement.lang = language;
-    }
-  }, [language, mounted]);
+    document.documentElement.lang = language;
+  }, [language]);
 
   const toggleLanguage = (): void => {
     setLanguage((prev: Language): Language => {

@@ -1,0 +1,7 @@
+[    2096ms] [ERROR] Failed to load assets @ http://localhost:3000/admin/:14
+[    3828ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:3000/admin/node_modules/.vite/deps/chunk-LC6BWNWL.js?v=c87893bf:21579
+[    4459ms] TypeError: process.cwd is not a function
+    at Object.configDotenv (http://localhost:3000/admin/node_modules/.vite/deps/dotenv.js?v=e7ca3740:233:47)
+    at Object.config (http://localhost:3000/admin/node_modules/.vite/deps/dotenv.js?v=e7ca3740:297:29)
+    at http://localhost:3000/admin/@fs/C:/Users/Sungbin/Documents/GitHub/sungblab-nextjs/tina/__generated__/config.prebuild.jsx:3:8
+[    4487ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/admin/vite.svg:0

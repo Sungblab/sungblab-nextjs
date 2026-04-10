@@ -1,0 +1,161 @@
+- generic [active] [ref=e1]:
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e7]:
+        - link "Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "Sungblab" [ref=e9]:
+            - generic [ref=e11]: S
+            - generic [ref=e12]: sungblab
+        - navigation [ref=e13]:
+          - link "Home" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - text: Home
+          - link "Projects" [ref=e16] [cursor=pointer]:
+            - /url: /projects
+          - link "Blog" [ref=e17] [cursor=pointer]:
+            - /url: /blog
+          - link "About" [ref=e18] [cursor=pointer]:
+            - /url: /about
+        - generic [ref=e19]:
+          - button "한국어로 전환" [ref=e20] [cursor=pointer]: KR
+          - button "Toggle theme" [ref=e21] [cursor=pointer]:
+            - img [ref=e22]
+      - main [ref=e24]:
+        - generic [ref=e25]:
+          - generic [ref=e29]:
+            - heading "Building with AI" [level=1] [ref=e30]
+            - paragraph [ref=e31]:
+              - text: Met ChatGPT in middle school,
+              - text: started vibe-coding with Claude at 18.
+              - text: Now I build and run AI services.
+            - generic [ref=e32]:
+              - link "UnivMind 보기" [ref=e33] [cursor=pointer]:
+                - /url: https://univmind.net
+              - link "Read Blog" [ref=e34] [cursor=pointer]:
+                - /url: /blog
+          - img [ref=e36]
+        - generic [ref=e40]:
+          - generic [ref=e41]:
+            - text: Featured Project
+            - heading "UnivMind" [level=2] [ref=e42]
+            - paragraph [ref=e43]: You don't need four apps for one class
+            - paragraph [ref=e44]: Upload recordings, PDFs, or handwritten notes — 7 AI agents handle everything from analysis to coaching. Built by a student, for students.
+            - list [ref=e45]:
+              - listitem [ref=e46]: 7 specialized AI agents automate analysis to coaching
+              - listitem [ref=e48]: Upload anything — recordings, PDFs, photos → structured notes
+              - listitem [ref=e50]: Knowledge graph discovers hidden connections across subjects
+              - listitem [ref=e52]: AI tutor based on your materials — cited sources, no hallucination
+            - link "Get Started" [ref=e54] [cursor=pointer]:
+              - /url: https://univmind.net
+              - text: Get Started
+              - img [ref=e55]
+          - generic [ref=e60]:
+            - generic [ref=e66]: univmind.net
+            - img "UnivMind - AI 학습 플랫폼" [ref=e68]
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - generic [ref=e72]:
+              - text: Projects
+              - heading "Projects" [level=2] [ref=e73]
+            - link "View All" [ref=e74] [cursor=pointer]:
+              - /url: /projects
+              - text: View All
+              - img [ref=e75]
+          - generic [ref=e77]:
+            - link "socratiq-monorepo socratiq-monorepo 답 대신 힌트를 주는 7인의 AI 에이전트 — 공모전 출품작 (2026) TypeScript" [ref=e78] [cursor=pointer]:
+              - /url: https://github.com/Sungblab/socratiq-monorepo
+              - img "socratiq-monorepo" [ref=e80]
+              - generic [ref=e81]:
+                - heading "socratiq-monorepo" [level=3] [ref=e82]
+                - paragraph [ref=e83]: 답 대신 힌트를 주는 7인의 AI 에이전트 — 공모전 출품작 (2026)
+                - generic [ref=e85]: TypeScript
+            - link "sungblab-nextjs sungblab-nextjs TypeScript" [ref=e86] [cursor=pointer]:
+              - /url: https://github.com/Sungblab/sungblab-nextjs
+              - img "sungblab-nextjs" [ref=e88]
+              - generic [ref=e89]:
+                - heading "sungblab-nextjs" [level=3] [ref=e90]
+                - paragraph
+                - generic [ref=e92]: TypeScript
+            - link "nbbang nbbang TypeScript" [ref=e93] [cursor=pointer]:
+              - /url: https://github.com/Sungblab/nbbang
+              - img "nbbang" [ref=e95]
+              - generic [ref=e96]:
+                - heading "nbbang" [level=3] [ref=e97]
+                - paragraph
+                - generic [ref=e99]: TypeScript
+            - link "moijang-monorepo moijang-monorepo TypeScript" [ref=e100] [cursor=pointer]:
+              - /url: https://github.com/Sungblab/moijang-monorepo
+              - img "moijang-monorepo" [ref=e102]
+              - generic [ref=e103]:
+                - heading "moijang-monorepo" [level=3] [ref=e104]
+                - paragraph
+                - generic [ref=e106]: TypeScript
+            - link "Sungblab Sungblab" [ref=e107] [cursor=pointer]:
+              - /url: https://github.com/Sungblab/Sungblab
+              - img "Sungblab" [ref=e109]
+              - generic [ref=e110]:
+                - heading "Sungblab" [level=3] [ref=e111]
+                - paragraph
+            - link "Sungblab_AI Sungblab_AI TypeScript" [ref=e112] [cursor=pointer]:
+              - /url: https://github.com/Sungblab/Sungblab_AI
+              - img "Sungblab_AI" [ref=e114]
+              - generic [ref=e115]:
+                - heading "Sungblab_AI" [level=3] [ref=e116]
+                - paragraph
+                - generic [ref=e118]: TypeScript
+        - generic [ref=e120]:
+          - generic [ref=e121]:
+            - generic [ref=e122]:
+              - text: Blog
+              - heading "Blog" [level=2] [ref=e123]
+            - link "View All Posts" [ref=e124] [cursor=pointer]:
+              - /url: /blog
+              - text: View All Posts
+              - img [ref=e125]
+          - generic [ref=e127]:
+            - link "2026-03-27 UnivMind 개발기 — 대학생을 위한 AI 학습 플랫폼을 만들기까지 UnivMind 개발기 안녕하세요, Sungblab입니다! 이번 글에서는 제가 만들고 있는 UnivMind라는 서비스의 개발 이야기를 해보려고 합니다. 대학생을 위한 AI 기반 학습·지식 관리 플랫폼인데, 지금까지 만든 것 중 가장 큰 프로젝트이기도 하고... develop" [ref=e129] [cursor=pointer]:
+              - /url: /blog/univmind-%EA%B0%9C%EB%B0%9C%EA%B8%B0
+              - text: 2026-03-27
+              - heading "UnivMind 개발기 — 대학생을 위한 AI 학습 플랫폼을 만들기까지" [level=3] [ref=e130]
+              - paragraph [ref=e131]: UnivMind 개발기 안녕하세요, Sungblab입니다! 이번 글에서는 제가 만들고 있는 UnivMind라는 서비스의 개발 이야기를 해보려고 합니다. 대학생을 위한 AI 기반 학습·지식 관리 플랫폼인데, 지금까지 만든 것 중 가장 큰 프로젝트이기도 하고...
+              - generic [ref=e132]: develop
+            - link "2025-01-08 클로드 api를 활용한 진로상담 챗봇 만들기 Claude API를 활용한 진로상담 챗봇 만들기 안녕하세요! 이번 포스트에서는 Claude API를 활용하여 진로상담 챗봇을 만드는 과정을 아주 상세하게 설명해드리려고 합니다. 취업과 진로에 대한 고민이 많은 학생들을 위해, AI 기술을 활용한 상담 서비스를 ... develop" [ref=e134] [cursor=pointer]:
+              - /url: /blog/ai%EC%B1%97%EB%B4%87
+              - text: 2025-01-08
+              - heading "클로드 api를 활용한 진로상담 챗봇 만들기" [level=3] [ref=e135]
+              - paragraph [ref=e136]: Claude API를 활용한 진로상담 챗봇 만들기 안녕하세요! 이번 포스트에서는 Claude API를 활용하여 진로상담 챗봇을 만드는 과정을 아주 상세하게 설명해드리려고 합니다. 취업과 진로에 대한 고민이 많은 학생들을 위해, AI 기술을 활용한 상담 서비스를 ...
+              - generic [ref=e137]: develop
+            - link "2025-01-08 파이썬 face recognition 라이브러리를 활용한 얼굴인식 출결 시스템 제작 파이썬 얼굴인식 출결 시스템 제작 과정 1. 프로젝트 소개 이 프로젝트는 파이썬의 face_recognition 라이브러리와 PyQt5를 활용하여 만든 얼굴인식 기반 출결 시스템입니다. 실시간으로 얼굴을 인식하고 등록된 사용자의 출석을 자동으로 기록하... develop" [ref=e139] [cursor=pointer]:
+              - /url: /blog/%EC%96%BC%EA%B5%B4%EC%9D%B8%EC%8B%9D%EC%B6%9C%EA%B2%B0%EC%8B%9C%EC%8A%A4%ED%85%9C
+              - text: 2025-01-08
+              - heading "파이썬 face recognition 라이브러리를 활용한 얼굴인식 출결 시스템 제작" [level=3] [ref=e140]
+              - paragraph [ref=e141]: 파이썬 얼굴인식 출결 시스템 제작 과정 1. 프로젝트 소개 이 프로젝트는 파이썬의 face_recognition 라이브러리와 PyQt5를 활용하여 만든 얼굴인식 기반 출결 시스템입니다. 실시간으로 얼굴을 인식하고 등록된 사용자의 출석을 자동으로 기록하...
+              - generic [ref=e142]: develop
+        - generic [ref=e144]:
+          - heading "Let's build together." [level=2] [ref=e145]
+          - paragraph [ref=e146]: Have a project idea or just want to say hi? I'd love to hear from you.
+          - link "sungblab@gmail.com" [ref=e147] [cursor=pointer]:
+            - /url: mailto:sungblab@gmail.com
+            - img [ref=e148]
+            - text: sungblab@gmail.com
+          - generic [ref=e151]:
+            - link "GitHub" [ref=e152] [cursor=pointer]:
+              - /url: https://github.com/Sungblab
+              - img [ref=e153]
+            - link "LinkedIn" [ref=e156] [cursor=pointer]:
+              - /url: https://linkedin.com
+              - img [ref=e157]
+      - generic [ref=e162]:
+        - img "Sungblab" [ref=e163]:
+          - generic [ref=e165]: S
+          - generic [ref=e166]: sungblab
+        - generic [ref=e167]:
+          - link "GitHub" [ref=e168] [cursor=pointer]:
+            - /url: https://github.com/Sungblab
+            - img [ref=e169]
+          - link "LinkedIn" [ref=e172] [cursor=pointer]:
+            - /url: https://linkedin.com
+            - img [ref=e173]
+          - generic [ref=e177]: Made by Sungbin · © 2026 sungblab
+  - alert [ref=e178]

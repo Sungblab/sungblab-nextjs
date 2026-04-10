@@ -1,0 +1,8 @@
+- generic [ref=e3]:
+  - heading "Failed loading TinaCMS assets" [level=1] [ref=e4]
+  - paragraph [ref=e5]: Your TinaCMS configuration may be misconfigured, and we could not load the assets for this page.
+  - paragraph [ref=e6]:
+    - text: Please visit
+    - link "this doc" [ref=e7] [cursor=pointer]:
+      - /url: https://tina.io/docs/r/FAQ/#13-how-do-i-resolve-failed-loading-tinacms-assets-error
+    - text: for help.

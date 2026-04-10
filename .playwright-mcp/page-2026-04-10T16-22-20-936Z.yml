@@ -1,0 +1,20 @@
+- generic [active] [ref=e1]:
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - main [ref=e6]:
+        - generic [ref=e14]:
+          - heading "Projects" [level=1] [ref=e15]
+          - paragraph [ref=e16]: Projects I designed and built from the ground up.
+      - generic [ref=e20]:
+        - img "Sungblab" [ref=e21]:
+          - generic [ref=e23]: S
+          - generic [ref=e24]: sungblab
+        - generic [ref=e25]:
+          - link "GitHub" [ref=e26] [cursor=pointer]:
+            - /url: https://github.com/Sungblab
+            - img [ref=e27]
+          - link "LinkedIn" [ref=e30] [cursor=pointer]:
+            - /url: https://linkedin.com
+            - img [ref=e31]
+          - generic [ref=e35]: Made by Sungbin · © 2026 sungblab
+  - alert [ref=e36]

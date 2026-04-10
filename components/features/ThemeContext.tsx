@@ -84,7 +84,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <ThemeContext.Provider value={contextValue}>
-      <div style={mounted ? undefined : { visibility: "hidden" }}>
+      <div suppressHydrationWarning style={mounted ? undefined : { visibility: "hidden" }}>
         {children}
       </div>
     </ThemeContext.Provider>
