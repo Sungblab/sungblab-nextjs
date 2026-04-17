@@ -1,7 +1,7 @@
 # Sungblab: 코딩도 예술처럼, 블로그도 감성 있게
 
 코딩만 하기엔 인생은 짧고, 내 작업물을 그냥 썩히기엔 너무 아깝습니다. 그래서 만들었습니다.  
-**Sungblab**은 Next.js 14의 파워와 TinaCMS의 편리함, 그리고 '약간의' 감성을 버무린 개인 포트폴리오 겸 블로그입니다.
+**Sungblab**은 Next.js 14의 파워와 MDX 기반 콘텐츠, 그리고 '약간의' 감성을 버무린 개인 포트폴리오 겸 블로그입니다.
 
 <img width="2521" height="1221" alt="Screenshot 2026-02-08 154335" src="https://github.com/user-attachments/assets/341ce9c2-167b-4494-a671-2dd540220aea" />
 
@@ -16,8 +16,8 @@
 - **엔진**: Next.js 14 (App Router & Pages Router의 기묘한 공존)
 - **뼈대**: React 18 & TypeScript (타입 에러는 내 친구)
 - **겉모습**: Tailwind CSS & Styled Components (디자인은 감성입니다)
-- **두뇌**: TinaCMS (마크다운 파일이랑 싸우기 싫어서 도입했습니다)
-- **데이터**: MongoDB & Gray-matter
+- **콘텐츠**: MDX + gray-matter (마크다운 파일을 그대로 껴안기로 했습니다)
+- **데이터**: MongoDB
 - **집**: Vercel (클릭 몇 번에 배포 끝!)
 
 ---
@@ -41,7 +41,7 @@
 # 의존성 설치 (npm이 열일할 시간입니다)
 npm install
 
-# 개발 서버 가동 (TinaCMS와 함께!)
+# 개발 서버 가동
 npm run dev
 ```
 
